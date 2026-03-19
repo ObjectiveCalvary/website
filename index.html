@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@100;300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --ink: #1a1612;
+      --gold: #c9a84c;
+      --muted: #8a7e70;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Josefin Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Radial light */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Animated lines background */
+    .bg-lines {
+      position: fixed; inset: 0;
+      overflow: hidden;
+      opacity: 0.15;
+    }
+    .bg-lines span {
+      position: absolute;
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      animation: lineFall linear infinite;
+    }
+    .bg-lines span:nth-child(1)  { left: 12%; animation-duration: 9s;  animation-delay: 0s; }
+    .bg-lines span:nth-child(2)  { left: 28%; animation-duration: 13s; animation-delay: -3s; }
+    .bg-lines span:nth-child(3)  { left: 45%; animation-duration: 7s;  animation-delay: -6s; }
+    .bg-lines span:nth-child(4)  { left: 63%; animation-duration: 11s; animation-delay: -1s; }
+    .bg-lines span:nth-child(5)  { left: 79%; animation-duration: 8s;  animation-delay: -5s; }
+    .bg-lines span:nth-child(6)  { left: 92%; animation-duration: 15s; animation-delay: -2s; }
+
+    @keyframes lineFall {
+      0%   { transform: translateY(-100%); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
+
+    /* Main layout */
+    .stage {
+      position: relative;
+      width: 100%; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    /* Top rule */
+    .rule {
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      position: absolute;
+      top: 0; left: 50%;
+      animation: growDown 1.6s cubic-bezier(0.16,1,0.3,1) forwards;
+      transform-origin: top;
+    }
+    @keyframes growDown {
+      from { height: 0; opacity: 0; }
+      to   { height: 18vh; opacity: 1; }
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 100;
+      font-size: clamp(0.6rem, 1vw, 0.75rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.8s forwards;
+    }
+
+    /* Main title */
+    .title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-align: center;
+      color: var(--cream);
+      opacity: 0;
+      animation: fadeUp 1.2s ease 1s forwards;
+      position: relative;
+    }
+    .title em {
+      font-style: italic;
+      color: rgba(245,240,232,0.45);
+    }
+    .title .outline {
+      -webkit-text-stroke: 1px rgba(245,240,232,0.25);
+      color: transparent;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin: 2.5rem 0;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.3s forwards;
+    }
+    .divider-line {
+      width: 60px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--muted));
+    }
+    .divider-line:last-child {
+      background: linear-gradient(to left, transparent, var(--muted));
+    }
+    .divider-diamond {
+      width: 5px; height: 5px;
+      border: 1px solid var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* Subtitle */
+    .subtitle {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 100;
+      font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      max-width: 30ch;
+      line-height: 2;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.5s forwards;
+    }
+
+
+
+    /* Bottom */
+    .bottom-rule {
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 1px;
+      background: linear-gradient(to top, transparent, var(--gold));
+      animation: growUp 1.6s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+      transform-origin: bottom;
+    }
+    @keyframes growUp {
+      from { height: 0; opacity: 0; }
+      to   { height: 12vh; opacity: 1; }
+    }
+
+    /* Corner marks */
+    .corner {
+      position: fixed;
+      width: 32px; height: 32px;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+    .corner::before, .corner::after {
+      content: '';
+      position: absolute;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    .corner::before { width: 1px; height: 100%; }
+    .corner::after  { width: 100%; height: 1px; }
+    .corner.tl { top: 28px; left: 28px; }
+    .corner.tr { top: 28px; right: 28px; transform: scaleX(-1); }
+    .corner.bl { bottom: 28px; left: 28px; transform: scaleY(-1); }
+    .corner.br { bottom: 28px; right: 28px; transform: scale(-1); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-lines">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="stage">
+    <div class="rule"></div>
+
+    <p class="eyebrow">Something is coming</p>
+
+    <h1 class="title">
+      Almost<br>
+      <em>There</em>
+    </h1>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <p class="subtitle">We're putting the finishing touches on something&nbsp;special. Leave your email and we'll let you know the&nbsp;moment we launch.</p>
+
+
+    <div class="bottom-rule"></div>
+  </div>
+
+
+</body>
+</html>
