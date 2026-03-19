@@ -1,254 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Coming Soon</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@100;300&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OC &mdash; Gospel Tools for the Church</title>
+    <meta name="description" content="Objective Calvary equips the Church with gospel tools, discipleship resources, and Bible study materials to communicate the redemptive purpose of the crucifixion of Jesus Christ.">
+    <link rel="canonical" href="https://www.objectivecalvary.com/">
+    <meta name="robots" content="index, follow">
 
-    :root {
-      --cream: #f5f0e8;
-      --ink: #1a1612;
-      --gold: #c9a84c;
-      --muted: #8a7e70;
-    }
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.objectivecalvary.com/">
+    <meta property="og:title" content="Objective Calvary &ndash; Gospel Tools for the Church">
+    <meta property="og:description" content="Equipping the Church with gospel tools and discipleship resources to understand the crucifixion of Jesus Christ.">
+    <meta property="og:image" content="https://www.objectivecalvary.com/images/og-image.jpg">
 
-    html, body {
-      width: 100%; height: 100%;
-      background: var(--ink);
-      color: var(--cream);
-      font-family: 'Josefin Sans', sans-serif;
-      overflow: hidden;
-    }
-
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.035;
-      pointer-events: none;
-      z-index: 100;
-    }
-
-    /* Radial light */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Animated lines background */
-    .bg-lines {
-      position: fixed; inset: 0;
-      overflow: hidden;
-      opacity: 0.15;
-    }
-    .bg-lines span {
-      position: absolute;
-      display: block;
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-      animation: lineFall linear infinite;
-    }
-    .bg-lines span:nth-child(1)  { left: 12%; animation-duration: 9s;  animation-delay: 0s; }
-    .bg-lines span:nth-child(2)  { left: 28%; animation-duration: 13s; animation-delay: -3s; }
-    .bg-lines span:nth-child(3)  { left: 45%; animation-duration: 7s;  animation-delay: -6s; }
-    .bg-lines span:nth-child(4)  { left: 63%; animation-duration: 11s; animation-delay: -1s; }
-    .bg-lines span:nth-child(5)  { left: 79%; animation-duration: 8s;  animation-delay: -5s; }
-    .bg-lines span:nth-child(6)  { left: 92%; animation-duration: 15s; animation-delay: -2s; }
-
-    @keyframes lineFall {
-      0%   { transform: translateY(-100%); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
-      100% { transform: translateY(100%); opacity: 0; }
-    }
-
-    /* Main layout */
-    .stage {
-      position: relative;
-      width: 100%; height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    /* Top rule */
-    .rule {
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, var(--gold));
-      position: absolute;
-      top: 0; left: 50%;
-      animation: growDown 1.6s cubic-bezier(0.16,1,0.3,1) forwards;
-      transform-origin: top;
-    }
-    @keyframes growDown {
-      from { height: 0; opacity: 0; }
-      to   { height: 18vh; opacity: 1; }
-    }
-
-    /* Eyebrow */
-    .eyebrow {
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 100;
-      font-size: clamp(0.6rem, 1vw, 0.75rem);
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.8s forwards;
-    }
-
-    /* Main title */
-    .title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      text-align: center;
-      color: var(--cream);
-      opacity: 0;
-      animation: fadeUp 1.2s ease 1s forwards;
-      position: relative;
-    }
-    .title em {
-      font-style: italic;
-      color: rgba(245,240,232,0.45);
-    }
-    .title .outline {
-      -webkit-text-stroke: 1px rgba(245,240,232,0.25);
-      color: transparent;
-    }
-
-    /* Divider */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      margin: 2.5rem 0;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.3s forwards;
-    }
-    .divider-line {
-      width: 60px; height: 1px;
-      background: linear-gradient(to right, transparent, var(--muted));
-    }
-    .divider-line:last-child {
-      background: linear-gradient(to left, transparent, var(--muted));
-    }
-    .divider-diamond {
-      width: 5px; height: 5px;
-      border: 1px solid var(--gold);
-      transform: rotate(45deg);
-    }
-
-    /* Subtitle */
-    .subtitle {
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 100;
-      font-size: clamp(0.65rem, 1.1vw, 0.8rem);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: center;
-      max-width: 30ch;
-      line-height: 2;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.5s forwards;
-    }
-
-
-
-    /* Bottom */
-    .bottom-rule {
-      position: absolute;
-      bottom: 0; left: 50%;
-      width: 1px;
-      background: linear-gradient(to top, transparent, var(--gold));
-      animation: growUp 1.6s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
-      transform-origin: bottom;
-    }
-    @keyframes growUp {
-      from { height: 0; opacity: 0; }
-      to   { height: 12vh; opacity: 1; }
-    }
-
-    /* Corner marks */
-    .corner {
-      position: fixed;
-      width: 32px; height: 32px;
-      opacity: 0;
-      animation: fadeIn 1s ease 2s forwards;
-    }
-    .corner::before, .corner::after {
-      content: '';
-      position: absolute;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-    .corner::before { width: 1px; height: 100%; }
-    .corner::after  { width: 100%; height: 1px; }
-    .corner.tl { top: 28px; left: 28px; }
-    .corner.tr { top: 28px; right: 28px; transform: scaleX(-1); }
-    .corner.bl { bottom: 28px; left: 28px; transform: scaleY(-1); }
-    .corner.br { bottom: 28px; right: 28px; transform: scale(-1); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @media (max-width: 480px) {
-    }
-  </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
-  <div class="bg-lines">
-    <span></span><span></span><span></span>
-    <span></span><span></span><span></span>
-  </div>
+<!-- ================= NAVIGATION ================= -->
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
 
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
+            <li class="dropdown">
+                <a href="#"><i class="fa-solid fa-grip-vertical" style="margin-right: 5px;"></i> Gospel Tools</a>
+                <ul class="dropdown-content">
+                    <li>
+                        <a href="./pages/IRBs.html">
+                            <img src="images/IRB_64px.png" class="menu-icon" alt=""> IRBs
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./pages/Anchor.html">
+                            <img src="images/Anchor_64px.png" class="menu-icon" alt=""> Anchor
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./pages/Pulse.html">
+                            <img src="images/Pulse_64px.png" class="menu-icon" alt=""> Pulse
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-  <div class="stage">
-    <div class="rule"></div>
+            <li><i class="fa-solid fa-code"></i> <a href="#">Feedback</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <p class="eyebrow">Something is coming</p>
 
-    <h1 class="title">
-      Almost<br>
-      <em>There</em>
-    </h1>
+<!-- ================= HERO ================= -->
+<section class="home-hero">
+    <div class="home-hero-inner">
+        <div class="hero-video-wrap">
+            <video id="heroVideo" class="hero-video-square" src="./video/intro v17.mp4" muted playsinline></video>
+        </div>
+        <div class="hero-text">
+            <h1 class="home-hero-heading">Objective Calvary</h1>
+            <p class="home-hero-sub" >Equipping the Universal Church with Gospel Tools to communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ.</p>
+            <div class="home-hero-actions">
+                <a href="#tools" class="btn-primary">Explore Gospel Tools</a>
+                <a href="#story" class="btn-secondary">About OC</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-diamond"></div>
-      <div class="divider-line"></div>
+<div class="section-divider">
+    <div class="divider-line"></div>
+    <div class="divider-arrow">
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+    <div class="divider-line"></div>
+</div>
+
+<!-- ================= TOOLS STRIP ================= -->
+<section class="tools-strip" id="tools">
+    <div class="tools-strip-inner">
+       <div class="section-heading">
+    <p class="section-eyebrow">Equip Yourself with </p>
+    <h2>Gospel Tools</h2>
+</div>
+        <div class="tools-grid">
+
+            <a href="./pages/IRBs.html" class="tool-card">
+                <div class="tool-card-bg"></div>
+                <div class="tool-card-content">
+                    <img src="images/IRB_64px.png" alt="IRBs" class="tool-card-icon">
+                    <div class="tool-card-text">
+                        <strong>IRBs</strong>
+                        <span>The Interactive Red Button — Equips preachers, leaders, trainers, and conference presenters with a powerful way to interact in real time with groups, individuals, and crowds. Communicate the unchanging work and message of God to a new genaration.</span>
+                    </div>
+                    <div class="tool-card-arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="tool-card-number">01</div>
+            </a>
+
+            <a href="./pages/Anchor.html" class="tool-card">
+                <div class="tool-card-bg"></div>
+                <div class="tool-card-content">
+                    <img src="images/Anchor_64px.png" alt="Anchor" class="tool-card-icon">
+                    <div class="tool-card-text">
+                        <strong>Anchor</strong>
+                        <span>Equip disciples of Jesus Christ with a big-picture understanding of the entire Bible and how it all connects in a way that is simple, interactive, and memorable. The Anchor Gospel tool was made to be used for both discipleship and personal devotionals.</span>
+                    </div>
+                    <div class="tool-card-arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="tool-card-number">02</div>
+            </a>
+
+            <a href="./pages/Pulse.html" class="tool-card">
+                <div class="tool-card-bg"></div>
+                <div class="tool-card-content">
+                    <img src="images/Pulse_64px.png" alt="Pulse" class="tool-card-icon">
+                    <div class="tool-card-text">
+                        <strong>Pulse</strong>
+                        <span>Small groups are the pulse of the Church. Equip your ministry with real time statistics and information on small group health, attendance and so much more with this Gospel tool. Gain clarity, strengthen leadership oversight, and identify trends.</span>
+                    </div>
+                    <div class="tool-card-arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="tool-card-number">03</div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ================= STORY + FOUNDERS ================= -->
+<section class="story-founders" id="story">
+
+    <!-- Row 1: Story text full width -->
+    <div class="sf-story">
+        <div class="sf-story-inner">
+            <div class="sf-story-label-block">
+                <p class="story-label">Why is it called</p>
+                <h2 class="story-heading">Objective Calvary?</h2>
+            </div>
+            <div class="sf-story-text">
+                <p class="story-body">In 312 AD, during the Battle of the Milvian Bridge, Constantine the Great reportedly saw a cross — in the sky accompanied by the words "In hoc signo vinces" ("By this sign, you will conquer"). After a confirming dream, he instructed his soldiers to mark the symbol on their shields. He won the battle and later professed faith in Christ.
+This moment marked a watershed moment in Church history. Christianity was legalized, persecution was lifted, and the Church began to grow rapidly throughout the world.
+Yet with this breakthrough came new challenges. As the Church became increasingly institutionalized and intertwined with imperial structures, it gradually shifted from a persecuted and tightly knit family of convicted believers toward a centralized, imperial Church. Human sin within the Church expressed itself through division, bureaucracy, politicization, and a growing emphasis on buildings rather than people. But the Church, the perfect bride of Christ, is called to be unified in its mission, while time still remains.
+The Church is not called to compete, but to complete one another. There is one Objective to which all true churches are called: to make disciples who take up their cross and follow Jesus Christ to Calvary (Matthew 16:24, 28:18–20). We are one body with many members, called to function in unity to achieve this objective (1 Corinthians 12:12).</p>
+                <p class="story-body">This historical inflection point inspires Objective Calvary, to equip the Universal Church with Gospel tools that help communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ and are relevant to the times as well as current generations (1 Chronicles 12:32).</p>
+            </div>
+        </div>
     </div>
 
-    <p class="subtitle">We're putting the finishing touches on something&nbsp;special. Leave your email and we'll let you know the&nbsp;moment we launch.</p>
+    <!-- Divider -->
+    <div class="sf-divider">
+        <div class="sf-divider-inner">
+            <div class="sf-divider-line"></div>
+            <span class="sf-divider-label">Founders</span>
+            <div class="sf-divider-line"></div>
+        </div>
+    </div>
+
+    <!-- Row 2: Founder cards strip -->
+    <div class="sf-founders" id="founders">
+        <div class="sf-founders-inner">
+
+            <div class="founder-card">
+                <img src="images/founder1.jpg" alt="William du Toit, Co-Founder of Objective Calvary">
+                <div class="founder-glass">
+                    <h3>William du Toit</h3>
+                    <div class="founder-credentials">
+                        <div class="credential">
+                            <img class="cred-logo" src="./images/SU.png" alt="Stellenbosch University">
+                            <div class="cred-text">
+                                <span class="cred-school">Stellenbosch University</span>
+                                <span class="cred-degree">Bachelor of Commerce</span>
+                            </div>
+                        </div>
+                        <div class="credential">
+                            <img class="cred-logo" src="./images/sats.png" alt="SA Theological Seminary">
+                            <div class="cred-text">
+                                <span class="cred-school">SA Theological Seminary</span>
+                                <span class="cred-degree">Bachelor of Theology <em>&mdash; In Progress</em></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="founder-card">
+                <img src="images/founder2.jpg" alt="Dylan Farge, Co-Founder of Objective Calvary">
+                <div class="founder-glass">
+                    <h3>Dylan Farge</h3>
+                    <div class="founder-credentials">
+                        <div class="credential">
+                            <img class="cred-logo" src="./images/SU.png" alt="Stellenbosch University">
+                            <div class="cred-text">
+                                <span class="cred-school">Stellenbosch University</span>
+                                <span class="cred-degree">Bachelor of Science in Computer Science</span>
+                            </div>
+                        </div>
+                        <div class="credential">
+                            <img class="cred-logo" src="./images/SU.png" alt="Stellenbosch University">
+                            <div class="cred-text">
+                                <span class="cred-school">Stellenbosch University</span>
+                                <span class="cred-degree">Masters of Science <em>&mdash; Cum Laude</em></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<!-- ================= VALUES ================= -->
+<section class="section" id="values">
+    <div class="section-heading">
+    <p class="section-eyebrow">What we stand for</p>
+    <h2>Values</h2>
+</div>
+    <div class="values">
+
+        <div class="value-row">
+            <div class="value-row-left">
+                <span class="value-num">01</span>
+                <div class="value-icon"><i class="fa-solid fa-dove" aria-hidden="true"></i></div>
+            </div>
+            <div class="value-row-main">
+                <h4>Unobstructed Gospel</h4>
+                <p class="value-verse">&ldquo; If others have this right of support from you, shouldn’t we have it all the more?
+
+But we did not use this right. On the contrary, we put up with anything rather than hinder the gospel of Christ.&rdquo;<br>&mdash; 1 Corinthians 9:12</p>
+            </div>
+            <div class="value-row-line"></div>
+        </div>
+
+        <div class="value-row">
+            <div class="value-row-left">
+                <span class="value-num">02</span>
+                <div class="value-icon"><i class="fa-solid fa-fire-flame-curved" aria-hidden="true"></i></div>
+            </div>
+            <div class="value-row-main">
+                <h4>Spirit-led Work</h4>
+                <p class="value-verse">&ldquo;and he has filled him with the Spirit of God, with wisdom, with understanding, with knowledge and with all kinds of skills — to make artistic designs for work in gold, silver and bronze, to cut and set stones, to work in wood and to engage in all kinds of artistic crafts.&rdquo; &mdash; Exodus 35:31-33</p>
+            </div>
+            <div class="value-row-line"></div>
+        </div>
+
+        <div class="value-row">
+            <div class="value-row-left">
+                <span class="value-num">03</span>
+                <div class="value-icon"><i class="fa-solid fa-hammer" aria-hidden="true"></i></div>
+            </div>
+            <div class="value-row-main">
+                <h4>Relationship Based</h4>
+                <p class="value-verse">&ldquo;As iron sharpens iron, so one person sharpens another.&rdquo; &mdash; Proverbs 27:17</p>
+            </div>
+            <div class="value-row-line"></div>
+        </div>
+
+    </div>
+</section>
 
 
-    <div class="bottom-rule"></div>
-  </div>
 
 
+
+<!-- ================= FOOTER ================= -->
+<footer id="Bottom">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>Objective Calvary</h4>
+            <p>Equipping the Universal Church with Gospel Tools to communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Gospel Tools</h4>
+            <ul>
+                <li><a href="./pages/IRBs.html">IRBs</a></li>
+                <li><a href="./pages/Anchor.html">Anchor</a></li>
+                <li><a href="./pages/Pulse.html">Pulse</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#story">About OC</a></li>
+                <li><a href="#founders">Founders</a></li>
+                <li><a href="#values">Values</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p>Email: <a href="ObjectiveCalvary.com">ObjectiveCalvary.com</a></p>
+            <div class="social-icons" style="margin-top: 20px;">
+                <a href="https://github.com/ObjectiveCalvary" aria-label="Github"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/objectivecalvary/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@objectivecalvary5740" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Objective Calvary. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+    // Play hero video once and freeze on last frame
+    const heroVideo = document.getElementById('heroVideo');
+    if (heroVideo) {
+        heroVideo.play();
+        heroVideo.addEventListener('timeupdate', () => {
+            if (heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 0.05) {
+                heroVideo.pause();
+            }
+        });
+    }
+
+    // Animate value cards on scroll
+    const cards = document.querySelectorAll('.value-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+    }, { threshold: 0.2 });
+    cards.forEach(card => observer.observe(card));
+</script>
+
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+
+                const headerOffset = 80; // adjust if needed
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Objective Calvary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="../images/OC_64px.png" sizes="48x48">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./SubPages_style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+      /* Particle Effects Canvas */
+      #particleCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+        #sketchfab-iframe {
+        background: transparent !important;
+      }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="../index.html" ><i class="fa-solid fa-house"></i>   Home</a></li>
+
+            <li class="dropdown">
+            <a class="active" href="#" style="color: #ff7676;"><i class="fa-solid fa-grip-vertical" style="color: #ff7676; margin-right: 5px;"></i>     Gospel Tools</a>
+            <ul class="dropdown-content">
+                <li>
+                <a href="./IRBs.html">
+                    <img src="../images/IRB_64px.png" class="menu-icon" alt="">
+                    IRBs
+                </a>
+                </li>
+                <li>
+                <a href="./Anchor.html">
+                    <img src="../images/Anchor_64px.png"  class="menu-icon" alt="">
+                    Anchor
+                </a>
+                </li>
+                <li>
+                <a href="./Pulse.html">
+                    <img src="../images/Pulse_64px.png" class="menu-icon" alt="">
+                    Pulse
+                </a>
+                </li>
+            </ul>
+            </li>
+
+            <li><i class="fa-solid fa-code"></i> <a href="#">Feedback</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+  <!-- Background video -->
+  <video
+    class="hero-video-bg"
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+    <source src="../video/IRB intro.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="overlay"></div>
+
+  <!-- Content -->
+  <div class="hero-content">
+    <h1>Interactive Red Buttons</h1>
+
+    <img
+      src="../images/IRB_500px.png"
+      alt="Blender Icon"
+      class="hero-icon"
+    />
+
+    <div class="button-group" style="padding-bottom: 0px; margin-bottom: 0px;">
+      <a href="#" class="primary-btn" id="openDownloadModal">Download Information Guide</a>
+      <a href="#Bottom" class="secondary-btn">
+        Join the Objective | Contact Us
+      </a>
+    </div>
+
+    <div class="links">
+      <p>
+        Help Us Make it Even Better!<br />
+        Share Some · <a href="#">Feedback</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- DOWNLOAD MODAL -->
+<div id="downloadModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box2">
+    <button class="modal-close"  id="closeModal" aria-label="Close">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon" style="background: #ff3131;"><i class="fa-solid fa-wifi"></i></div>
+      <h2>Before You Continue</h2>
+    </div>
+    <div class="modal-body2" style="text-align: justify;">
+      <p>We are thrilled that you want to learn more about the <strong>IRB Gospel Tool</strong>.</p>
+      <p>Before you continue, we believe in an <strong>Unhindered Gospel</strong> — meaning that we charge no extra cost than is absolutely needed. The IRB is a <strong>hardware dependent Gospel Tool</strong> and we produce them at cost price. Please get into contact with us. We also have a <strong>GitHub repository</strong> you can make use of if we are not geographically close, to do so please get in contact with us.</p>
+      <p>We do however ask that if you make use of the IRBs and belong to a <strong>Church or Institution</strong>, that you email us your logo and consent to use your details under the <strong>Community Spotlight</strong> section, as it helps contribute to our credibility — as well as any social content we can tag you in.</p>
+      <p>All rights are reserved to <strong>Objective Calvary</strong> and you cannot distribute the IRB Gospel tool for commercial use.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="modal-download-btn" id="continueDownload" style="background: linear-gradient(135deg, #ff3131, #ff3131);">
+        <i class="fa-solid fa-envelope"></i> Contact Us
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= PRODUCT SHOWCASE (STICKY SCROLL) ================= -->
+<section class="features-scroll" data-theme="irb">
+  <div class="features-scroll-inner">
+
+    <!-- Sticky left panel -->
+    <div class="features-sticky-col">
+   
+      <h2 class="features-main-heading">Why IRBs Work</h2>
+
+      <div class="features-nav">
+        <div class="feat-track">
+          <div class="feat-track-fill" id="featuresProgress" style="background: #ff3131;"></div>
+        </div>
+        <div class="feat-nav-items">
+          <button class="feat-nav-btn active" data-index="0">
+            <span class="feat-dot"></span>
+            <span class="feat-label">01 Real-Time Interaction</span>
+          </button>
+          <button class="feat-nav-btn" data-index="1">
+            <span class="feat-dot"></span>
+            <span class="feat-label">02 Plug &amp; Play Simplicity</span>
+          </button>
+          <button class="feat-nav-btn" data-index="2">
+            <span class="feat-dot"></span>
+            <span class="feat-label">03 Flexibility & Scalability</span>
+          </button>
+            <button class="feat-nav-btn" data-index="3">
+            <span class="feat-dot"></span>
+            <span class="feat-label">04 Control at Your Fingertips</span>
+          </button>
+        </div>
+      </div>
+                <!-- Bible Verse -->
+      <div class="bible-verse-block">
+        <p class="bible-verse-text">"Preach the word; be prepared in season and out of season; correct, rebuke and encourage — with great patience and careful instruction."</p>
+        <span class="bible-verse-ref">— 2 Timothy 4:2</span>
+      </div>
+    </div>
+
+
+
+    <!-- Scrolling right panel -->
+    <div class="features-scroll-col">
+
+   <div class="feature-panel" data-index="0">
+  <div class="feature-img-wrap">
+    <img src="../images/product_IRB1.jpg" alt="Real-Time Interaction">
+    <div class="feature-img-num">01</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+      <h3>Real-Time Interaction</h3>
+    </div>
+    <p style="text-align: justify;">The IRB equips preachers, leaders, trainers, and conference presenters with a powerful way to interact in real time with groups, individuals, and crowds. The first group or person to press the button appears instantly on screen. Engagement increases immediately, attention sharpens, and time seems to fly when using this gospel tool.</p>
+  </div>
+</div>
+
+<div class="feature-panel" data-index="1">
+  <div class="feature-img-wrap">
+    <img src="../images/product_IRB3.jpg" alt="Plug &amp; Play Simplicity">
+    <div class="feature-img-num">02</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fas fa-plug"></i></div>
+      <h3>Plug &amp; Play Simplicity</h3>
+    </div>
+<p style="text-align: justify;">
+We have purposefully engineered this Gospel tool with the end user in mind, whether you are highly tech savvy or have very little technical experience. Setup takes only moments. Connect your buttons, launch the interface, and begin interacting immediately. There are no complicated configurations, no steep learning curves, and no unnecessary distractions. Instead, you are free to focus on what truly matters: communicating truth clearly, engaging people meaningfully, and leading with confidence.
+</p>  </div>
+</div>
+
+<div class="feature-panel" data-index="2">
+  <div class="feature-img-wrap">
+    <img src="../images/product_IRB4.jpg" alt="Flexibility & Scalability">
+    <div class="feature-img-num">03</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fas fa-arrows-alt"></i></div>
+      <h3>Flexibility & Scalability</h3>
+    </div>
+    <p style="text-align: justify;">From a room of hundreds gathered in groups to a small, elite leadership training setting, the IRBs scale effortlessly to fit your need. The uses are limitless – from powerful interactive teaching moments to playful conference icebreakers. The IRB system delivers large-scale impact while maintaining a personal, individual feel.</p>
+  </div>
+</div>
+
+<div class="feature-panel" data-index="3">
+  <div class="feature-img-wrap">
+    <img src="../images/product_IRB2.jpg" alt="Control at Your Fingertips">
+    <div class="feature-img-num">04</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+      <h3>Control at Your Fingertips</h3>
+    </div>
+<p style="text-align: justify;">
+Take full command of the entire IRB system from wherever you are using your phone, tablet, laptop, or even your smartwatch. Reset buzzers instantly and create, edit, or delete questions in seconds. Whether you are adjusting during a session or preparing beforehand, everything is designed to be intuitive, fast, and fully in your hands. Seamless control means fewer distractions and greater focus on meaningful interaction.
+</p>  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3D MODEL VIEWER - REDESIGNED TO MATCH THEME ================= -->
+<section class="model-viewer-section-new">
+  <div class="model-container-new">
+    <div class="section-header-new">
+      <h2 style="text-align: left;">Visual Demonstration</h2>
+    </div>
+    
+    <!-- Two Column Layout -->
+    <div class="model-grid">
+      
+      <!-- LEFT: 3D Model -->
+      <div class="model-card">
+        <div class="card-header">
+          <h3 style="text-align: center;">IRB: 3D Model Preview</h3>
+        </div>
+        <div class="model-frame">
+          <iframe 
+            id="sketchfab-iframe" 
+            title="red_button" 
+            frameborder="0" 
+            allowfullscreen 
+            mozallowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            allow="autoplay; fullscreen; xr-spatial-tracking" 
+            xr-spatial-tracking 
+            execution-while-out-of-viewport 
+            execution-while-not-rendered 
+            web-share 
+            src="https://sketchfab.com/models/42d1f84641e741e5bff2f56b310de246/embed?autospin=1&autostart=1&preload=1&transparent=1&ui_hint=0&background=00000000">
+          </iframe>
+        </div>
+
+      </div>
+      
+      <!-- RIGHT: Video with TV Frame -->
+      <div class="model-card">
+        <div class="card-header">
+          <h3 style="text-align: center; padding-bottom: 20px;">Display: Screen or Projector</h3>
+        </div>
+        <div class="tv-container">
+          <!-- TV Frame -->
+          <div class="tv-frame">
+            <div class="tv-screen">
+              <video 
+                id="demo-video"
+                playsinline
+              >
+                <source src="../video/IRB trigger.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="tv-stand">
+              <div class="tv-stand-neck"></div>
+              <div class="tv-stand-base"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button id="play-sync-button" class="play-button" style="margin-top: 30px;">
+            <i class="fas fa-play"></i> Play Demonstration
+          </button>
+          <p class="video-status" id="video-status"></p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOCIAL PROOF / INSTAGRAM (SIMPLE PLAY ICON) ================= -->
+<section class="social-proof">
+  <div class="social-inner">
+      <h2>Community Spotlight</h2>
+
+    <div class="instagram-grid reveal">
+      
+      <!-- Video 1 -->
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/XXXXXXXXX/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true"></iframe>
+        <div class="simple-play-icon">
+          <i class="fas fa-play"></i>
+        </div>
+      </div>
+
+      <!-- Video 2 -->
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/DQHx2AIjBEH/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true"></iframe>
+        <div class="simple-play-icon">
+          <i class="fas fa-play"></i>
+        </div>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/XXXXXXXXX/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true"></iframe>
+        <div class="simple-play-icon">
+          <i class="fas fa-play"></i>
+        </div>
+      </div>
+
+    </div>
+     <div style="padding-bottom: 150px;">
+   
+  <div class="reviews">
+    <div class="review reveal">
+      <p style="color: #fff">"The IRBs completely changed our Bible study engagement."</p>
+      <span>— Pastor X</span>
+    </div>
+
+    <div class="review reveal">
+      <p style="color: #fff">"Our youth group has never been more interactive."</p>
+      <span>— Pastor Y</span>
+    </div>
+
+    <div class="review reveal">
+      <p style="color: #fff">"Simple. Powerful. Effective."</p>
+      <span>— Pastor Z</span>
+    </div>
+  </div>
+
+  <div class="logos reveal">
+    <img src="../images/church2.png" alt="">
+    <img src="../images/church1.png" alt="">
+    <img src="../images/church3.png" alt="">
+    
+
+  </div>
+  </div>
+  </div>
+  
+</section>
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+<footer id="Bottom">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>Objective Calvary</h4>
+            <p>Equipping the Universal Church with Gospel Tools to communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Gospel Tools</h4>
+            <ul>
+                <li><a href="./pages/IRBs.html">IRBs</a></li>
+                <li><a href="./pages/Anchor.html">Anchor</a></li>
+                <li><a href="./pages/Pulse.html">Pulse</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#story">About OC</a></li>
+                <li><a href="#founders">Founders</a></li>
+                <li><a href="#values">Values</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p>Email: <a href="ObjectiveCalvary.com">ObjectiveCalvary.com</a></p>
+            <div class="social-icons" style="margin-top: 20px;">
+                <a href="https://github.com/ObjectiveCalvary" aria-label="Github"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/objectivecalvary/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@objectivecalvary5740" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Objective Calvary. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ================= SCROLL REVEAL =================
+  const reveals2 = document.querySelectorAll('.reveal');
+
+  function revealOnScroll2() {
+    const windowHeight = window.innerHeight;
+
+    reveals2.forEach((el) => {
+      const elementTop = el.getBoundingClientRect().top;
+      const elementVisible = 100;
+
+      if (elementTop < windowHeight - elementVisible) {
+        el.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll2);
+  revealOnScroll2();
+</script>
+
+
+<!-- Sketchfab Viewer API for Synchronized Playback -->
+<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+<script>
+// ================= SYNCHRONIZED ANIMATION & VIDEO PLAYBACK =================
+var iframe = document.getElementById('sketchfab-iframe');
+var video = document.getElementById('demo-video');
+var playButton = document.getElementById('play-sync-button');
+var videoStatus = document.getElementById('video-status');
+var sketchfabAPI = null;
+var modelReady = false;
+
+// Extract model ID from iframe src
+var modelId = iframe.src.match(/models\/([^\/]+)/)?.[1];
+
+if (modelId) {
+  var client = new Sketchfab(iframe);
+  
+  client.init(modelId, {
+    success: function onSuccess(api) {
+      sketchfabAPI = api;
+      
+      api.start(function() {
+        console.log('Sketchfab model loaded');
+        
+        // Wait a moment for everything to fully initialize
+        setTimeout(function() {
+          // Get animations to ensure they're loaded
+          api.getAnimations(function(err, animations) {
+            if (!err && animations.length > 0) {
+              console.log('Found', animations.length, 'animation(s)');
+              
+              // IMPORTANT: Play and immediately pause to "prime" the animation
+              api.play(function() {
+                console.log('Animation primed');
+                // Immediately pause after starting
+                setTimeout(function() {
+                  api.pause(function() {
+                    // Seek back to start
+                    api.seekTo(0, function() {
+                      modelReady = true;
+                      console.log('Animation ready for sync playback');
+                      // Update button to show it's ready
+                      playButton.disabled = false;
+                      playButton.style.opacity = '1';
+                    });
+                  });
+                }, 100);
+              });
+            } else {
+              console.warn('No animations found in the model');
+              modelReady = true;
+              playButton.disabled = false;
+            }
+          });
+        }, 500);
+      });
+    },
+    error: function onError() {
+      console.error('Sketchfab API error');
+    }
+  });
+}
+
+// Handle video ending - stop and reset
+if (video) {
+  video.addEventListener('ended', function() {
+    console.log('Video ended - stopping playback');
+    video.pause();
+    video.currentTime = 0;
+    
+    // Update button state
+    playButton.innerHTML = '<i class="fas fa-play"></i> Play Demonstration';
+    playButton.disabled = false;
+    playButton.style.opacity = '1';
+    
+    // Update status
+    videoStatus.textContent = 'Click to play again';
+    videoStatus.style.color = '#ffbd59';
+  });
+}
+
+
+
+// Play Button Click Handler
+if (playButton) {
+  // Start with button disabled until ready
+  playButton.disabled = true;
+  playButton.style.opacity = '0.6';
+  
+  playButton.addEventListener('click', function() {
+    if (!modelReady) {
+      console.log('Model not ready yet, please wait...');
+      return;
+    }
+    
+    console.log('Play button clicked - starting synchronized playback');
+    
+    // Reset both to start
+    if (video) {
+      video.currentTime = 0;
+    }
+    
+    // Play video WITH SOUND (no loop, plays once)
+    if (video) {
+      video.muted = false; // Ensure sound is enabled
+      video.loop = false; // Make sure it doesn't loop
+      video.play().then(() => {
+        console.log('Video playing with sound');
+        
+        // Then play Sketchfab animation
+        if (sketchfabAPI) {
+          sketchfabAPI.seekTo(0, function() {
+            sketchfabAPI.play(function() {
+              console.log('Sketchfab animation playing - synced!');
+            });
+          });
+        }
+      }).catch(err => {
+        console.error('Video play error:', err);
+        
+        // Even if video fails, try to play animation
+        if (sketchfabAPI) {
+          sketchfabAPI.seekTo(0, function() {
+            sketchfabAPI.play(function() {
+              console.log('Sketchfab animation playing');
+            });
+          });
+        }
+      });
+    } else {
+      // No video, just play animation
+      if (sketchfabAPI) {
+        sketchfabAPI.seekTo(0, function() {
+          sketchfabAPI.play(function() {
+            console.log('Sketchfab animation playing');
+          });
+        });
+      }
+    }
+    
+    // Update button state
+    playButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Playing...';
+    playButton.disabled = true;
+    playButton.style.opacity = '0.6';
+    
+    // Clear status
+    videoStatus.textContent = '';
+  });
+}
+
+// Optional: Add keyboard shortcut (spacebar to play)
+document.addEventListener('keydown', function(e) {
+  if (e.code === 'Space' && e.target === document.body) {
+    e.preventDefault();
+    if (modelReady && !playButton.disabled) {
+      playButton.click();
+    }
+  }
+});
+</script>
+
+
+
+<script>
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'none';
+      setTimeout(() => {
+        entry.target.style.animation = '';
+      }, 10);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.feature-card-new').forEach(card => {
+  observer.observe(card);
+});
+</script>
+
+<!-- ADD THIS SCRIPT AT THE BOTTOM OF YOUR HTML, BEFORE THE CLOSING </body> TAG -->
+<script>
+// ================= DYNAMIC 3D TILT EFFECT =================
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+    
+    // Move glow with mouse
+    const glow = card.querySelector('.showcase-glow');
+    if (glow) {
+      glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 189, 89, 0.3), transparent 60%)`;
+    }
+  });
+  
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+  });
+});
+
+// ================= SCROLL REVEAL ANIMATIONS (FIXED) =================
+function revealCardsOnScroll() {
+  const cards = document.querySelectorAll('.showcase-card');
+  const windowHeight = window.innerHeight;
+  
+  cards.forEach((card, index) => {
+    const cardTop = card.getBoundingClientRect().top;
+    const revealPoint = windowHeight * 0.85; // Reveal when card is 85% down the viewport
+    
+    if (cardTop < revealPoint && !card.classList.contains('reveal-active')) {
+      setTimeout(() => {
+        card.classList.add('reveal-active');
+      }, index * 150); // Stagger the animations
+    }
+  });
+}
+
+// Run on scroll
+window.addEventListener('scroll', revealCardsOnScroll);
+
+// Run once on page load
+window.addEventListener('load', revealCardsOnScroll);
+
+// Also run immediately in case cards are already in view
+revealCardsOnScroll();
+</script>
+
+<script>
+(function() {
+  const panels      = document.querySelectorAll('.feature-panel');
+  const navBtns     = document.querySelectorAll('.feat-nav-btn');
+  const progressFill = document.getElementById('featuresProgress');
+  const total       = panels.length;
+
+  function update() {
+    let activeIndex = 0;
+    panels.forEach((panel, i) => {
+      const rect = panel.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.55) activeIndex = i;
+      if (rect.top < window.innerHeight * 0.85) panel.classList.add('in-view');
+    });
+
+    navBtns.forEach((btn, i) => btn.classList.toggle('active', i === activeIndex));
+
+    const segH = 100 / total;
+    const basePct = activeIndex * segH;
+    const activePanel = panels[activeIndex];
+    const rect = activePanel.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.55 - rect.top) / activePanel.offsetHeight));
+    if (progressFill) progressFill.style.height = (basePct + progress * segH) + '%';
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      panels[parseInt(btn.dataset.index)].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+<script>
+// ================= STICKY SCROLL FEATURE TRACKER =================
+(function() {
+  const panels = document.querySelectorAll('.feature-panel');
+  const navBtns = document.querySelectorAll('.feat-nav-btn');
+  const progressBar = document.getElementById('featuresProgress');
+  const scrollCol = document.querySelector('.features-scroll-col');
+
+  function onScroll() {
+    if (!scrollCol) return;
+    const colRect = scrollCol.getBoundingClientRect();
+    const colHeight = scrollCol.offsetHeight;
+    const windowH = window.innerHeight;
+
+    // Progress bar
+    const scrolled = Math.max(0, -colRect.top);
+    const total = colHeight - windowH;
+    const pct = Math.min(100, Math.max(0, (scrolled / total) * 100));
+    if (progressBar) progressBar.style.height = pct + '%';
+
+    // Active panel detection
+    let activeIndex = 0;
+    panels.forEach((panel, i) => {
+      const rect = panel.getBoundingClientRect();
+      if (rect.top < windowH * 0.55) activeIndex = i;
+    });
+
+    navBtns.forEach((btn, i) => {
+      btn.classList.toggle('active', i === activeIndex);
+    });
+
+    // Fade in panels
+    panels.forEach(panel => {
+      const rect = panel.getBoundingClientRect();
+      if (rect.top < windowH * 0.85) {
+        panel.classList.add('in-view');
+      }
+    });
+  }
+
+  // Nav button click — scroll to panel
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.index);
+      panels[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+
+<script>
+(function() {
+  const modal = document.getElementById('downloadModal');
+  const openBtn = document.getElementById('openDownloadModal');
+  const closeBtn = document.getElementById('closeModal');
+  const continueBtn = document.getElementById('continueDownload');
+
+  function openModal(e) {
+    e.preventDefault();
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // Update the line below with your actual PDF URL
+  continueBtn.addEventListener('click', function() {
+    closeModal();
+    // window.open('YOUR-PDF-URL-HERE', '_blank');
+  });
+})();
+</script>
+
+</body>
+</html>

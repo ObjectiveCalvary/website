@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Objective Calvary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="../images/OC_64px.png" sizes="48x48">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./Anchor_style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+      /* Particle Effects Canvas */
+      #particleCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+      }
+    </style>
+</head>
+
+<body>
+
+<!-- Particle Canvas for Celebrations -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- ================= NAVIGATION ================= -->
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="../index.html" ><i class="fa-solid fa-house"></i>   Home</a></li>
+
+            <li class="dropdown">
+            <a class="active" href="#" style="color: #ffbd59;"><i class="fa-solid fa-grip-vertical" style="color: #ffbd59; margin-right: 5px;"></i>     Gospel Tools</a>
+            <ul class="dropdown-content">
+                <li>
+                <a href="./IRBs.html">
+                    <img src="../images/IRB_64px.png" class="menu-icon" alt="">
+                    IRBs
+                </a>
+                </li>
+                <li>
+                <a href="./Anchor.html">
+                    <img src="../images/Anchor_64px.png"  class="menu-icon" alt="">
+                    Anchor
+                </a>
+                </li>
+                <li>
+                <a href="./Pulse.html">
+                    <img src="../images/Pulse_64px.png" class="menu-icon" alt="">
+                    Pulse
+                </a>
+                </li>
+            </ul>
+            </li>
+
+            <li><i class="fa-solid fa-code"></i> <a href="https://forms.gle/qT6z1kd16kxkoYpR7">Feedback</a></li>
+        </ul>
+    </nav>
+</header>
+
+ <section class="hero">
+  <!-- Background video -->
+  <video
+    class="hero-video-bg"
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+    <source src="../video/Anchor intro.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="overlay"></div>
+
+  <!-- Content -->
+  <div class="hero-content">
+    <h1>Anchor</h1>
+
+    <img
+      src="../images/Anchor_500px.png"
+      alt="Blender Icon"
+      class="hero-icon"
+    />
+
+    <div class="button-group" style="padding-bottom: 0px; margin-bottom: 0px;">
+      <a href="#" class="primary-btn2" id="openDownloadModal">Download PDF Documents</a>
+      <a href="#AnchorPracticeMode" class="secondary-btn">
+        Anchor Digital Practice Mode
+      </a>
+    </div>
+
+    <div class="links">
+      <p>
+        Help Us Make it Even Better!<br />
+        Share Some · <a href="https://forms.gle/qT6z1kd16kxkoYpR7">Feedback</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- DOWNLOAD MODAL -->
+<div id="downloadModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon"><i class="fa-solid fa-anchor"></i></div>
+      <h2>Before You Download</h2>
+    </div>
+    <div class="modal-body" style="text-align: justify;">
+      <p>We are thrilled that you want to gain access to the <strong>Anchor Gospel Tool</strong>.</p>
+      <p>Before you continue, we believe in an <strong>Unhindered Gospel</strong> — meaning that we charge no extra cost than is absolutely needed. Anchor is one of our <strong>free tools digitally</strong>, unless you choose to buy one of our printed sets.</p>
+      <p>We do however ask that if you make use of Anchor and belong to a <strong>Church or Institution</strong>, that you email us your logo and consent to use your details under the <strong>Community Spotlight</strong> section, as it helps contribute to our credibility — as well as any social content we can tag you in.</p>
+          <p>All rights are reserved to <strong>Objective Calvary</strong> and you cannot distribute the Anchor Gospel tool for commercial use.</p>
+
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="modal-download-btn" id="continueDownload">
+        <i class="fa-solid fa-download"></i> Continue to Download
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PRODUCT SHOWCASE (STICKY SCROLL) ================= -->
+<section class="features-scroll" data-theme="Anchor">
+  <div class="features-scroll-inner">
+
+    <!-- Sticky left panel -->
+    <div class="features-sticky-col">
+   
+      <h2 class="features-main-heading">Anchor Info</h2>
+
+      <div class="features-nav">
+        <div class="feat-track">
+          <div class="feat-track-fill" id="featuresProgress"></div>
+        </div>
+        <div class="feat-nav-items">
+          <button class="feat-nav-btn active" data-index="0">
+            <span class="feat-dot"></span>
+            <span class="feat-label">01 Made for Discipleship</span>
+          </button>
+          <button class="feat-nav-btn" data-index="1">
+            <span class="feat-dot"></span>
+            <span class="feat-label">02 Made for Devotionals</span>
+          </button>
+          <button class="feat-nav-btn" data-index="2">
+            <span class="feat-dot"></span>
+            <span class="feat-label">03 Made for Community</span>
+        </div>
+      </div>
+            <div class="bible-verse-block" style="border-color: #ffbd59;">
+        <p class="bible-verse-text" >"And beginning with Moses and all the Prophets, he explained to them what was said in all the Scriptures concerning himself."</p>
+        <span class="bible-verse-ref" style="color: #ffbd59">— Luke 24:27</span>
+      </div>
+    </div>
+    <!-- Scrolling right panel -->
+    <div class="features-scroll-col">
+   <div class="feature-panel" data-index="0">
+  <div class="feature-img-wrap">
+    <img src="../images/product_anchor1.jpg" alt="Discipleship">
+    <div class="feature-img-num">01</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+      <h3>Made for Discipleship</h3>
+    </div>
+    <p style="text-align: justify;">For centuries, Jewish culture placed great value on storytelling and the faithful passing down of truth through oral tradition. Each generation carefully retold the story of God and His people so that the next would know not only the events, but the meaning behind them.
+
+Anchor's objective is to make use of this tool of the Sages. It has been designed with discipleship in mind, to help new and old Christians grasp the big picture narrative of Scripture through conversation, guided discovery, and shared reflection. Anchor aids believers to see how every part of the Bible connects to the greater story of redemption. It is a gospel tool to walk through Scripture, teaching, discussing, and learning along the way.</p>
+  </div>
+</div>
+
+<div class="feature-panel" data-index="1">
+  <div class="feature-img-wrap">
+    <img src="../images/product_anchor2.jpg" alt="Devotional">
+    <div class="feature-img-num">02</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fa-solid fa-seedling"></i></div>
+      <h3>Made for Devotionals</h3>
+    </div>
+<p style="text-align: justify;">
+Trying to study the Bible without understanding how the whole story fits together is a bit like starting a movie halfway through. It can feel confusing, difficult to follow, and even intimidating.
+
+But once you begin to see the overarching story of Scripture, everything changes. You'll discover the greatest story ever told and it includes you. Suddenly, the pieces begin to fall into place. You become eager to explore the parts you haven’t yet read and excited to revisit the moments you love most.
+
+Anchor was created to help build that big-picture understanding of the Bible in a way that is engaging, interactive, and memorable. If you’re unsure where to begin in your devotional time, choose a card you’re less familiar with and fill in the missing pieces. Slowly, you’ll begin filling in the picture of God’s unfolding plan.          </p>  </div>
+</div>
+<div class="feature-panel" data-index="2">
+  <div class="feature-img-wrap">
+    <img src="../images/product_anchor3.jpg" alt="Community">
+    <div class="feature-img-num">03</div>
+  </div>
+  <div class="feature-text">
+    <div class="feature-title-row">
+      <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+      <h3>Made for Community</h3>
+    </div>
+    <p style="text-align: justify;">Anchor is not only a personal tool—it is designed to be shared. Use it with friends, family, or your church community. Challenge one another, test your knowledge, and grow together in your understanding of Scripture’s grand narrative.
+
+See who can arrange the story most accurately. Talk through the events. Discuss how God has worked throughout history and how His promises unfold from beginning to end. In doing so, you’ll not only strengthen your knowledge of the Bible—you’ll deepen relationships and build meaningful conversations around God’s Word in a way that is both fun and interactive.         </p>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+</section>
+
+  <!-- ================= PRODUCT SHOWCASE (THREE FEATURES) ================= -->
+<!-- 
+<section class="product-showcase-new">
+  <div class="showcase-container-new">
+    <div class="showcase-header-new">
+      <h2>Luke 24:27 (NIV)</h2>
+      <p class="showcase-subtitle-new"> "And beginning with Moses and all the Prophets, <br>He explained to them what was said in all the Scriptures concerning Himself."
+      </p>
+    </div>
+
+    <div class="features-grid-new">
+      
+      <div class="feature-card-new" data-feature="1">
+        <div class="feature-number-new">01</div>
+        <div class="feature-image-new">
+          <div class="image-wrapper-new">
+            <img src="../images/product_anchor1.png" alt="Build Understanding">
+            <div class="image-overlay-new"></div>
+          </div>
+        </div>
+        <div class="feature-content-new">
+          <h3>Discipleship</h3>
+          <p style="text-align: justify;">
+For centuries, Jewish culture placed great value on storytelling and the faithful passing down of truth through oral tradition. Each generation carefully retold the story of God and His people so that the next would know not only the events, but the meaning behind them.
+
+Anchor's objective is to make use of this tool of the Sages. It has been designed with discipleship in mind, to help new and old Christians grasp the big picture narrative of Scripture through conversation, guided discovery, and shared reflection. Anchor aids believers to see how every part of the Bible connects to the greater story of redemption. It is a gospel tool to walk through Scripture, teaching, discussing, and learning along the way.          </p>
+          <div class="feature-accent-new"></div>
+        </div>
+      </div>
+
+      <div class="feature-card-new" data-feature="2">
+        <div class="feature-number-new">02</div>
+        <div class="feature-image-new">
+          <div class="image-wrapper-new">
+            <img src="../images/product_anchor1.png" alt="Tool of Sages">
+            <div class="image-overlay-new"></div>
+          </div>
+        </div>
+        <div class="feature-content-new">
+          <h3>Devotional</h3>
+          <p style="text-align: justify;"> 
+Trying to study the Bible without understanding how the whole story fits together is a bit like starting a movie halfway through. It can feel confusing, difficult to follow, and even intimidating.
+
+But once you begin to see the overarching story of Scripture, everything changes. You'll discover the greatest story ever told and it includes you. Suddenly, the pieces begin to fall into place. You become eager to explore the parts you haven’t yet read and excited to revisit the moments you love most.
+
+Anchor was created to help build that big-picture understanding of the Bible in a way that is engaging, interactive, and memorable. If you’re unsure where to begin in your devotional time, choose a card you’re less familiar with and fill in the missing pieces. Slowly, you’ll begin filling in the picture of God’s unfolding plan.          </p>
+          <div class="feature-accent-new"></div>
+        </div>
+      </div>
+
+      <div class="feature-card-new" data-feature="3">
+        <div class="feature-number-new">03</div>
+        <div class="feature-image-new">
+          <div class="image-wrapper-new">
+            <img src="../images/product_anchor1.png" alt="Navigate Scripture">
+            <div class="image-overlay-new"></div>
+          </div>
+        </div>
+        <div class="feature-content-new">
+          <h3>Community</h3>
+          <p style="text-align: justify;">
+Anchor is not only a personal tool—it is designed to be shared. Use it with friends, family, or your church community. Challenge one another, test your knowledge, and grow together in your understanding of Scripture’s grand narrative.
+
+See who can arrange the story most accurately. Talk through the events. Discuss how God has worked throughout history and how His promises unfold from beginning to end. In doing so, you’ll not only strengthen your knowledge of the Bible—you’ll deepen relationships and build meaningful conversations around God’s Word in a way that is both fun and interactive.          </p>
+          <div class="feature-accent-new"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section> -->
+
+
+
+
+<!-- ================= ANCHOR CARDS GAME SECTION (90% WIDTH) ================= -->
+<section class="anchor-cards-container" id="AnchorPracticeMode">
+  <div class="anchor-cards-inner">
+
+    <!-- ================= ANCHOR MENU BAR ================= -->
+    <section class="anchor-menu-bar">
+      <div class="menu-inner">
+
+        <!-- Title + Description (LEFT-CENTER aligned) -->
+        <div class="menu-title-group">
+          <div class="menu-title">Anchor Practice Mode</div>
+        </div>
+
+        <!-- Testament Toggle Buttons (REORDERED: OT, NT, Both) -->
+        <div class="testament-toggle">
+          <button class="toggle-btn active" data-testament="ot">
+            <i class="fas fa-scroll"></i>
+            Old Testament
+          </button>
+          <button class="toggle-btn" data-testament="nt">
+            <i class="fas fa-cross"></i>
+            New Testament
+          </button>
+          <button class="toggle-btn" data-testament="both">
+            <i class="fas fa-bible"></i>
+            Both
+          </button>
+        </div>
+
+        <!-- Buttons -->
+        <div class="menu-actions">
+          <button id="shuffleBtn" class="menu-btn secondary" title="Randomly rearrange all cards">
+            <i class="fas fa-random"></i>
+            Shuffle Cards
+          </button>
+
+
+
+          <button id="checkBtn" class="menu-btn primary" title="Check if the cards are in the correct order">
+            <i class="fas fa-check-circle"></i>
+            Check
+          </button>
+
+          <button id="resetBtn" class="menu-btn danger" title="Return cards to their original starting order">
+            <i class="fas fa-undo"></i>
+            Order
+          </button>
+
+                    <button id="hideCardsBtn" class="menu-btn info" title="Hide/Reveal card faces">
+            <i class="fas fa-eye-slash"></i>
+            Teaching Mode
+          </button>
+        </div>
+
+        <!-- Size Slider -->
+        <div class="menu-size" title="Adjust the size of the cards">
+          <label for="cardSize">Size</label>
+          <input
+            type="range"
+            id="cardSize"
+            min="60"
+            max="240"
+            value="120"
+          >
+        </div>
+
+
+
+      </div>
+      
+    </section>
+            <!-- Legend -->
+        <div class="menu-legend" style="margin: 20px;">
+          <span><span class="dot green"></span> Correct</span>
+          <span><span class="dot yellow"></span> Neighbours</span>
+          <span><span class="dot red"></span> Incorrect</span>
+        </div>
+
+    <!-- Progress Bar -->
+    <!-- <div class="progress-container">
+      <div class="progress-stats">
+        <span id="progressText">0% Complete</span>
+        <span id="timerText">Time: 00:00</span>
+        <span id="moveCounter">Moves: 0</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div> -->
+
+    <!-- Single Card Grid (Combined View) -->
+    <div id="cardGrid" class="card-grid"></div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ================= INTERACTIVE BOOKLET SECTION ================= -->
+<section class="booklet-section" style="background-color: black;">
+  <div class="booklet-container">
+    <h2 class="booklet-title" style="color: #fff;">Anchor Booklet</h2>    
+    <div class="booklet-viewer">
+      <!-- Book structure -->
+      <div class="book-container">
+        <div class="book" id="flipbook">
+          <!-- Pages will be dynamically created -->
+        </div>
+        
+        <!-- Book spine -->
+        <div class="book-spine"></div>
+      </div>
+      
+      <div class="booklet-controls">
+        <button id="prevPageBtn" class="booklet-nav-btn">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="page-info">
+          <span id="currentPageNum">1</span> / <span id="totalPagesNum">0</span>
+        </div>
+        
+        <button id="nextPageBtn" class="booklet-nav-btn">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CITATIONS & CONTRIBUTIONS ================= -->
+<section class="citations-section">
+  <div class="citations-container">
+
+    <!-- Citations -->
+    <div class="citations-block">
+      <h3 class="citations-heading" style="text-align: center;">Anchor Cards | Citations</h3>
+      <p class="citations-subtext" style="text-align: center;">Spiritual formation is a serious matter and needs to be grounded in faithful interpretation of Scripture. The following works were used in the making of Anchor.</p>
+
+      <div class="citations-grid">
+
+        <div class="citation-card">
+          <div class="citation-icon-wrap"><i class="fas fa-book"></i></div>
+          <div class="citation-body">
+            <span class="citation-tag">Old Testament</span>
+            <p class="citation-text">Longman, Tremper III. <span class="citation-year">2014.</span> <em>Old Testament Essentials: Creation, Conquest, Exile and Return.</em> Downers Grove, IL: IVP Bible Studies.</p>
+          </div>
+        </div>
+
+        <div class="citation-card">
+          <div class="citation-icon-wrap"><i class="fas fa-book"></i></div>
+          <div class="citation-body">
+            <span class="citation-tag">The Gospels</span>
+            <p class="citation-text">Smith, Kevin G. <span class="citation-year">2021.</span> <em>"One Life, Four Accounts."</em> Interactive Lesson. Accessed from BIB1123 The Words and Works of Jesus, a course of The South African Theological Seminary.</p>
+          </div>
+        </div>
+
+        <div class="citation-card">
+          <div class="citation-icon-wrap"><i class="fas fa-book"></i></div>
+          <div class="citation-body">
+            <span class="citation-tag">Church History</span>
+            <p class="citation-text">Joseph, Early. <span class="citation-year">2015.</span> <em>A History of Christianity: An Introductory Survey.</em> Nashville, Tennessee: B&amp;H Academic.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Contributions -->
+    <div class="contributions-block">
+      <h3 class="citations-heading" style="text-align: center;">Contributions</h3>
+      <p class="citations-subtext" style="text-align: center;">Victory is won through many advisers according to Scripture. Anchor was made possible through the generous help of the following people.</p>
+
+      <div class="contributions-grid">
+
+
+                <div class="contributor-card">
+          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
+          <div class="contributor-info">
+            <span class="contributor-name">Joy du Toit</span>
+          </div>
+        </div>
+
+        <div class="contributor-card">
+          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
+          <div class="contributor-info">
+            <span class="contributor-name">Grant Böhler</span>
+          </div>
+        </div>
+
+
+
+        <div class="contributor-card">
+          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
+          <div class="contributor-info">
+            <span class="contributor-name">Charl Wiehahn</span>
+          </div>
+        </div>
+
+                <div class="contributor-card">
+          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
+          <div class="contributor-info">
+            <span class="contributor-name">Elizabeth Ackermann</span>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= SOCIAL PROOF / INSTAGRAM (SIMPLE PLAY ICON) ================= -->
+<section class="social-proof">
+  <div class="social-inner">
+      <h2>Community Spotlight</h2>
+
+    <div class="instagram-grid reveal">
+      
+      <!-- Video 1 -->
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/XXXXXXXXX/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true"></iframe>
+      
+      </div>
+
+      <!-- Video 2 -->
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/DQHx2AIjBEH/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true"></iframe>
+
+      </div>
+
+      <!-- Video 3 -->
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/XXXXXXXXX/embed" 
+                frameborder="0" 
+                scrolling="no" 
+                allowtransparency="true"></iframe>
+ 
+      </div>
+
+    </div>
+     <div style="padding-bottom: 150px;">
+   
+  <div class="reviews">
+    <div class="review reveal">
+      <p style="color: #fff">"The IRBs completely changed our Bible study engagement."</p>
+      <span>— Pastor X</span>
+    </div>
+
+    <div class="review reveal">
+      <p style="color: #fff">"Our youth group has never been more interactive."</p>
+      <span>— Pastor Y</span>
+    </div>
+
+    <div class="review reveal">
+      <p style="color: #fff">"Simple. Powerful. Effective."</p>
+      <span>— Pastor Z</span>
+    </div>
+  </div>
+
+  <div class="logos reveal">
+    <img src="../images/church2.png" alt="">
+    <img src="../images/church1.png" alt="">
+    <img src="../images/church3.png" alt="">
+    
+
+  </div>
+  </div>
+  </div>
+  
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+<footer id="Bottom">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>Objective Calvary</h4>
+            <p>Equipping the Universal Church with Gospel Tools to communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Gospel Tools</h4>
+            <ul>
+                <li><a href="./pages/IRBs.html">IRBs</a></li>
+                <li><a href="./pages/Anchor.html">Anchor</a></li>
+                <li><a href="./pages/Pulse.html">Pulse</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="../index.html#story">About OC</a></li>
+                <li><a href="../index.html#founders">Founders</a></li>
+                <li><a href="../index.html#values">Values</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p>Email: <a href="ObjectiveCalvary.com">ObjectiveCalvary.com</a></p>
+            <div class="social-icons" style="margin-top: 20px;">
+                <a href="https://github.com/ObjectiveCalvary" aria-label="Github"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/objectivecalvary/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@objectivecalvary5740" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Objective Calvary. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<script>
+  // ================= CARD DATA =================
+  const OT_COUNT = 58;
+  const NT_COUNT = 73;
+  const TOTAL_COUNT = OT_COUNT + NT_COUNT;
+
+  // Generate card data array
+  const cardData = [];
+  
+  // Old Testament cards (1-58)
+  for (let i = 1; i <= OT_COUNT; i++) {
+    cardData.push({ number: i, testament: "ot" });
+  }
+  
+  // New Testament cards (59-131)
+  for (let i = OT_COUNT + 1; i <= TOTAL_COUNT; i++) {
+    cardData.push({ number: i, testament: "nt" });
+  }
+
+  // Bible verses for card backs
+  const verses = {
+    1: { reference: "Genesis 1:1", verse: "In the beginning God created the heavens and the earth." },
+    2: { reference: "Exodus 20:2", verse: "I am the LORD your God, who brought you out of Egypt." },
+    3: { reference: "Leviticus 19:2", verse: "Be holy because I, the LORD your God, am holy." },
+    4: { reference: "Numbers 6:24", verse: "The LORD bless you and keep you." },
+    5: { reference: "Deuteronomy 6:5", verse: "Love the LORD your God with all your heart." },
+    // Add more verses as needed...
+  };
+
+  // Default verse for cards without specific verses
+  function getVerse(cardNumber) {
+    if (verses[cardNumber]) {
+      return verses[cardNumber];
+    }
+    return { reference: `Card ${cardNumber}`, verse: `Scripture verse for card ${cardNumber}` };
+  }
+
+  // ================= SOUND SYSTEM =================
+  const sounds = {
+    correct: () => playTone(800, 0.15, 'sine'),
+    close: () => playTone(600, 0.15, 'sine'),
+    wrong: () => playTone(300, 0.2, 'sawtooth'),
+    shuffle: () => playTone(500, 0.1, 'sine'),
+    complete: () => {
+      playTone(600, 0.1, 'sine');
+      setTimeout(() => playTone(800, 0.1, 'sine'), 100);
+      setTimeout(() => playTone(1000, 0.2, 'sine'), 200);
+    },
+    reveal: () => playTone(700, 0.1, 'sine'),
+    hide: () => playTone(400, 0.1, 'sine'),
+    flip: () => playTone(650, 0.08, 'sine')
+  };
+
+  function playTone(frequency, duration, type = 'sine') {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.value = frequency;
+      oscillator.type = type;
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+    } catch (e) {
+      console.log('Audio not supported');
+    }
+  }
+
+  // ================= PARTICLE CELEBRATION =================
+  function celebrateWithParticles() {
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 150;
+    const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b', '#fa709a'];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -20,
+        vx: (Math.random() - 0.5) * 8,
+        vy: Math.random() * 3 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        radius: Math.random() * 6 + 2,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 10
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((p, index) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.15;
+        p.rotation += p.rotationSpeed;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.radius / 2, -p.radius / 2, p.radius, p.radius);
+        ctx.restore();
+
+        if (p.y > canvas.height) {
+          particles.splice(index, 1);
+        }
+      });
+
+      if (particles.length > 0) {
+        requestAnimationFrame(animate);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    animate();
+  }
+
+  // ================= GAME STATE =================
+  let currentTestament = 'ot'; // DEFAULT TO OLD TESTAMENT
+  let isGameStarted = false;
+  let startTime = null;
+  let timerInterval = null;
+  let moveCount = 0;
+  let cardsHidden = false;
+  let draggedCard = null;
+  let draggedElement = null;
+
+  // ================= INITIALIZE CARDS =================
+  const cardGrid = document.getElementById('cardGrid');
+
+  function renderCards() {
+    cardGrid.innerHTML = '';
+    
+    const filteredCards = cardData.filter(card => {
+      if (currentTestament === 'both') return true;
+      return card.testament === currentTestament;
+    });
+
+    filteredCards.forEach(card => {
+      const verse = getVerse(card.number);
+      const cardElement = document.createElement('div');
+      cardElement.className = 'card';
+      cardElement.setAttribute('draggable', 'true');
+      cardElement.setAttribute('data-card-number', card.number);
+      cardElement.setAttribute('data-testament', card.testament);
+
+      cardElement.innerHTML = `
+        <div class="card-inner">
+          <div class="card-front">
+            <img 
+              src="../images/cards/${card.number}.jpg" 
+              alt="Card ${card.number}"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22280%22%3E%3Crect width=%22200%22 height=%22280%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2248%22 fill=%22white%22 font-weight=%22bold%22%3E${card.number}%3C/text%3E%3C/svg%3E';"
+              class="card-front-image"
+            />
+          </div>
+          <div class="card-back">
+            <div class="card-back-verse">
+              <p class="verse-text">"${verse.verse}"</p>
+              <p class="verse-reference">${verse.reference}</p>
+            </div>
+            <div class="card-back-anchor">
+              <img src="../images/Anchor_500px.png" alt="Anchor" class="anchor-back-icon">
+            </div>
+            <div class="card-back-image">
+              <img 
+                src="../images/cards/${card.number}.jpg" 
+                alt="Card ${card.number}"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22280%22%3E%3Crect width=%22200%22 height=%22280%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2248%22 fill=%22white%22 font-weight=%22bold%22%3E${card.number}%3C/text%3E%3C/svg%3E';"
+                class="card-image-back"
+              />
+            </div>
+          </div>
+        </div>
+      `;
+
+      cardGrid.appendChild(cardElement);
+    });
+
+    attachCardListeners();
+    updateProgress(0, filteredCards.length);
+  }
+
+  // ================= TESTAMENT TOGGLE =================
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTestament = btn.getAttribute('data-testament');
+      renderCards();
+      resetGameStats();
+      clearCheckClasses();
+    });
+  });
+
+  // ================= HIDE/REVEAL CARDS =================
+  document.getElementById('hideCardsBtn').addEventListener('click', () => {
+    cardsHidden = !cardsHidden;
+    const btn = document.getElementById('hideCardsBtn');
+    
+    document.querySelectorAll('.card').forEach(card => {
+      if (cardsHidden) {
+        card.classList.add('hidden');
+        card.classList.remove('flipped');
+      } else {
+        card.classList.remove('hidden');
+      }
+    });
+
+    if (cardsHidden) {
+      btn.innerHTML = '<i class="fas fa-eye"></i> Reveal All Cards';
+      sounds.hide();
+    } else {
+      btn.innerHTML = '<i class="fas fa-eye-slash"></i> Teaching Mode';
+      sounds.reveal();
+    }
+  });
+
+  // ================= CARD INTERACTIONS (CLICK TO FLIP + DRAG) =================
+  function attachCardListeners() {
+    document.querySelectorAll('.card').forEach(card => {
+      // Click to flip (works everywhere)
+      card.addEventListener('click', handleCardClick);
+      
+      // Drag and drop
+      card.addEventListener('dragstart', handleDragStart);
+      card.addEventListener('dragend', handleDragEnd);
+    });
+
+    // Drop zone listeners on the grid
+    cardGrid.addEventListener('dragover', handleDragOver);
+    cardGrid.addEventListener('drop', handleDrop);
+  }
+
+  function handleCardClick(e) {
+    // Don't flip if currently dragging
+    if (e.currentTarget.classList.contains('dragging')) {
+      return;
+    }
+
+    const card = e.currentTarget;
+    card.classList.toggle('flipped');
+    sounds.flip();
+
+    // In hide mode, cards stay flipped (no auto-unflip)
+  }
+
+  // ================= IMPROVED DRAG AND DROP =================
+  function handleDragStart(e) {
+    draggedElement = this;
+    this.classList.add('dragging');
+    
+    // Create ghost image
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+    
+    startGameTimer();
+  }
+
+  function handleDragEnd(e) {
+    this.classList.remove('dragging');
+    draggedElement = null;
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+
+    const dragging = document.querySelector('.dragging');
+    if (!dragging) return;
+
+    const afterElement = getDragAfterElement(cardGrid, e.clientX, e.clientY);
+    
+    if (afterElement == null) {
+      cardGrid.appendChild(dragging);
+    } else {
+      cardGrid.insertBefore(dragging, afterElement);
+    }
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (draggedElement) {
+      incrementMoveCount();
+      clearCheckClasses();
+    }
+  }
+
+  function getDragAfterElement(container, x, y) {
+    const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      
+      // Calculate both horizontal and vertical distances
+      const centerX = box.left + box.width / 2;
+      const centerY = box.top + box.height / 2;
+      
+      const offsetX = x - centerX;
+      const offsetY = y - centerY;
+      
+      // Determine if we're in the same row
+      const sameRow = Math.abs(offsetY) < box.height / 2;
+      
+      if (sameRow && offsetX < 0 && offsetX > closest.offset) {
+        return { offset: offsetX, element: child };
+      } else {
+        return closest;
+      }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  // ================= GAME CONTROL BUTTONS =================
+  document.getElementById('shuffleBtn').addEventListener('click', shuffleCards);
+  document.getElementById('checkBtn').addEventListener('click', checkOrder);
+  document.getElementById('resetBtn').addEventListener('click', resetOrder);
+
+  function shuffleCards() {
+    clearCheckClasses();
+
+    const cardsArray = Array.from(cardGrid.children);
+    shuffleArray(cardsArray);
+    cardsArray.forEach(card => cardGrid.appendChild(card));
+
+    sounds.shuffle();
+    showMessage('Cards shuffled! Try to put them in the correct order.', 'info');
+    resetGameStats();
+    startGameTimer();
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function checkOrder() {
+    clearCheckClasses();
+
+    let correctCount = 0;
+    let closeCount = 0;
+    let totalCount = 0;
+
+    const cardsInGrid = Array.from(cardGrid.children);
+    const expectedCards = cardData.filter(card => {
+      if (currentTestament === 'both') return true;
+      return card.testament === currentTestament;
+    });
+
+    let hasWrong = false;
+    let hasClose = false;
+
+    cardsInGrid.forEach((card, index) => {
+      const cardNumber = parseInt(card.getAttribute('data-card-number'));
+      const expectedNumber = expectedCards[index].number;
+      totalCount++;
+
+      if (cardNumber === expectedNumber) {
+        card.classList.add('correct-order');
+        correctCount++;
+      } else {
+        const prevCard = index > 0 ? cardsInGrid[index - 1] : null;
+        const nextCard = index < cardsInGrid.length - 1 ? cardsInGrid[index + 1] : null;
+        
+        const prevCardNumber = prevCard ? parseInt(prevCard.getAttribute('data-card-number')) : null;
+        const nextCardNumber = nextCard ? parseInt(nextCard.getAttribute('data-card-number')) : null;
+        
+        const hasCorrectNeighbor = 
+          (prevCardNumber === cardNumber - 1) || 
+          (nextCardNumber === cardNumber + 1);
+        
+        if (hasCorrectNeighbor) {
+          card.classList.add('close-order');
+          closeCount++;
+          hasClose = true;
+        } else {
+          card.classList.add('wrong-order');
+          hasWrong = true;
+        }
+      }
+    });
+
+    if (correctCount === totalCount) {
+      sounds.complete();
+      celebrateWithParticles();
+      stopTimer();
+      const time = formatTime(Math.floor((Date.now() - startTime) / 1000));
+      showMessage(`🎉 Perfect! All ${totalCount} cards correct in ${time} with ${moveCount} moves!`, 'success');
+    } else if (hasWrong) {
+      sounds.wrong();
+    } else if (hasClose) {
+      sounds.close();
+    }
+
+    updateProgress(correctCount, totalCount);
+
+    if (correctCount !== totalCount) {
+      if (closeCount > 0) {
+        showMessage(`${correctCount} correct, ${closeCount} close (orange), ${totalCount - correctCount - closeCount} wrong. Keep trying!`, 'warning');
+      } else {
+        showMessage(`${correctCount} out of ${totalCount} cards are correct. Keep trying!`, 'warning');
+      }
+    }
+  }
+
+  function resetOrder() {
+    clearCheckClasses();
+
+    const cardsArray = Array.from(cardGrid.children);
+    cardsArray.sort((a, b) => {
+      return parseInt(a.getAttribute('data-card-number')) - parseInt(b.getAttribute('data-card-number'));
+    });
+    cardsArray.forEach(card => cardGrid.appendChild(card));
+
+    showMessage('Cards reset to correct order!', 'success');
+    resetGameStats();
+    
+    const totalCards = cardsArray.length;
+    updateProgress(totalCards, totalCards);
+  }
+
+  function clearCheckClasses() {
+    document.querySelectorAll('.card').forEach(card => {
+      card.classList.remove('correct-order', 'wrong-order', 'close-order');
+    });
+  }
+
+  function showMessage(text, type) {
+    const existing = document.querySelector('.game-message');
+    if (existing) existing.remove();
+
+    const message = document.createElement('div');
+    message.className = `game-message ${type}`;
+    message.textContent = text;
+    
+    const container = document.querySelector('.anchor-cards-inner');
+    container.insertBefore(message, container.querySelector('.progress-container'));
+
+    setTimeout(() => {
+      message.style.opacity = '0';
+      setTimeout(() => message.remove(), 300);
+    }, 4000);
+  }
+
+  // ================= GAME TIMER AND STATS =================
+  function startGameTimer() {
+    if (!isGameStarted) {
+      isGameStarted = true;
+      startTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+  }
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function updateTimer() {
+    if (startTime) {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById('timerText').textContent = 'Time: ' + formatTime(elapsed);
+    }
+  }
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  function incrementMoveCount() {
+    moveCount++;
+    document.getElementById('moveCounter').textContent = `Moves: ${moveCount}`;
+  }
+
+  function resetGameStats() {
+    moveCount = 0;
+    isGameStarted = false;
+    startTime = null;
+    stopTimer();
+    document.getElementById('moveCounter').textContent = 'Moves: 0';
+    document.getElementById('timerText').textContent = 'Time: 00:00';
+  }
+
+  function updateProgress(correct, total) {
+    const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = percentage + '%';
+    document.getElementById('progressText').textContent = percentage + '% Complete';
+  }
+
+  // Initialize on load
+  renderCards();
+</script>
+
+
+<script>
+  // ================= CARD SIZE SLIDER =================
+  const sizeSlider = document.getElementById('cardSize');
+
+  sizeSlider.addEventListener('input', (e) => {
+    document.documentElement.style.setProperty(
+      '--card-size',
+      e.target.value + 'px'
+    );
+  });
+</script>
+
+
+<script>
+  // ================= SCROLL REVEAL =================
+  const reveals2 = document.querySelectorAll('.reveal');
+
+  function revealOnScroll2() {
+    const windowHeight = window.innerHeight;
+
+    reveals2.forEach((el) => {
+      const elementTop = el.getBoundingClientRect().top;
+      const elementVisible = 100;
+
+      if (elementTop < windowHeight - elementVisible) {
+        el.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll2);
+  revealOnScroll2();
+</script>
+
+<script>
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'none';
+      setTimeout(() => {
+        entry.target.style.animation = '';
+      }, 10);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.feature-card-new').forEach(card => {
+  observer.observe(card);
+});
+</script>
+
+
+<script>
+// ================= IMPROVED BOOKLET FUNCTIONALITY =================
+(function() {
+  const flipbook = document.getElementById('flipbook');
+  const prevBtn = document.getElementById('prevPageBtn');
+  const nextBtn = document.getElementById('nextPageBtn');
+  const currentPageEl = document.getElementById('currentPageNum');
+  const totalPagesEl = document.getElementById('totalPagesNum');
+  
+  // IMPORTANT: Add your booklet image paths here
+  const bookletPages = [
+    '../images/booklet/1.jpg',
+    '../images/booklet/2.jpg',
+    '../images/booklet/3.jpg',
+    '../images/booklet/4.jpg',
+    '../images/booklet/5.jpg',
+    '../images/booklet/6.jpg',
+    '../images/booklet/7.jpg',
+    '../images/booklet/8.jpg',
+  ];
+  
+  let currentPage = 0;
+  let isAnimating = false;
+  const totalPages = bookletPages.length;
+  
+  function createPage(imagePath, pageNum) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'page-wrapper right';
+    wrapper.setAttribute('data-page', pageNum);
+    
+    const front = document.createElement('div');
+    front.className = 'page-content page-front';
+    const frontImg = document.createElement('img');
+    frontImg.src = imagePath;
+    frontImg.alt = `Page ${pageNum}`;
+    frontImg.onerror = function() {
+      front.style.background = '#f0f0f0';
+      front.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">Page ${pageNum}<br>Image not found</div>`;
+    };
+    front.appendChild(frontImg);
+    const back = document.createElement('div');
+back.className = 'page-content page-back';
+
+// Preload and attach the back image immediately
+if (pageNum < totalPages) {
+  const backImg = document.createElement('img');
+  backImg.src = bookletPages[pageNum];
+  backImg.alt = `Page ${pageNum + 1}`;
+  back.appendChild(backImg);
+}
+
+    
+    wrapper.appendChild(front);
+    wrapper.appendChild(back);
+    
+    // Click handler
+    wrapper.addEventListener('click', function(e) {
+      if (isAnimating) return;
+      
+      const rect = this.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const halfWidth = rect.width / 2;
+      
+      if (clickX > halfWidth) {
+        goToNextPage();
+      } else {
+        goToPrevPage();
+      }
+    });
+    
+    return wrapper;
+  }
+  
+  function initBooklet() {
+    flipbook.innerHTML = '';
+    
+    // Create pages (each page shows front and back)
+    for (let i = 0; i < totalPages; i += 2) {
+      const page = createPage(bookletPages[i], i + 1);
+      flipbook.appendChild(page);
+    }
+    
+    totalPagesEl.textContent = totalPages;
+    updateView();
+  }
+  
+ function goToNextPage() {
+  if (isAnimating) return;
+
+  const maxPageIndex = Math.ceil(totalPages / 2) - 1;
+  if (currentPage < maxPageIndex) {
+
+    isAnimating = true;
+
+    const pages = flipbook.querySelectorAll('.page-wrapper');
+    const currentPageElement = pages[currentPage];
+
+    // ONLY flip this page visually first
+    currentPageElement.classList.add('flipped', 'no-hover');
+
+    // Wait for flip animation to finish
+    setTimeout(() => {
+      currentPage++;
+      updateView();
+      isAnimating = false;
+    }, 800);
+  }
+}
+  
+function goToPrevPage() {
+  if (isAnimating) return;
+
+  if (currentPage > 0) {
+    isAnimating = true;
+
+    currentPage--;
+    updateView();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 800);
+  }
+}
+  
+  function updateView() {
+    const pages = flipbook.querySelectorAll('.page-wrapper');
+    
+    pages.forEach((page, index) => {
+      page.classList.remove('flipped', 'no-hover');
+      
+      if (index < currentPage) {
+        page.classList.add('flipped', 'no-hover');
+        page.style.zIndex = index;
+        
+        // Load back image for flipped pages
+        const backContent = page.querySelector('.page-back');
+        const nextPageSrc = page.getAttribute('data-next-page');
+        if (nextPageSrc && backContent.children.length === 0) {
+          const backImg = document.createElement('img');
+          backImg.src = nextPageSrc;
+          backImg.alt = 'Next page';
+          backContent.appendChild(backImg);
+        }
+      } else if (index === currentPage) {
+        page.style.zIndex = 100;
+      } else {
+        page.style.zIndex = pages.length - index;
+      }
+      
+      page.style.display = 'block';
+    });
+    
+    // Update page number
+    const displayPage = (currentPage * 2) + 1;
+    currentPageEl.textContent = Math.min(displayPage, totalPages);
+    
+    // Update buttons
+    prevBtn.disabled = currentPage === 0;
+    nextBtn.disabled = currentPage >= Math.ceil(totalPages / 2) - 1;
+  }
+  
+  // Button listeners
+  prevBtn.addEventListener('click', goToPrevPage);
+  nextBtn.addEventListener('click', goToNextPage);
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (isAnimating) return;
+    if (e.key === 'ArrowLeft') goToPrevPage();
+    if (e.key === 'ArrowRight') goToNextPage();
+  });
+  
+  // Initialize
+  initBooklet();
+})();
+</script>
+
+
+<script>
+// ================= STICKY SCROLL FEATURE TRACKER =================
+(function() {
+  const panels = document.querySelectorAll('.feature-panel');
+  const navBtns = document.querySelectorAll('.feat-nav-btn');
+  const progressBar = document.getElementById('featuresProgress');
+  const scrollCol = document.querySelector('.features-scroll-col');
+
+  function onScroll() {
+    if (!scrollCol) return;
+    const colRect = scrollCol.getBoundingClientRect();
+    const colHeight = scrollCol.offsetHeight;
+    const windowH = window.innerHeight;
+
+    // Progress bar
+    const scrolled = Math.max(0, -colRect.top);
+    const total = colHeight - windowH;
+    const pct = Math.min(100, Math.max(0, (scrolled / total) * 100));
+    if (progressBar) progressBar.style.height = pct + '%';
+
+    // Active panel detection
+    let activeIndex = 0;
+    panels.forEach((panel, i) => {
+      const rect = panel.getBoundingClientRect();
+      if (rect.top < windowH * 0.55) activeIndex = i;
+    });
+
+    navBtns.forEach((btn, i) => {
+      btn.classList.toggle('active', i === activeIndex);
+    });
+
+    // Fade in panels
+    panels.forEach(panel => {
+      const rect = panel.getBoundingClientRect();
+      if (rect.top < windowH * 0.85) {
+        panel.classList.add('in-view');
+      }
+    });
+  }
+
+  // Nav button click — scroll to panel
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.index);
+      panels[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+<script>
+(function() {
+  const modal = document.getElementById('downloadModal');
+  const openBtn = document.getElementById('openDownloadModal');
+  const closeBtn = document.getElementById('closeModal');
+  const continueBtn = document.getElementById('continueDownload');
+
+  function openModal(e) {
+    e.preventDefault();
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // Update the line below with your actual PDF URL
+  continueBtn.addEventListener('click', function() {
+    closeModal();
+    // window.open('YOUR-PDF-URL-HERE', '_blank');
+  });
+})();
+</script>
+
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+
+                const headerOffset = 80; // adjust if needed
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+
