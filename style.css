@@ -278,6 +278,35 @@ nav {
     z-index: 0;
 }
 
+/* Per-card hover background colors */
+.tool-card--irb    .tool-card-bg { background: #ff3131; }
+.tool-card--anchor .tool-card-bg { background: #ffbd59; }
+.tool-card--pulse  .tool-card-bg { background: #48e080; }
+
+/* Per-card hover border colors */
+.tool-card--irb:hover    { border-color: #ff3131; }
+.tool-card--anchor:hover { border-color: #ffbd59; }
+.tool-card--pulse:hover  { border-color: #48e080; }
+
+/* Anchor & Pulse use dark text/icons on their light hover backgrounds */
+.tool-card--anchor:hover .tool-card-text strong,
+.tool-card--pulse:hover  .tool-card-text strong { color: #111; }
+
+.tool-card--anchor:hover .tool-card-text span,
+.tool-card--pulse:hover  .tool-card-text span   { color: rgba(0,0,0,0.55); }
+
+.tool-card--anchor:hover .tool-card-icon,
+.tool-card--pulse:hover  .tool-card-icon        { filter: none; }
+
+.tool-card--anchor:hover .tool-card-arrow,
+.tool-card--pulse:hover  .tool-card-arrow       { border-color: #111; background: #111; }
+
+.tool-card--anchor:hover .tool-card-arrow i,
+.tool-card--pulse:hover  .tool-card-arrow i     { color: #fff; }
+
+.tool-card--anchor:hover .tool-card-number,
+.tool-card--pulse:hover  .tool-card-number      { color: rgba(0,0,0,0.07); }
+
 .tool-card:hover .tool-card-bg {
     transform: translateY(0);
 }
@@ -754,7 +783,7 @@ nav {
 }
 
 .value-row:hover .value-icon {
-    background: #ffbd59;
+    background: #ffffff;
     transform: scale(0.85);
 }
 
@@ -1215,3 +1244,100 @@ footer {
         display: none;
     }
 }
+
+@media (max-width: 768px) {
+    nav {
+        margin-left: 0;
+        padding: 22px 5px;
+        font-size: 14px;
+    }
+
+    .menu {
+        gap: 24px;          /* tighter gap on phones */
+        justify-content: center;
+    }
+
+    /* Hide dropdown text labels if still too cramped */
+    .dropdown-content {
+        left: 50%;
+        transform: translateX(-50%);  /* centre dropdown under trigger */
+    }
+}
+
+/* ── Church Logo Carousel ── */
+.church-logos-section {
+  background: #ffffff;
+  padding: 70px 40px;
+  overflow: hidden;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.church-logos-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.church-logos-header .section-eyebrow {
+  color: #48e080;
+}
+.church-logos-header h2 {
+  font-size: clamp(22px, 2.5vw, 36px);
+  font-weight: 800;
+  color: #111111;
+  margin-top: 8px;
+  letter-spacing: -0.5px;
+}
+.logo-track-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+.logo-track {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  width: max-content;
+  animation: logo-scroll 28s linear infinite;
+}
+.logo-track:hover { animation-play-state: paused; }
+@keyframes logo-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-item {
+  flex-shrink: 0;
+  width: 200px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  padding: 16px 22px;
+  border: 1px solid transparent;
+  transition: background 0.3s, border-color 0.3s;
+}
+.logo-item:hover {
+  background: rgba(72,224,128,0.08);
+  border-color: rgba(72,224,128,0.35);
+}
+.logo-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.75;
+  transition: opacity 0.3s;
+}
+.logo-item:hover img { opacity: 1; }
+
+.chruch-logo-small-text{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #272727;
+}
+
+  @media (max-width: 600px) {
+    .chruch-logo-small-text {
+      font-size: 1.0rem; /* smaller on phones */
+    }
+  }

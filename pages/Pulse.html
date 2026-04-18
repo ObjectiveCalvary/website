@@ -15,18 +15,16 @@
 </head>
 
 
-
-
 <body>
 
 <!-- ================= NAVIGATION ================= -->
 <header>
     <nav>
         <ul class="menu">
-            <li><a href="../index.html" class="active">Home</a></li>
+            <li><a href="../index.html" ><i class="fa-solid fa-house"></i>   Home</a></li>
 
             <li class="dropdown">
-            <a href="#">Gospel Tools</a>
+            <a class="active" href="#" style="color: #48e080;"><i class="fa-solid fa-grip-vertical" style="color: #48e080; margin-right: 5px;"></i>     Gospel Tools</a>
             <ul class="dropdown-content">
                 <li>
                 <a href="./IRBs.html">
@@ -36,7 +34,7 @@
                 </li>
                 <li>
                 <a href="./Anchor.html">
-                    <img src="../images/Anchor_64px.png" class="menu-icon" alt="">
+                    <img src="../images/Anchor_64px.png"  class="menu-icon" alt="">
                     Anchor
                 </a>
                 </li>
@@ -49,20 +47,14 @@
             </ul>
             </li>
 
-            <li><a href="#">Feedback</a></li>
+            <li><i class="fa-solid fa-code"></i> <a href="https://forms.gle/qT6z1kd16kxkoYpR7">Feedback</a></li>
         </ul>
     </nav>
 </header>
 
 <section class="hero">
   <!-- Background video -->
-  <video
-    class="hero-video-bg"
-    autoplay
-    muted
-    loop
-    playsinline
-  >
+  <video class="hero-video-bg" autoplay muted loop playsinline>
     <source src="../video/Pulse intro.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
@@ -76,151 +68,523 @@
 
     <img
       src="../images/Pulse_500px.png"
-      alt="Blender Icon"
+      alt="Pulse Icon"
       class="hero-icon"
+      id="pulseHeroIcon"
     />
 
     <div class="button-group">
-      <a href="#" class="primary-btn3">Download Software Installer</a>
-      <a href="#Bottom" class="secondary-btn">
-        Join the Objective | Contact Us
+      <a href="#" class="primary-btn3 pulse-btn-glow" id="openPulseDownloadModal">Download Now (Beta)</a>
+ <a href="#Bottom" class="secondary-btn" id="openDocsModal">
+        Software Documentation
       </a>
     </div>
 
     <div class="links">
       <p>
         Help Us Make it Even Better!<br />
-        Share Some · <a href="#">Feedback</a>
+        Share Some · <a href="https://forms.gle/qT6z1kd16kxkoYpR7">Feedback</a>
       </p>
     </div>
   </div>
 </section>
 
 
-<section class="featured-verse">
-    <div class="verse-container">
-        <p class="verse-text">
-            “Be sure you know the condition of your flocks, give careful attention to your herds.”
+<style>
+/* ── Pulsing glow on Download button ── */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(72, 224, 128, 0.7); }
+  70%  { box-shadow: 0 0 0 18px rgba(72, 224, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(72, 224, 128, 0); }
+}
+.pulse-btn-glow {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.pulse-btn-glow:hover {
+  animation: none;
+}
+
+/* ── modal box fix for Pulse theme ── */
+.modal-overlay.active .modal-box2 {
+  transform: translateY(0) scale(1);
+}
+
+/* ── Pulse modal: bold text is green, not red ── */
+.modal-body2 strong {
+  color: #48e080 !important;
+  font-weight: 700;
+}
+
+/* ── Church Logo Carousel ── */
+.church-logos-section {
+  background: #ffffff;
+  padding: 70px 40px;
+  overflow: hidden;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.church-logos-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.church-logos-header .section-eyebrow {
+  color: #48e080;
+}
+.church-logos-header h2 {
+  font-size: clamp(22px, 2.5vw, 36px);
+  font-weight: 800;
+  color: #111111;
+  margin-top: 8px;
+  letter-spacing: -0.5px;
+}
+.logo-track-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+.logo-track {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  width: max-content;
+  animation: logo-scroll 28s linear infinite;
+}
+.logo-track:hover { animation-play-state: paused; }
+@keyframes logo-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-item {
+  flex-shrink: 0;
+  width: 200px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  padding: 16px 22px;
+  border: 1px solid transparent;
+  transition: background 0.3s, border-color 0.3s;
+}
+.logo-item:hover {
+  background: rgba(72,224,128,0.08);
+  border-color: rgba(72,224,128,0.35);
+}
+.logo-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.75;
+  transition: opacity 0.3s;
+}
+.logo-item:hover img { opacity: 1; }
+</style>
+
+<!-- PULSE DOWNLOAD MODAL -->
+<div id="pulseDownloadModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box2" style="border-color: rgba(72,224,128,0.5);">
+    <button class="modal-close" id="closePulseModal" aria-label="Close">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon" style="background: #48e080;"><i class="fa-solid fa-download"></i></div>
+      <h2>Before You Download</h2>
+    </div>
+    <div class="modal-body2" style="text-align: justify;">
+      <p>We are thrilled that you want to install <strong>Pulse</strong> for your ministry.</p>
+      <p>Pulse is a <strong>free, open-source Gospel Tool</strong> — no cost, no catch. We believe in an <strong>Unhindered Gospel</strong> and that technology should serve the Church freely.</p>
+      <p>We do ask that if you belong to a <strong>Church or Institution</strong> using Pulse, you email us your logo and consent to be featured under our <strong>Community Spotlight</strong> section. It helps grow our credibility and encourages others to engage.</p>
+      <p>All rights are reserved to <strong>Objective Calvary</strong>. You may not distribute Pulse for commercial use.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="https://drive.google.com/uc?export=download&id=1xCZTLhLkNgCKcTZjZ_RCH2LCDeyrNRcg" class="modal-download-btn" id="continuePulseDownload" style="background: linear-gradient(135deg, #48e080, #2ebd62);">
+        <i class="fa-solid fa-download"></i> Download Installer
+      </a>
+    </div>
+  </div>
+</div>
+
+</section>
+
+
+<!-- ================= PRODUCT FEATURES (PULSE THEME) ================= -->
+<section class="features-scroll" data-theme="pulse">
+  <div class="features-scroll-inner">
+
+    <!-- Sticky left column -->
+    <div class="features-sticky-col">
+      <span class="features-eyebrow">A Statistical Tool</span>
+      <h2 class="features-main-heading">Know Your<br>Flok. At Every<br>Turn.</h2>
+
+      <nav class="features-nav" aria-label="Feature navigation">
+        <div class="feat-track">
+          <div class="feat-track-fill" id="pulseTrackFill"></div>
+        </div>
+        <div class="feat-nav-items">
+          <button class="feat-nav-btn active" data-index="0">
+            <span class="feat-dot"></span>
+            <span class="feat-label">Stewardship Made Clear</span>
+          </button>
+          <button class="feat-nav-btn" data-index="1">
+            <span class="feat-dot"></span>
+            <span class="feat-label">Live Statistical Tracking</span>
+          </button>
+          <button class="feat-nav-btn" data-index="2">
+            <span class="feat-dot"></span>
+            <span class="feat-label">QR Attendance System</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Bible Verse -->
+      <div class="bible-verse-block" style="border-left-color: #48e080;">
+        <p class="bible-verse-text">"Be sure you know the condition of your flocks, give careful attention to your herds."</p>
+        <span class="bible-verse-ref" style="color: #48e080;">— Proverbs 27:23</span>
+      </div>
+    </div>
+
+    <!-- Scrolling right column -->
+    <div class="features-scroll-col">
+
+      <!-- Panel 1 -->
+      <div class="feature-panel" id="pulsePanel0">
+        <div class="feature-img-wrap">
+          <img src="../images/product_pulse1.png" alt="Live Group Statistics screenshot" loading="lazy">
+          <span class="feature-img-num">01</span>
+        </div>
+        <div class="feature-text">
+      <div class="feature-text">
+  <div class="feature-title-row">
+    <div class="feature-icon">
+      <i class="fa-solid fa-bolt"></i>
+    </div>
+    <h3>Stewardship Made Clear</h3>
+  </div>
+
+  <p style="text-align: justify;">
+    Pulse is a Gospel tool created to help church leaders faithfully steward the people entrusted to them. According to Romans 12:8, if you lead, do it with diligence, and Proverbs 27:23 stresses giving careful attention to those in your care. This is at the heart of the Gospel tool Pulse. Get big-picture statistics and live attendance tracking to enable you as a leader to lead with diligence and careful attention. See weekly, monthly, and yearly trends and label them to pray over and consider, to make informed ministry decisions. Be able to place newcomers and monitor your Bible study groups live on the day and much more with this Gospel tool.
+  </p>
+
+  <h4 style="color: #fff; margin: 20px 0 10px;">Some Insight Features</h4>
+  <ul style="color: rgba(255,255,255,0.55); line-height: 1.85; padding-left: 20px;">
+    <li>View long-term attendance trends and statistics across years, and label key events for reflection and planning.</li>
+    <li>Track group attendance and engagement trends over time.</li>
+    <li>Monitor live group attendance as members arrive through a simple, real-time interface.</li>
+    <li>View average group attendance over the last three months for quick insight.</li>
+    <li>Access individual member statistics to better understand engagement patterns.</li>
+    <li>Assign tags such as Leader, Setup Crew, or Worship Captain to help structure roles clearly.</li>
+    <li>Filter and analyse attendance data by attendance history and patterns.<br><br></li>
+  </ul>
+</div>
+
+      <!-- Panel 2 -->
+      <div class="feature-panel" id="pulsePanel1">
+        <div class="feature-img-wrap">
+          <img src="../images/product_pulse2.png" alt="Track Group Consistency screenshot" loading="lazy">
+          <span class="feature-img-num">02</span>
+        </div>
+        <div class="feature-text">
+          <div class="feature-title-row">
+            <div class="feature-icon">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3>Live Statistical Tracking</h3>
+          </div>
+          <p style="text-align: justify;">
+Once Pulse is live, you can track attendance and statistics in real time across multiple devices. Be able to have multiple phones, tablets, and laptops all connected at once to register, view, and gain insight. Set up different user profile restrictions to protect privacy depending on your needs. This gives you the power to know precisely what the flock is looking like in real time."And discern what shifts you need to make to steward your night with the most care and attention. Flag newcomers and assign them to Bible study groups on the fly.
+          </p>
+        </div>
+      </div>
+
+      <!-- Panel 3 -->
+      <div class="feature-panel" id="pulsePanel2">
+        <div class="feature-img-wrap">
+          <img src="../images/product_pulse3.png" alt="Macro Statistics screenshot" loading="lazy">
+          <span class="feature-img-num">03</span>
+        </div>
+        <div class="feature-text">
+          <div class="feature-title-row">
+            <div class="feature-icon">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h3>QR Attendance System</h3>
+          </div>
+          <p style="text-align: justify;">
+Ever wanted to streamline your attendance system by assigning unique QR codes to each member so they can simply scan and walk in? Allowing you to focus more on capturing and connecting with newcomers rather than manual check-ins.
+
+With OC Pulse, you can do exactly that. Use any device with a camera—whether it’s a webcam, smartphone, laptop, or even a tablet—to scan a member’s QR code and have their attendance instantly recorded in real time.
+
+Everything updates immediately, giving you accurate live data without delay or manual admin. It’s simple, fast, and reliable, designed to reduce friction at the door and increase focus on people.
+
+Setup is flexible with both bulk QR code generation for entire groups and individual user-specific codes. You can easily print, download, or distribute codes digitally depending on your setup.
+
+This system ensures smooth entry flow, reduces admin load, and helps you keep your attention where it matters most—on people, connection, and discipleship.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= GITHUB SECTION ================= -->
+<section class="pulse-github">
+  <div class="github-inner">
+
+    <!-- Left: Text -->
+    <div class="github-text-col reveal">
+      <span class="section-eyebrow">Open Source</span>
+      <div style="display: flex; align-items: center; gap: 22px; margin-bottom: 20px;">
+        <i class="fab fa-github" style="font-size: 72px; color: #ffffff; opacity: 0.92; flex-shrink: 0; line-height: 1;"></i>
+        <h2 style="margin: 0;">Built in the open, for the Church.</h2>
+      </div>
+      <p>
+        Pulse is fully open source. Inspect the code, contribute improvements,
+        or fork it to fit your ministry's unique needs. We believe Gospel tools
+        should be transparent, trustworthy, and community-driven.
+      </p>
+
+      <div class="github-stats">
+        <div class="github-stat">
+          <span class="github-stat-value">MIT</span>
+          <span class="github-stat-label">License</span>
+        </div>
+        <div class="github-stat">
+          <span class="github-stat-value">Free</span>
+          <span class="github-stat-label">Always</span>
+        </div>
+        <div class="github-stat">
+          <span class="github-stat-value">Open</span>
+          <span class="github-stat-label">Contributions</span>
+        </div>
+      </div>
+
+      <a href="https://github.com/ObjectiveCalvary" target="_blank" class="github-btn">
+        <i class="fab fa-github"></i>
+        View on GitHub
+      </a>
+    </div>
+
+    <!-- Right: Repo card -->
+    <div class="github-card-col reveal">
+      <div class="github-repo-card">
+        <div class="repo-header">
+          <div class="repo-icon">
+            <i class="fab fa-github"></i>
+          </div>
+          <div>
+            <div class="repo-title">Pulse</div>
+            <div class="repo-owner">ObjectiveCalvary / Pulse</div>
+          </div>
+        </div>
+
+        <p class="repo-desc">
+          A real-time group engagement tracker built for churches and small-group ministries.
+          Connect physical buttons, capture live responses, and shepherd your flock with data.
         </p>
-        <p class="verse-reference">Proverbs 27:23–24 (NIV)</p>
-    </div>
-</section>
 
-
-  <!-- ================= PRODUCT INTRO ================= -->
-
-<section class="split-section alt">
-  <div class="split-inner">
-    <div class="split-image reveal">
-      <img src="../images/product_pulse1.jpg" alt="">
-    </div>
-    <div class="split-text reveal">
-      <h2>Live Group Statistics</h2>
-      <p>
-        The first group to press appears instantly on screen.
-        Create excitement, focus, and energy in the room.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FEATURE SPLIT 1 ================= -->
-<section class="split-section">
-  <div class="split-inner">
-    <div class="split-image reveal">
-      <img src="../images/product_pulse2.jpg" alt="">
-    </div>
-    <div class="split-text reveal">
-      <h2>Track Group Consistency Overtime</h2>
-      <p>
-        Setup takes minutes. Connect your buttons, launch the interface,
-        and begin interacting instantly.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ================= FEATURE SPLIT 2 ================= -->
-<section class="split-section alt">
-  <div class="split-inner">
-    <div class="split-image reveal">
-      <img src="../images/product_pulse3.jpg" alt="">
-    </div>
-    <div class="split-text reveal">
-      <h2>See Macro Statistics</h2>
-      <p>
-        The first group to press appears instantly on screen.
-        Create excitement, focus, and energy in the room.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ================= COMMUNITY ================= -->
-<section class="community">
-  <h2 class="reveal">Trusted by Churches</h2>
-
-  <div class="reviews">
-    <div class="review reveal">
-      <p>"The IRBs completely changed our Bible study engagement."</p>
-      <span>— Pastor X</span>
-    </div>
-
-    <div class="review reveal">
-      <p>"Our youth group has never been more interactive."</p>
-      <span>— Pastor Y</span>
-    </div>
-
-    <div class="review reveal">
-      <p>"Simple. Powerful. Effective."</p>
-      <span>— Pastor Z</span>
-    </div>
-  </div>
-
-  <div class="logos reveal">
-    <img src="../images/church2.png" alt="">
-    <img src="../images/church1.png" alt="">
-    <img src="../images/church3.png" alt="">
-    
-
-  </div>
-</section>
-
-
-  <!-- ================= FOOTER ================= -->
-<footer>
-    <div id="Bottom" class="footer-content">
-
-        <div>
-            <h4>Join the Objective:</h4>
-            <p href="#" style="color: white;"><i class="fa-regular fa-envelope" style="color: white; padding: 5px;"></i> ObjectiveCalvary@gmail.com</p>
-            <p href="#" style="color: white;"><i class="fa-solid fa-phone" style="color: white; padding: 5px;"></i> Dylan Farge | 076 241 8576</p>
-            <p href="#" style="color: white;"><i class="fa-solid fa-phone" style="color: white; padding: 5px;"></i> William du Toit | 067 210 3704</p>
-
+        <div class="repo-tags">
+          <span class="repo-tag">Python</span>
+          <span class="repo-tag">Ministry</span>
+          <span class="repo-tag">Real-Time</span>
+          <span class="repo-tag">Open Source</span>
         </div>
 
-        <div>
-            <h4>Follow Us</h4>
-            <a href="https://www.instagram.com/objectivecalvary/" style="color: white;"><i class="fab fa-instagram" style="color: white;"></i> Instagram</a>
-            <a href="https://www.youtube.com/@objectivecalvary5740"style="color: white;"><i class="fab fa-youtube" style="color: white;"></i> YouTube</a>
-            <a href="https://github.com/ObjectiveCalvary"style="color: white;"><i class="fab fa-github" style="color: white;"></i> Github</a>
+        <div class="repo-meta">
+          <span class="repo-meta-item"><i class="fa-solid fa-code-branch"></i> MIT License</span>
+          <span class="repo-meta-item"><i class="fa-solid fa-star"></i> Star us</span>
+          <span class="repo-meta-item"><i class="fa-solid fa-code-fork"></i> Fork it</span>
+        </div>
+      </div>
+    </div>
 
+  </div>
+</section>
+
+
+<!-- ================= TUTORIAL SECTION ================= -->
+<section class="pulse-tutorial">
+  <div class="tutorial-inner">
+
+    <div class="tutorial-header reveal">
+      <span class="section-eyebrow">Get Started</span>
+      <h2>Up and running<br>in minutes.</h2>
+      <p>
+        Watch the full walkthrough, then follow the steps to launch Pulse
+        for your very first group session.
+      </p>
+    </div>
+
+    <div class="tutorial-grid">
+
+      <!-- YouTube video -->
+      <div class="tutorial-video-wrap reveal">
+        <!--
+          Replace VIDEO_ID below with your actual YouTube video ID.
+          e.g. for https://youtu.be/dQw4w9WgXcQ the ID is dQw4w9WgXcQ
+        -->
+        <iframe
+          src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1&color=white"
+          title="Pulse Tutorial"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Steps -->
+      <div class="tutorial-steps reveal">
+
+        <div class="tutorial-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Download the Installer</h4>
+            <p>Grab the latest version from the button at the top of this page and run the installer on your Windows or Mac machine.</p>
+          </div>
         </div>
 
+        <div class="tutorial-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Connect Your Buttons</h4>
+            <p>Plug in your USB response buttons. Pulse auto-detects them and assigns each group a colour instantly.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Configure Your Groups</h4>
+            <p>Name your groups, set session goals, and customise the display to match your ministry's style.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Launch & Engage</h4>
+            <p>Hit start. The live dashboard goes full-screen and your group is ready to respond in real time.</p>
+          </div>
+        </div>
+
+        <a href="https://www.youtube.com/@objectivecalvary5740" target="_blank" class="tutorial-cta">
+          <i class="fab fa-youtube"></i>
+          More tutorials on YouTube
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= CHURCH LOGO CAROUSEL ================= -->
+<section class="church-logos-section">
+  <div class="church-logos-header">
+    <h2 style="margin-bottom: 5px;">Ministries Currently Using</h2>
+    <p class="chruch-logo-small-text">Objective Calvary: Gospel Tools</p>
+  </div>
+
+  <div class="logo-track-wrap">
+    <div class="logo-track" id="logoTrack">
+      <!-- Replace src with your actual church logo paths, e.g. ../images/church_logo_1.png -->
+
+      <div class="logo-item"><img src="../images/church1.png" alt="Church 1"></div>
+      <div class="logo-item"><img src="../images/church2.png" alt="Church 2"></div>
+      <div class="logo-item"><img src="../images/church3.png" alt="Church 3"></div>
+      <div class="logo-item"><img src="../images/church4.png" alt="Church 4"></div>
+
+
+      <!-- Duplicate set for seamless infinite loop -->
+      <div class="logo-item"><img src="../images/church1.png" alt="Church 1"></div>
+      <div class="logo-item"><img src="../images/church2.png" alt="Church 2"></div>
+      <div class="logo-item"><img src="../images/church3.png" alt="Church 3"></div>
+      <div class="logo-item"><img src="../images/church4.png" alt="Church 4"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SOCIAL PROOF / INSTAGRAM ================= -->
+<section class="social-proof" style="margin-top: 60px;">
+  <div class="social-inner">
+    <h2>Community Spotlight</h2>
+
+    <div class="instagram-grid reveal">
+
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/XXXXXXXXX/embed"
+                frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/DQHx2AIjBEH/embed"
+                frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+      <div class="instagram-video-wrapper">
+        <iframe src="https://www.instagram.com/reel/XXXXXXXXX/embed"
+                frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+    </div>
+    <div style="padding-bottom: 150px;"></div>
+  </div>
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+<footer id="Bottom">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>Objective Calvary</h4>
+            <p>Equipping the Universal Church with Gospel Tools to communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Gospel Tools</h4>
+            <ul>
+                <li><a href="./pages/IRBs.html">IRBs</a></li>
+                <li><a href="./pages/Anchor.html">Anchor</a></li>
+                <li><a href="./pages/Pulse.html">Pulse</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="../index.html#story">About OC</a></li>
+                <li><a href="../index.html#founders">Founders</a></li>
+                <li><a href="../index.html#values">Values</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p>Email: <a href="ObjectiveCalvary.com">ObjectiveCalvary.com</a></p>
+            <div class="social-icons" style="margin-top: 20px;">
+                <a href="https://github.com/ObjectiveCalvary" aria-label="Github"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/objectivecalvary/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@objectivecalvary5740" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Objective Calvary. All Rights Reserved.</p>
     </div>
 </footer>
 
 <script>
+  // ── Scroll reveal ──────────────────────────────────────────────
   const reveals = document.querySelectorAll('.reveal');
 
   function revealOnScroll() {
     const windowHeight = window.innerHeight;
-
     reveals.forEach((el) => {
-      const elementTop = el.getBoundingClientRect().top;
-      if (elementTop < windowHeight - 100) {
+      if (el.getBoundingClientRect().top < windowHeight - 100) {
         el.classList.add('active');
       }
     });
@@ -228,11 +592,232 @@
 
   window.addEventListener('scroll', revealOnScroll);
   revealOnScroll();
+
+  // ── Pulse features scroll: panel in-view + nav highlighting ───
+  const panels     = document.querySelectorAll('#pulsePanel0, #pulsePanel1, #pulsePanel2');
+  const navBtns    = document.querySelectorAll('.features-scroll[data-theme="pulse"] .feat-nav-btn');
+  const trackFill  = document.getElementById('pulseTrackFill');
+
+  function updatePulseNav() {
+    const wh = window.innerHeight;
+    let activeIndex = 0;
+
+    panels.forEach((panel, i) => {
+      const rect = panel.getBoundingClientRect();
+      const mid  = rect.top + rect.height / 2;
+
+      // Fade in
+      if (rect.top < wh - 80) panel.classList.add('in-view');
+
+      // Which panel centre is closest to 40% viewport height
+      if (mid < wh * 0.65) activeIndex = i;
+    });
+
+    navBtns.forEach((btn, i) => {
+      btn.classList.toggle('active', i === activeIndex);
+    });
+
+    // Progress bar: 0% at panel 0, 100% at panel 2
+    const pct = (activeIndex / (panels.length - 1)) * 100;
+    if (trackFill) trackFill.style.height = pct + '%';
+  }
+
+  window.addEventListener('scroll', updatePulseNav);
+  updatePulseNav();
+
+  // Manual nav button click
+  navBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx   = parseInt(btn.dataset.index);
+      const panel = panels[idx];
+      if (panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
 </script>
 
+<script>
+// ── Pulse Download Modal ──────────────────────────────────────────
+(function() {
+  const modal      = document.getElementById('pulseDownloadModal');
+  const openBtn    = document.getElementById('openPulseDownloadModal');
+  const closeBtn   = document.getElementById('closePulseModal');
+  const continueBtn = document.getElementById('continuePulseDownload');
+
+  function openModal(e) {
+    e.preventDefault();
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // Replace the href below with your actual installer download URL
+continueBtn.addEventListener('click', function(e) {
+  // DON'T prevent default
+  closeModal();
+});
+})();
+</script>
+
+<script>
+// ── Pulse hero icon: replay heartbeat on hover ──
+(function () {
+  const icon = document.getElementById('pulseHeroIcon');
+  if (!icon) return;
+  icon.addEventListener('mouseenter', () => {
+    icon.style.animation = 'none';
+    void icon.offsetWidth;
+    icon.style.animation = '';
+  });
+})();
+</script>
+
+<!-- ====================================================
+     TEMP: "Coming Soon" intercept for Docs button
+     DELETE THIS BLOCK when documentation is ready
+     ==================================================== -->
+<div id="docsComingSoonToast" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: linear-gradient(160deg, #050f0a 0%, #0b1f13 60%, #0d2318 100%);
+  border: 1.5px solid rgba(72, 224, 128, 0.3);
+  border-radius: 24px;
+  padding: 40px 48px 36px;
+  text-align: center;
+  z-index: 99999;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(72,224,128,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  opacity: 0;
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.16, 1, 0.36, 1);
+  min-width: 300px;
+  max-width: 88vw;
+  font-family: inherit;
+">
+
+
+  <!-- Eyebrow -->
+  <div style="
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #48e080;
+    margin-bottom: 10px;
+  ">Coming Soon</div>
+
+  <!-- Heading -->
+  <div style="
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  ">Documentation in Progress</div>
+
+  <!-- Divider -->
+  <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 16px 0;"></div>
+
+  <!-- Body -->
+  <div style="
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  ">
+    Full software docs are being written.<br>
+    In the meantime, reach us at<br>
+    <a href="mailto:info@objectivecalvary.com" style="
+      color: #48e080;
+      text-decoration: none;
+      font-weight: 700;
+    ">objectivecalvary.com</a>
+  </div>
+
+  <!-- Got it button -->
+  <button id="docsComingSoonClose" style="
+    background: #48e080;
+    color: #071a0e;
+    border: none;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 32px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 4px 20px rgba(72,224,128,0.3);
+  "
+    onmouseover="this.style.background='#6aeba0'; this.style.transform='scale(1.04)';"
+    onmouseout="this.style.background='#48e080'; this.style.transform='scale(1)';"
+  >Got it</button>
+</div>
+
+<div id="docsComingSoonBackdrop" style="
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 99998;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+"></div>
+
+<script>
+// TEMP — intercept Docs button → show coming soon. DELETE when live.
+(function () {
+  const docsBtn  = document.getElementById('openDocsModal');
+  const toast    = document.getElementById('docsComingSoonToast');
+  const backdrop = document.getElementById('docsComingSoonBackdrop');
+  const closeBtn = document.getElementById('docsComingSoonClose');
+  if (!docsBtn || !toast) return;
+
+  function showToast() {
+    toast.style.display = 'block';
+    backdrop.style.display = 'block';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translate(-50%, -50%) scale(1)';
+    }));
+  }
+
+  function hideToast() {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translate(-50%, -50%) scale(0.93)';
+    setTimeout(() => {
+      toast.style.display = 'none';
+      backdrop.style.display = 'none';
+    }, 280);
+  }
+
+  docsBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); showToast(); });
+  closeBtn.addEventListener('click', hideToast);
+  backdrop.addEventListener('click', hideToast);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideToast(); });
+})();
+</script>
+
+
 </body>
-
-
-
-
+<!-- ====== END TEMP DOCS COMING SOON BLOCK ====== -->
 </html>

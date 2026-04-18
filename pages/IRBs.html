@@ -28,6 +28,72 @@
         #sketchfab-iframe {
         background: transparent !important;
       }
+
+      /* ── Church Logo Carousel ── */
+.church-logos-section {
+  background: #ffffff;
+  padding: 70px 40px;
+  overflow: hidden;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.church-logos-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.church-logos-header .section-eyebrow {
+  color: #48e080;
+}
+.church-logos-header h2 {
+  font-size: clamp(22px, 2.5vw, 36px);
+  font-weight: 800;
+  color: #111111;
+  margin-top: 8px;
+  letter-spacing: -0.5px;
+}
+.logo-track-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+.logo-track {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  width: max-content;
+  animation: logo-scroll 28s linear infinite;
+}
+.logo-track:hover { animation-play-state: paused; }
+@keyframes logo-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-item {
+  flex-shrink: 0;
+  width: 200px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  padding: 16px 22px;
+  border: 1px solid transparent;
+  transition: background 0.3s, border-color 0.3s;
+}
+.logo-item:hover {
+  background: rgba(72,224,128,0.08);
+  border-color: rgba(72,224,128,0.35);
+}
+.logo-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.75;
+  transition: opacity 0.3s;
+}
+.logo-item:hover img { opacity: 1; }
     </style>
 </head>
 
@@ -77,7 +143,7 @@
     loop
     playsinline
   >
-    <source src="../video/IRB intro.mp4" type="video/mp4" />
+    <source src="../video/IRB intro V2.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
@@ -104,7 +170,7 @@
     <div class="links">
       <p>
         Help Us Make it Even Better!<br />
-        Share Some · <a href="#">Feedback</a>
+        Share Some · <a href="https://forms.gle/qT6z1kd16kxkoYpR7">Feedback</a>
       </p>
     </div>
   </div>
@@ -121,13 +187,13 @@
     </div>
     <div class="modal-body2" style="text-align: justify;">
       <p>We are thrilled that you want to learn more about the <strong>IRB Gospel Tool</strong>.</p>
-      <p>Before you continue, we believe in an <strong>Unhindered Gospel</strong> — meaning that we charge no extra cost than is absolutely needed. The IRB is a <strong>hardware dependent Gospel Tool</strong> and we produce them at cost price. Please get into contact with us. We also have a <strong>GitHub repository</strong> you can make use of if we are not geographically close, to do so please get in contact with us.</p>
+      <p>Before you continue, we believe in an <strong>Unhindered Gospel</strong> — meaning that we charge no extra cost than is absolutely needed. The IRB is a <strong>hardware dependent Gospel Tool</strong> and we produce them at cost price. We also have a <strong>GitHub repository</strong> you can make use of if we are not geographically close, to do so please get in contact with us.</p>
       <p>We do however ask that if you make use of the IRBs and belong to a <strong>Church or Institution</strong>, that you email us your logo and consent to use your details under the <strong>Community Spotlight</strong> section, as it helps contribute to our credibility — as well as any social content we can tag you in.</p>
       <p>All rights are reserved to <strong>Objective Calvary</strong> and you cannot distribute the IRB Gospel tool for commercial use.</p>
     </div>
     <div class="modal-footer">
-      <a href="#" class="modal-download-btn" id="continueDownload" style="background: linear-gradient(135deg, #ff3131, #ff3131);">
-        <i class="fa-solid fa-envelope"></i> Contact Us
+      <a href="mailto:Objectivecalvary@gmail.com" class="modal-download-btn" id="continueDownload" style="background: linear-gradient(135deg, #ff3131, #ff3131);">
+        <i class="fa-solid fa-envelope"></i> Objectivecalvary@gmail.com
       </a>
     </div>
   </div>
@@ -309,6 +375,32 @@ Take full command of the entire IRB system from wherever you are using your phon
   </div>
 </section>
 
+<!-- ================= CHURCH LOGO CAROUSEL ================= -->
+<section class="church-logos-section">
+  <div class="church-logos-header">
+    <h2 style="margin-bottom: 5px;">Ministries Currently Using</h2>
+    <p class="chruch-logo-small-text">Objective Calvary: Gospel Tools</p>
+  </div>
+
+  <div class="logo-track-wrap">
+    <div class="logo-track" id="logoTrack">
+      <!-- Replace src with your actual church logo paths, e.g. ../images/church_logo_1.png -->
+
+      <div class="logo-item"><img src="../images/church1.png" alt="Church 1"></div>
+      <div class="logo-item"><img src="../images/church2.png" alt="Church 2"></div>
+      <div class="logo-item"><img src="../images/church3.png" alt="Church 3"></div>
+      <div class="logo-item"><img src="../images/church4.png" alt="Church 4"></div>
+
+
+      <!-- Duplicate set for seamless infinite loop -->
+      <div class="logo-item"><img src="../images/church1.png" alt="Church 1"></div>
+      <div class="logo-item"><img src="../images/church2.png" alt="Church 2"></div>
+      <div class="logo-item"><img src="../images/church3.png" alt="Church 3"></div>
+      <div class="logo-item"><img src="../images/church4.png" alt="Church 4"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= SOCIAL PROOF / INSTAGRAM (SIMPLE PLAY ICON) ================= -->
 <section class="social-proof">
   <div class="social-inner">
@@ -350,34 +442,7 @@ Take full command of the entire IRB system from wherever you are using your phon
       </div>
 
     </div>
-     <div style="padding-bottom: 150px;">
-   
-  <div class="reviews">
-    <div class="review reveal">
-      <p style="color: #fff">"The IRBs completely changed our Bible study engagement."</p>
-      <span>— Pastor X</span>
-    </div>
-
-    <div class="review reveal">
-      <p style="color: #fff">"Our youth group has never been more interactive."</p>
-      <span>— Pastor Y</span>
-    </div>
-
-    <div class="review reveal">
-      <p style="color: #fff">"Simple. Powerful. Effective."</p>
-      <span>— Pastor Z</span>
-    </div>
-  </div>
-
-  <div class="logos reveal">
-    <img src="../images/church2.png" alt="">
-    <img src="../images/church1.png" alt="">
-    <img src="../images/church3.png" alt="">
     
-
-  </div>
-  </div>
-  </div>
   
 </section>
 
