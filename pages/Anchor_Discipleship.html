@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchor — Discipleship Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background: #e4decb; }
+
+:root {
+  --gold:    #ffbd59;
+  --gold-dk: #d6b027;
+  --sand:    #e4decb;
+  --teal:    #258fa2;
+  --red:     #bd444c;
+  --orange:  #eb8a18;
+  --amber:   #cf8404;
+  --navy:    #374ca6;
+  --forest:  #40654a;
+  --deep:    #006484;
+  --purple:  #8f2b58;
+}
+
+.back-btn {
+  position: fixed;
+  top: 1rem; left: 1rem; z-index: 300;
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255,189,89,0.5);
+  border-radius: 50px;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.82rem; font-weight: 800;
+  color: #5a4320; text-decoration: none;
+  display: flex; align-items: center; gap: 0.4rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), background 0.2s;
+  letter-spacing: 0.05em;
+}
+.back-btn:hover { transform: translateX(-5px) scale(1.05); background: rgba(255,255,255,0.38); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 85svh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 0rem 1.5rem 8rem;
+  position: relative; overflow: hidden;
+  background: #e4decb;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 44%,
+    rgba(245,240,232,0.82) 0%,
+    rgba(245,240,232,0.52) 48%,
+    rgba(245,240,232,0.06) 100%
+  );
+  pointer-events: none; z-index: 1;
+}
+.hero > * { position: relative; z-index: 2; }
+
+.logo-container {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.6rem;
+  animation: fade-down 0.85s ease both;
+}
+.sparkle { position: absolute; border-radius: 50%; pointer-events: none; animation: sparkle-glow 2.8s ease-in-out infinite; }
+.sp1 { width:9px;  height:9px;  background:#d6b027; top:-4px;   right:10px;  animation-delay:0s;    }
+.sp2 { width:7px;  height:7px;  background:#258fa2; top:14px;   left:-8px;   animation-delay:0.55s; }
+.sp3 { width:8px;  height:8px;  background:#858bd8; bottom:6px; right:-6px;  animation-delay:1.1s;  }
+.sp4 { width:6px;  height:6px;  background:#70af81; bottom:20px;left:-2px;   animation-delay:1.65s; }
+@keyframes sparkle-glow {
+  0%,100%{ transform:scale(1);    opacity:0.55; }
+  50%     { transform:scale(1.65); opacity:1;    }
+}
+
+.logo-ring {
+  width: 278px; height: 278px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  animation: float-bob 4.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.logo-ring img { width: 278px; height: 278px; object-fit: contain; display: block; }
+.logo-fallback {
+  display: none; width: 90px; height: 90px; border-radius: 50%;
+  background: linear-gradient(135deg, #f8d06c 0%, #d6b027 100%);
+  align-items: center; justify-content: center;
+  font-size: 2.5rem; color: rgba(255,255,255,0.9);
+}
+
+.hero-title {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--gold);
+  font-size: clamp(2.8rem, 10vw, 4.2rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 3px 12px rgba(214,176,39,0.18);
+  animation: fade-down 0.85s 0.1s ease both;
+}
+
+.hero-sub {
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+  color: #666; max-width: 520px; line-height: 1.75;
+  animation: rise 0.8s ease 0.22s both;
+  font-weight: 600;
+}
+
+.section-wave {
+  position: absolute; bottom: -2px; left: 0; right: 0;
+  line-height: 0; z-index: 3; pointer-events: none;
+}
+.section-wave svg { display: block; width: 100%; }
+
+/* ── STEP BANDS ── */
+.step-band {
+  position: relative;
+  padding: 0.5rem 0 9.5rem;
+  background: var(--c, #374ca6);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.2,.64,1);
+}
+.step-band.visible { opacity:1; transform:translateY(0); }
+.step-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.09) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.step-inner {
+  max-width: 800px; margin: 0 auto;
+  padding: 0 2rem;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+
+.step-body { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+.step-body h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: #fff; line-height: 1.15; margin-bottom: 0.7rem;
+  font-weight: 900;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.15);
+}
+.step-body .intro {
+  font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+  color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1.4rem;
+  font-weight: 600;
+  width: 100%; max-width: 620px; text-align: center;
+}
+.step-body .intro strong { color: #fff; font-weight: 900; }
+
+.ilist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; align-items: stretch; width: 100%; max-width: 620px; margin: 0 auto; }
+.ilist li {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  color: rgba(255,255,255,0.94);
+  font-size: clamp(0.9rem, 2.3vw, 1rem);
+  line-height: 1.65; width: 100%; text-align: left; font-weight: 600;
+}
+.ilist li strong { color: #fff; font-weight: 900; }
+.inum {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  border: 2px solid rgba(255,255,255,0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem; font-weight: 900; color: #fff; margin-top: 2px;
+}
+
+.blist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; width: 100%; max-width: 620px; margin: 0 auto; }
+.blist li {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  color: rgba(255,255,255,0.94);
+  font-size: clamp(0.9rem, 2.3vw, 1rem);
+  line-height: 1.65; text-align: left; font-weight: 600;
+}
+.blist li strong { color: #fff; font-weight: 900; }
+.bdot { flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.55); margin-top: 7px; }
+
+.tip {
+  margin-top: 1.4rem; padding: 1.05rem 1.4rem;
+  background: rgba(0,0,0,0.16);
+  border: 2px solid rgba(255,255,255,0.28);
+  border-radius: 16px;
+  font-size: 0.95rem; color: rgba(255,255,255,0.92); line-height: 1.6;
+  text-align: left; width: 100%; max-width: 620px;
+  margin-left: auto; margin-right: auto; font-weight: 600;
+}
+.tip strong { color: #fff; font-weight: 900; }
+
+.band-wave { position: absolute; bottom: -2px; left: 0; right: 0; line-height: 0; z-index: 4; pointer-events: none; }
+.band-wave svg { display: block; width: 100%; }
+
+/* ── CLOSING BAND ── */
+.sink-band {
+  position: relative; background: var(--sand);
+  padding: 5rem 1.5rem 7rem; text-align: center;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.2,.64,1);
+}
+.sink-band.visible { opacity:1; transform:translateY(0); }
+.sink-band::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,189,89,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sink-band > * { position: relative; z-index: 2; }
+.sink-inner { max-width: 600px; margin: 0 auto; }
+.sink-icon { font-size: 3.2rem; margin-bottom: 0.6rem; display: block; animation: float-bob 4s ease-in-out infinite; }
+.sink-title { font-family: 'Nunito', sans-serif; font-size: clamp(2rem, 6vw, 3rem); font-weight: 900; color: #5a4320; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+.sink-divider { width: 100%; max-width: 320px; display: flex; align-items: center; gap: 10px; margin: 0.7rem auto 1.2rem; }
+.div-line { flex: 1; height: 1.5px; border-radius: 99px; background: linear-gradient(to right, transparent, #d6b027 30%, #ed9e71 60%, #ffbd59, transparent); opacity: 0.65; }
+.div-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; box-shadow: 0 0 6px rgba(214,176,39,0.55); animation: float-bob 3.5s ease-in-out infinite; }
+.sink-desc { font-size: clamp(0.95rem, 2.5vw, 1.08rem); color: #ffffff; line-height: 1.75; margin-bottom: 2rem; font-weight: 600; }
+
+/* ── FOOTER ── */
+.page-footer {
+  background: #1a1510; text-align: center; padding: 3rem 1rem;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+.ft-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid rgba(255,189,89,0.18); display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0 auto 1.2rem; }
+.ft-logo img { width: 38px; height: 38px; object-fit: contain; }
+
+/* ── ANIMATIONS ── */
+@keyframes float-bob { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-9px); } }
+@keyframes fade-down { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+@keyframes rise { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+@media (max-width: 600px) {
+  .hero { padding: 4.5rem 1.2rem 7rem; }
+  .step-inner { padding: 0 1.2rem; }
+  .step-band { padding: 3.5rem 0 5.5rem; }
+  .sink-band { padding: 4rem 1.2rem 6rem; }
+  .ilist li, .blist li { font-size: 0.92rem; }
+  .tip { font-size: 0.88rem; }
+}
+@media (max-width: 380px) {
+  .step-body h2 { font-size: 1.65rem; }
+  .hero-title { font-size: 2.4rem; }
+}
+</style>
+</head>
+<body>
+
+<a class="back-btn" href="./Anchor_Menu.html">← Back</a>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="logo-container">
+
+
+    <div class="logo-ring">
+      <img src="../images/Anchor_64px.png" alt="Anchor Logo"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="logo-fallback">⚓</div>
+    </div>
+  </div>
+
+  <h1 class="hero-title">Discipleship Guide</h1>
+
+  <p class="hero-sub">
+    Anchor is a gospel tool designed to help you walk alongside others,
+    through honest conversation, shared curiosity, and guided discovery through Scripture.
+  </p>
+
+  <div class="section-wave">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#8f2b58">
+        <animate attributeName="d" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+          values="M0,90 C360,20 720,110 1080,30 C1260,0 1380,70 1440,50 L1440,120 L0,120 Z;
+                  M0,40 C360,100 720,10 1080,90 C1260,115 1380,40 1440,70 L1440,120 L0,120 Z;
+                  M0,90 C360,20 720,110 1080,30 C1260,0 1380,70 1440,50 L1440,120 L0,120 Z"/>
+      </path>
+    </svg>
+  </div>
+</header>
+
+
+<!-- ════ SECTION 1 — You Don't Have to Know It All ════ -->
+<section class="step-band" style="--c:#8f2b58">
+  <div class="step-inner">
+    <div class="step-body">
+      <h2>You Don't Have to Know It All</h2>
+      <p class="intro">
+        One of the biggest barriers to discipleship is the belief that you need to
+        have all the answers first. You don't... and you never will. <strong>Disciples are meant to make disciples</strong> (Matt 28:16–20). Using Anchor can help you know where to start.
+      </p>
+      <ul class="blist">
+        <li>
+          <span class="bdot"></span>
+          <span><strong>Start with a simple invitation.</strong> Reach out to a friend, family
+          member, or someone in your life who could use a little guided discovery.
+          Pray beforehand and trust that God will provide what's needed in the moment.</span>
+        </li>
+        <li>
+          <span class="bdot"></span>
+          <span><strong>Keep it relaxed and low-pressure.</strong> Play a game of Anchor over coffee, hot chocolate,
+          or whatever's on the table. Anchor is designed so that even someone with
+          little Bible knowledge can engage fully, the colour system makes it
+          accessible from the very first card.</span>
+        </li>
+        <li>
+          <span class="bdot"></span>
+          <span><strong>Let the conversation happen naturally.</strong> As you play together,
+          questions and moments of curiosity will surface on their own.
+          Share what you know. Speak into what you notice. And when you don't
+          know the answer, say so, <em>"I'm not sure"</em> is always an honest
+          and welcome response.</span>
+        </li>
+
+      </ul>
+     
+    </div>
+  </div>
+  <div class="band-wave">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#006484">
+        <animate attributeName="d" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+          values="M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z;
+                  M0,30 C360,100 720,5  1080,95 C1300,115 1400,45 1440,80 L1440,120 L0,120 Z;
+                  M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z"/>
+      </path>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ════ SECTION 2 — Discipling Through Themes ════ -->
+<section class="step-band" style="--c:#006484">
+  <div class="step-inner">
+    <div class="step-body">
+      <h2>Discipling Through Themes</h2>
+      <p class="intro">
+        One of the most powerful ways to help someone understand the Bible is to
+        show them how a single thread runs through the entire story. Choose a
+        theme you're familiar with and walk through it together.
+      </p>
+      <ul class="ilist">
+        <li>
+          <div class="inum">1</div>
+          <span><strong>Pick a theme you know.</strong> Lay out the relevant cards and walk
+          through how that theme unfolds. Let the cards do the heavy lifting.</span>
+        </li>
+        <li>
+          <div class="inum">2</div>
+          <span><strong>Share what it's meant to you.</strong> Theology hits different
+          when it's personal. Tell them not just what a theme or even card means, but
+          how understanding it has shaped the way you read the Bible or
+          live your faith.</span>
+        </li>
+        <li>
+          <div class="inum">3</div>
+          <span><strong>Invite them to go deeper.</strong> After exploring
+          together, ask what they noticed. Let them go and learn more about it and then discuss it the next time you meet.</span>
+        </li>
+      </ul>
+      <!-- <div class="tip">
+        <strong>🎨 Theme ideas to get started —</strong> Covenant · Sacrifice · Kingship ·
+        The Promised Land · Redemption · The Holy Spirit · Prayer · Exile &amp; Return.
+        Any one of these, traced from Genesis to Revelation, is a discipleship
+        session in itself.
+      </div> -->
+    </div>
+  </div>
+  <div class="band-wave">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#cf8404">
+        <animate attributeName="d" dur="5.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+          values="M0,95 C300,10 700,110 1100,15 C1300,0 1400,55 1440,35 L1440,120 L0,120 Z;
+                  M0,25 C300,110 700,10 1100,105 C1300,120 1400,55 1440,85 L1440,120 L0,120 Z;
+                  M0,95 C300,10 700,110 1100,15 C1300,0 1400,55 1440,35 L1440,120 L0,120 Z"/>
+      </path>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ════ SECTION 3 — Building a Rhythm ════ -->
+<!-- <section class="step-band" style="--c:#cf8404">
+  <div class="step-inner">
+    <div class="step-body">
+      <h2>Building a Rhythm</h2>
+      <p class="intro">
+        A single conversation can spark something — but a consistent rhythm
+        is what shapes a disciple. You don't need a formal programme.
+        You need a recurring moment that both of you protect.
+      </p>
+      <ul class="blist">
+        <li>
+          <span class="bdot"></span>
+          <span><strong>Start with once a fortnight.</strong> A low-commitment cadence
+          removes the pressure and builds trust. As momentum grows, so
+          does the frequency.</span>
+        </li>
+        <li>
+          <span class="bdot"></span>
+          <span><strong>Begin each session with a check-in.</strong> Before the cards
+          come out, ask how they've been sitting with what came up last time.
+          What stayed with them? What confused them? What did they go
+          and read?</span>
+        </li>
+        <li>
+          <span class="bdot"></span>
+          <span><strong>End with something to carry.</strong> Before you part ways, identify
+          one passage, question, or idea to sit with until you meet again.
+          Keep it small and specific — depth beats breadth every time.</span>
+        </li>
+        <li>
+          <span class="bdot"></span>
+          <span><strong>Pray together.</strong> Even briefly. It reframes the whole conversation
+          as something you're both receiving, not just discussing.</span>
+        </li>
+      </ul>
+      <div class="tip">
+        <strong>📅 Consistency beats intensity.</strong> An hour every two weeks over
+        a year will do far more than an occasional deep dive. Show up
+        regularly and let the Word do its work over time.
+      </div>
+    </div>
+  </div>
+  <div class="band-wave">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#374ca6">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+          values="M0,85 C400,5  900,115 1300,20 C1400,5  1440,50 1440,40 L1440,120 L0,120 Z;
+                  M0,25 C400,110 900,5  1300,100 C1400,115 1440,60 1440,80 L1440,120 L0,120 Z;
+                  M0,85 C400,5  900,115 1300,20 C1400,5  1440,50 1440,40 L1440,120 L0,120 Z"/>
+      </path>
+    </svg>
+  </div>
+</section> -->
+
+
+<!-- ════ SECTION 4 — When They Want to Go Deeper ════ -->
+<!-- <section class="step-band" style="--c:#374ca6">
+  <div class="step-inner">
+    <div class="step-body">
+      <h2>When They Want to Go Deeper</h2>
+      <p class="intro">
+        Sometimes a card or a conversation will open a door that Anchor
+        alone can't fully walk through. That's not a limitation — that's
+        the whole point. Know how to point them further.
+      </p>
+      <ul class="ilist">
+        <li>
+          <div class="inum">1</div>
+          <span><strong>Point them to the text first.</strong> Before recommending a book
+          or a podcast, send them back to Scripture itself. Find the passage
+          the card references and read it together or encourage them to
+          read it before you meet again.</span>
+        </li>
+        <li>
+          <div class="inum">2</div>
+          <span><strong>Recommend resources wisely.</strong> If someone is hungry to understand
+          more about a particular theme or book of the Bible, point them
+          toward a trusted commentary, sermon series, or study resource.
+          Ask your pastor or a mature believer for recommendations
+          you can pass on with confidence.</span>
+        </li>
+        <li>
+          <div class="inum">3</div>
+          <span><strong>Invite them into community.</strong> Discipleship in isolation has
+          a ceiling. If the person you're walking with isn't yet connected
+          to a local church or small group, begin planting that seed.
+          The goal of one-on-one discipleship is ultimately to draw people
+          into the body, not to replace it.</span>
+        </li>
+        <li>
+          <div class="inum">4</div>
+          <span><strong>Celebrate hunger.</strong> When someone wants more than you can give,
+          that's a gift — not a problem. It means the Word is working. Say so,
+          and rejoice together.</span>
+        </li>
+      </ul>
+      <div class="tip">
+        <strong>🌱 Your role is to accompany, not to complete.</strong> You are planting
+        and watering. God brings the growth (1 Corinthians 3:6–7). Trust
+        the process and trust the One who began the work.
+      </div>
+    </div>
+  </div>
+  <div class="band-wave">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#e4decb">
+        <animate attributeName="d" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+          values="M0,80 C360,5  720,115 1080,25 C1300,0  1440,55 1440,45 L1440,120 L0,120 Z;
+                  M0,30 C360,110 720,5  1080,105 C1300,120 1440,55 1440,85 L1440,120 L0,120 Z;
+                  M0,80 C360,5  720,115 1080,25 C1300,0  1440,55 1440,45 L1440,120 L0,120 Z"/>
+      </path>
+    </svg>
+  </div>
+</section> -->
+
+
+<!-- ════ CLOSING BAND ════ -->
+<section class="sink-band" style="background-color: #cf8404;">
+  <div class="sink-inner">
+
+    <p class="sink-desc">
+      The world is facing a discipleship crisis and you are part of the answer.
+      You don't need to be a theologian. You need to be willing.
+      Pick up the cards and start the conversation.
+    </p>
+  </div>
+</section>
+
+
+
+<script>
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+},{ threshold: 0.06 });
+document.querySelectorAll('.step-band, .sink-band').forEach(b => io.observe(b));
+</script>
+</body>
+</html>
