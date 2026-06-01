@@ -178,7 +178,10 @@
   overflow: visible;
 }
 #spotlightOverlay.active #spotlightTimeline { opacity: 1; pointer-events: auto; }
-
+#spotlightTimeline,
+#gospelTimeline {
+  display: none !important;
+}
 /* Hide the old track div — line is now a pseudo on .sptl-nodes */
 .sptl-track { display: none; }
 
@@ -272,6 +275,13 @@
   }
   .sptl-node-circle { height: 10px; }
   .sptl-node.active .sptl-node-circle { height: 14px; }
+  #filterDropdown {
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+  }
+  #filterCheckboxList {
+    justify-content: flex-start !important;
+  }
 }
 
 /* ── Desktop only: roomier timeline ── */
@@ -297,19 +307,23 @@
 }
 
 /* =============================================
-   SPOTLIGHT HEADER — gospel timeline replaces
-   the main timeline at the same size/position;
-   no layout change needed to the header itself.
+   SPOTLIGHT HEADER — stacks OT and NT timelines
+   vertically. NT row appears below OT row.
    ============================================= */
 
-/* Remove the distinct header background so it blends with the rest of the overlay,
-   and add top padding to push the timeline away from the top edge */
 #spotlightHeader {
   background: rgba(4,4,16,0.88) !important;
   padding-top: 18px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
 }
 
-/* Desktop: extra top breathing room for timelines */
 @media (min-width: 1161px) {
   #spotlightHeader {
     padding-top: 28px !important;
@@ -319,6 +333,44 @@
 #spotlightTimeline {
   width: 100%;
   max-width: 860px;
+}
+
+/* NT timeline: taller to give wrapped labels space, smaller text */
+#gospelTimeline {
+  margin-top: 6px;
+}
+
+/* NT labels: smaller + allow wrapping so long names don't overflow */
+.gtl-node-label {
+  font-size: 8px !important;
+  white-space: normal !important;
+  word-break: break-word;
+  max-width: 52px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (min-width: 1161px) {
+  .gtl-node-label {
+    font-size: 10px !important;
+    max-width: 72px;
+  }
+}
+
+/* NT timeline needs more height to fit wrapped labels */
+#gospelTimeline { height: 96px !important; }
+#gospelTimeline.visible { height: 96px !important; }
+.gtl-nodes { height: 56px !important; }
+
+@media (min-width: 1161px) {
+  #gospelTimeline { height: 120px !important; }
+  #gospelTimeline.visible { height: 120px !important; }
+  .gtl-nodes { height: 72px !important; }
+}
+
+@media (max-width: 600px) {
+  #gospelTimeline.visible { height: 72px !important; }
+  .gtl-node-label { font-size: clamp(5px, 1.4vw, 8px) !important; max-width: 36px; }
 }
 
 
@@ -388,24 +440,29 @@
 }
 .logo-item:hover img { opacity: 1; }
 /* =============================================
-   GOSPEL SUB-TIMELINE
-   A secondary timeline that appears beneath the
-   main one when an active card is in the gospel
-   range (70–118). Hidden otherwise.
+   NEW TESTAMENT (NT) SUB-TIMELINE
+   Sits below the OT timeline when NT cards are
+   active. Hidden when only OT cards are shown.
    ============================================= */
+
+/* Header stacks the two timelines vertically */
+#spotlightHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
 
 #gospelTimeline {
   position: relative;
   width: 100%;
   max-width: 860px;
   box-sizing: border-box;
-  /* Starts hidden — shown only when replacing the main timeline */
-  display: none;
+  display: none;          /* hidden until NT cards active */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease 0.15s;
   height: 80px;
-  flex: 1;
   overflow: visible;
   flex-direction: column;
   align-items: center;
@@ -416,6 +473,16 @@
   display: flex;
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Thin separator between OT and NT timelines */
+#gospelTimeline::before {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 auto 4px;
 }
 
 /* Node container — mirrors .sptl-nodes */
@@ -443,7 +510,7 @@
   z-index: 0;
 }
 
-/* Individual gospel node */
+/* Individual NT node */
 .gtl-node {
   display: flex;
   flex-direction: column;
@@ -452,7 +519,7 @@
   z-index: 1;
 }
 
-/* Tick mark — matches .sptl-node-circle exactly */
+/* Tick mark */
 .gtl-node-circle {
   width: 2px;
   height: 12px;
@@ -464,7 +531,7 @@
   order: 1;
 }
 
-/* Label — matches .sptl-node-label exactly */
+/* Label */
 .gtl-node-label {
   font-size: 10px;
   font-weight: 700;
@@ -477,11 +544,11 @@
   text-align: center;
 }
 
-/* Stagger: odd above, even below — mirrors main timeline */
+/* Stagger: odd above, even below */
 .gtl-node:nth-child(odd)  .gtl-node-label { order: 0; margin-bottom: 4px; margin-top: 0; }
 .gtl-node:nth-child(even) .gtl-node-label { order: 2; margin-top: 4px; margin-bottom: 0; }
 
-/* Active state — matches .sptl-node.active exactly */
+/* Active state */
 .gtl-node.active .gtl-node-label { color: #ffbd59; }
 .gtl-node.active .gtl-node-circle {
   background: #ffbd59;
@@ -490,7 +557,7 @@
   box-shadow: 0 0 8px rgba(255,189,89,0.8);
 }
 
-/* Mobile — mirrors main timeline mobile rules */
+/* Mobile */
 @media (max-width: 600px) {
   #gospelTimeline.visible { height: 50px; overflow: hidden; }
   .gtl-node-label { font-size: clamp(6px, 1.6vw, 9px); letter-spacing: 0; }
@@ -505,29 +572,16 @@
   .gtl-node.active .gtl-node-circle { height: 14px; }
 }
 
-/* Desktop — mirrors main timeline desktop enlargement */
+/* Desktop */
 @media (min-width: 1161px) {
-  #gospelTimeline {
-    height: 112px;
-    max-width: 1000px;
-    
-  }
+  #gospelTimeline { height: 112px; max-width: 1000px; }
   #gospelTimeline.visible { height: 112px; }
   .gtl-nodes { height: 68px; }
-  .gtl-node-label {
-    font-size: 13px;
-    letter-spacing: 0.06em;
-  }
+  .gtl-node-label { font-size: 13px; letter-spacing: 0.06em; }
   .gtl-node:nth-child(odd)  .gtl-node-label { margin-bottom: 7px; }
   .gtl-node:nth-child(even) .gtl-node-label { margin-top:    7px; }
-  .gtl-node-circle {
-    width: 3px;
-    height: 16px;
-  }
-  .gtl-node.active .gtl-node-circle {
-    width: 4px;
-    height: 26px;
-  }
+  .gtl-node-circle { width: 3px; height: 16px; }
+  .gtl-node.active .gtl-node-circle { width: 4px; height: 26px; }
 }
 
     /* =============================================
@@ -695,6 +749,278 @@
       to   { transform: scale(3.5); opacity: 0; }
     }
 
+    /* =============================================
+   FILTER DROPDOWN — card image rows
+   ============================================= */
+
+/* Each row: checkbox + card thumbnail + label + range */
+.filter-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+  min-height: 52px;
+}
+.filter-checkbox-row:hover { background: rgba(255,255,255,0.07); }
+
+/* Card thumbnail — replaces the icon */
+.filter-card-thumb {
+  width: 36px;
+  height: 54px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+}
+.filter-checkbox-row:hover .filter-card-thumb {
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.55);
+}
+
+/* Dim the thumb when the category is unchecked */
+.filter-cb:not(:checked) ~ .filter-card-thumb {
+  opacity: 0.38;
+  filter: grayscale(60%);
+}
+
+/* Label and range — same as before but tweak spacing */
+.filter-cb-label {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgb(0, 0, 0) !important;  /* was 0.38 — too faint */
+  letter-spacing: 0.03em;
+}
+.filter-cb-range {
+  font-size: 10px;
+  color: rgba(165, 80, 80, 0.38);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* Make the dropdown taller/wider to accommodate card images */
+.filter-dropdown {
+  min-width: 240px !important;
+  max-height: 70vh !important;
+}
+/* =============================================
+   FILTER DROPDOWN — horizontal card grid
+   ============================================= */
+
+/* Wrap needs relative positioning so the dropdown can anchor to it */
+.filter-dropdown-wrap {
+  position: relative;
+}
+
+/* The dropdown itself — breaks out wide, anchors left to the wrap */
+#filterDropdown {
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 0 !important;
+  right: auto !important;
+  width: max-content !important;
+  max-width: min(96vw, 520px) !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  z-index: 9000 !important;
+  box-sizing: border-box !important;
+}
+
+/* On mobile: stretch edge to edge with small margin */
+/* Desktop: bigger dropdown */
+@media (min-width: 601px) {
+  #filterDropdown {
+    min-width: 480px !important;
+  }
+  .filter-checkbox-row {
+    width: 96px !important;
+  }
+  .filter-card-thumb {
+    width: 72px !important;
+    height: 108px !important;
+  }
+  .filter-cb-label {
+    font-size: 11px !important;
+    width: 88px !important;
+  }
+#filterCheckboxList {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  padding: 8px 4px 10px !important;
+  justify-content: flex-start !important;
+}
+}
+
+/* Mobile: edge-to-edge with close button */
+@media (max-width: 600px) {
+  #filterDropdown {
+    position: fixed !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    top: 120px !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  /* Show the close button only on mobile */
+  #filterMobileClose {
+    display: flex !important;
+    
+  }
+}
+
+/* Grid of cards */
+#filterCheckboxList {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  max-width: 100% !important;
+  padding: 10px 10px 10px 10px !important;
+  background-color: #ffffff;
+}
+
+/* Each item: vertical stack — image on top, label below */
+.filter-checkbox-row {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 4px 8px !important;
+  cursor: pointer !important;
+  border-radius: 8px !important;
+  width: 72px !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  transition: background 0.15s ease !important;
+  border: none !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  min-height: 120px !important;
+}
+
+
+/* Hide the raw checkbox and old UI elements */
+.filter-checkbox-row input.filter-cb,
+.filter-checkbox-row .filter-cb-box,
+.filter-checkbox-row .filter-cat-icon,
+.filter-checkbox-row .filter-cb-range {
+  display: none !important;
+}
+
+/* Card thumbnail — correct 2:3 portrait ratio */
+.filter-card-thumb {
+  width: 56px !important;
+  height: 84px !important;
+  border-radius: 5px !important;
+  object-fit: cover !important;
+  display: block !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.55) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+              opacity 0.2s ease, filter 0.2s ease !important;
+  /* Deselected state */
+  opacity: 0.28 !important;
+  filter: grayscale(75%) !important;
+}
+
+/* Selected state — full color, slight lift */
+.filter-checkbox-row.is-checked .filter-card-thumb {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 16px rgba(0,0,0,0.6) !important;
+}
+.filter-checkbox-row:hover .filter-card-thumb {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 7px 20px rgba(0,0,0,0.65) !important;
+}
+
+/* Label below the card — always visible, dims when deselected */
+.filter-cb-label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: rgba(66, 66, 66, 0.685) !important;
+  letter-spacing: 0.02em !important;
+  text-align: center !important;
+  line-height: 1.25 !important;
+  white-space: normal !important;
+  width: 64px !important;
+  min-height: 1em !important;
+  transition: color 0.18s ease !important;
+  display: block !important;
+  visibility: visible !important;
+  overflow: visible !important;
+  flex-shrink: 0 !important;
+  margin-top: 7px;
+}
+.filter-checkbox-row.is-checked .filter-cb-label {
+  color: #6e6e6e !important;
+}
+
+/* Footer */
+.filter-dropdown-footer {
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  padding-top: 8px !important;
+  margin-top: 4px !important;
+  display: flex !important;
+  gap: 8px !important;
+}
+/* ── Menu hint lines ── */
+.menu-hints {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 2px 0;
+  align-self: center;
+}
+.menu-hint-line {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.5);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.menu-hint-line i {
+  font-size: 10px;
+  margin-right: 5px;
+  color: rgba(0,0,0,0.3);
+}
+.menu-hint-line kbd {
+  font-family: inherit;
+  font-size: 10px;
+  background: rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: rgba(0,0,0,0.5);
+}
+@media (max-width: 600px) {
+  .menu-hints {
+    font-size: 10px;
+    gap: 3px 12px;
+    padding: 6px 0 2px;
+    width: 100%;
+  }
+  .menu-hint-line {
+    font-size: 10px;
+  }
+}
+.menu-hints--mobile  { display: none; }
+.menu-hints--desktop { display: flex; }
+@media (max-width: 600px) {
+  .menu-hints--mobile  { display: flex; }
+  .menu-hints--desktop { display: none; }
+}
     </style>
 
 <body>
@@ -782,12 +1108,13 @@
       </p>
     </div>
     <div class="button-group" style="padding-bottom: 0px; margin-bottom: 0px;">
-      <a href="#AnchorPracticeMode" class="primary-btn2">Open Digital Version</a>
-      <a href="#" class="secondary-btn" id="openBuyModal">
-        Buy or Order Hard Copy
+      <a href="./Anchor_Menu.html" class="primary-btn2">Instruction Guide</a>
+      <a href="#AnchorPracticeMode" class="secondary-btn">
+        Try Digital Version
       </a>
     </div>
 
+      <!-- <a href="#AnchorPracticeMode" class="secondary-btn" id="openBuyModal"> -->
 
   </div>
 </section>
@@ -1635,8 +1962,12 @@ My mouth will speak in praise of the Lord.
                 <i class="fas fa-chevron-down filter-chevron" id="filterChevron"></i>
               </button>
               <div class="filter-dropdown" id="filterDropdown">
-                <div class="filter-dropdown-header">Show Categories</div>
-                <div id="filterCheckboxList" class="filter-checkbox-list"></div>
+<div class="filter-dropdown-header" style="display:flex;align-items:center;justify-content:space-between;">
+  <span>Show Categories</span>
+  <button id="filterMobileClose" style="display:none;background:none;border:none;color:rgba(3, 3, 3, 0.7);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;" aria-label="Close filter">
+    <i class="fas fa-times"></i>
+  </button>
+</div>                <div id="filterCheckboxList" class="filter-checkbox-list"></div>
                 <div class="filter-dropdown-footer">
                   <button class="filter-footer-btn" id="filterSelectAll">All</button>
                   <button class="filter-footer-btn" id="filterSelectNone">None</button>
@@ -1652,47 +1983,11 @@ My mouth will speak in praise of the Lord.
             </div>
             <span id="colsLabel">9</span>
           </div>
-        </div>
-
-        <div class="menu-divider"></div>
-
-        <!-- GROUP: Info -->
-        <div class="menu-group">
-          <div class="menu-group-label">Info</div>
-          <div class="menu-group-btns">
-            <button id="didYouKnowBtn" class="menu-btn" data-variant="dyk" title="Did you know? — About Anchor" onclick="document.getElementById('features-main-heading').scrollIntoView({behavior: 'smooth'})">
-              <i class="fas fa-lightbulb"></i><span>Did You Know?</span>
-            </button>
-            <!-- HELP DROPDOWN -->
-            <div class="help-dropdown-wrap" id="helpDropdownWrap">
-              <button id="helpBtn" class="menu-btn" data-variant="help" title="How to use Anchor" >
-                <i class="fas fa-question-circle"></i><span>How to Play</span>
-              </button>
-              <div class="help-dropdown" id="helpDropdown">
-                <div class="help-dropdown-header">How to Use Anchor</div>
-                <div class="help-dropdown-body">
-                  <div class="help-drop-section">
-                    <div class="help-drop-label">Controls</div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#fff8ed;color:#c2410c;"><i class="fas fa-hand-pointer"></i></span><span class="help-drop-text"><strong>Click/Tap</strong> a card to flip it over</span></div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#eff6ff;color:#1d4ed8;"><i class="fas fa-mouse-pointer"></i></span><span class="help-drop-text"><strong>Right-click/Double-tap</strong> to inspect in spotlight</span></div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="fas fa-layer-group"></i></span><span class="help-drop-text"><strong>Ctrl+click</strong> to multi-select cards</span></div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#f0fdf4;color:#15803d;"><i class="fas fa-grip-vertical"></i></span><span class="help-drop-text"><strong>Drag</strong> cards to reorder them</span></div>
-                  </div>
-                  <div class="help-drop-divider"></div>
-                  <div class="help-drop-section">
-                    <div class="help-drop-label">After Check Order</div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#ecfdf5;color:#10b981;"><i class="fas fa-check-circle"></i></span><span class="help-drop-text"><strong style="color:#065f46;">Correct</strong> — exactly right</span></div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#fffbeb;color:#f59e0b;"><i class="fas fa-exclamation-circle"></i></span><span class="help-drop-text"><strong style="color:#78350f;">Close</strong> — one or two off</span></div>
-                    <div class="help-drop-row"><span class="help-drop-icon" style="background:#fef2f2;color:#ef4444;"><i class="fas fa-times-circle"></i></span><span class="help-drop-text"><strong style="color:#7f1d1d;">Wrong</strong> — needs to move</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button id="muteBtn" class="menu-btn" data-variant="mute" title="Mute / unmute sound effects">
-              <i class="fas fa-volume-up" id="muteIcon"></i><span id="muteLabel">Sound</span>
-            </button>
-          </div>
-
+          <!-- Hints shown below slider on mobile only
+          <div class="menu-hints menu-hints--mobile">
+            <span class="menu-hint-line"><i class="fas fa-hand-pointer"></i> Tap to flip &amp; drag to reorder</span>
+            <span class="menu-hint-line"><i class="fas fa-search"></i> Double-tap to spotlight</span>
+          </div> -->
         </div>
 
       </div>
@@ -2284,7 +2579,6 @@ See who can arrange the story most accurately. Talk through the events. Discuss 
             <h4>Company</h4>
             <ul>
                 <li><a href="../index.html#story">About OC</a></li>
-                <li><a href="../index.html#founders">Founders</a></li>
                 <li><a href="../index.html#values">Values</a></li>
             </ul>
         </div>
@@ -2782,13 +3076,14 @@ function playFlipShimmer(faceEl){
 }
 
 // ============================================================
-//  SPOTLIGHT TIMELINE
+//  OT SPOTLIGHT TIMELINE  (shown only for OT cards)
 // ============================================================
 function renderTimeline(activeCatIds) {
+  const tl    = document.getElementById('spotlightTimeline');
   const nodes = document.querySelector('.sptl-nodes');
-  if (!nodes) return;
+  if (!nodes || !tl) return;
   nodes.innerHTML = '';
-  CATEGORIES.forEach(cat => {
+  CATEGORIES.filter(cat => cat.testament === 'ot').forEach(cat => {
     const isActive = activeCatIds.includes(cat.id);
     const node = document.createElement('div');
     node.className = 'sptl-node' + (isActive ? ' active' : '');
@@ -2801,59 +3096,45 @@ function renderTimeline(activeCatIds) {
 }
 
 // ============================================================
-//  GOSPEL SUB-TIMELINE
+//  NT TIMELINE  (shown only for NT cards; hides OT timeline)
 // ============================================================
-const GOSPEL_PHASES = [
-  { id:'childhood',    label:'Childhood',     min:70,  max:76  },
-  { id:'preparation',  label:'Preparation',   min:77,  max:81  },
-  { id:'year1',        label:'1st Year',      min:82,  max:87  },
-  { id:'year2',        label:'2nd Year',      min:88,  max:95  },
-  { id:'year3',        label:'3rd Year',      min:96,  max:100 },
-  { id:'sixmonths',    label:'Last 6 Months',      min:101, max:106 },
-  { id:'passionweek',  label:'Passion Week',  min:107, max:118 },
-];
-
-function cardGospelPhase(num) {
-  return GOSPEL_PHASES.find(p => num >= p.min && num <= p.max);
-}
-
 /**
- * Swap between the main timeline and the Gospel timeline.
+ * activeNums  – array of card numbers currently spotlit
+ * showNT      – true = NT card(s) active; false = OT card(s) or multi-select
  *
- * showGospel = true  → hide main #spotlightTimeline, show #gospelTimeline
- *                       with the correct phase node highlighted.
- * showGospel = false → show main #spotlightTimeline, hide #gospelTimeline.
- *
- * activeNums – array of card numbers currently spotlit (used to pick phase).
+ * When showNT is true:  hide OT timeline, show NT timeline with active node(s) lit.
+ * When showNT is false: show OT timeline, hide NT timeline.
  */
-function renderGospelTimeline(activeNums, showGospel) {
+function renderGospelTimeline(activeNums, showNT) {
   const mainTl = document.getElementById('spotlightTimeline');
   const gtl    = document.getElementById('gospelTimeline');
   const nodes  = gtl ? gtl.querySelector('.gtl-nodes') : null;
-  if (!gtl || !nodes || !mainTl) return;
+  if (!gtl || !nodes) return;
 
-  if (!showGospel) {
-    // Restore normal timeline, hide gospel one
-    mainTl.style.display = '';
+  if (!showNT) {
+    // OT card (or no timeline mode): show OT row, hide NT row
+    if (mainTl) mainTl.style.display = '';
     gtl.classList.remove('visible');
     return;
   }
 
-  // Hide the main (category) timeline — gospel timeline replaces it
-  mainTl.style.display = 'none';
+  // NT card: hide OT timeline, show NT timeline
+  if (mainTl) mainTl.style.display = 'none';
 
-  // Build set of active phase ids from card numbers
-  const activePhaseIds = new Set(
-    activeNums.map(n => cardGospelPhase(n)?.id).filter(Boolean)
+  const activeNTCatIds = new Set(
+    activeNums.map(n => {
+      const cat = cardCategory(n);
+      return cat && cat.testament === 'nt' ? cat.id : null;
+    }).filter(Boolean)
   );
 
   nodes.innerHTML = '';
-  GOSPEL_PHASES.forEach(phase => {
-    const isActive = activePhaseIds.has(phase.id);
+  CATEGORIES.filter(cat => cat.testament === 'nt').forEach(cat => {
+    const isActive = activeNTCatIds.has(cat.id);
     const node = document.createElement('div');
     node.className = 'gtl-node' + (isActive ? ' active' : '');
     node.innerHTML = `
-      <span class="gtl-node-label">${phase.label}</span>
+      <span class="gtl-node-label">${cat.label}</span>
       <span class="gtl-node-circle"></span>
     `;
     nodes.appendChild(node);
@@ -3017,10 +3298,11 @@ function openSpotlight(cardEl,ox,oy){
   document.getElementById('spotlightLabel').textContent=''; // label hidden
   document.getElementById('spotlightInner').classList.remove('flipped');
   overlay.classList.add('active');
-  const _singleCat = cardCategory(parseInt(n));
-  renderTimeline([_singleCat?.id].filter(Boolean));
-  // Show Gospel sub-timeline only when the card is in the gospels category
-  renderGospelTimeline([parseInt(n)], _singleCat?.id === 'gospels');
+const _singleCat = cardCategory(parseInt(n));
+  const _isNT = _singleCat?.testament === 'nt';
+  // OT card: render OT timeline. NT card: renderGospelTimeline handles everything.
+  if (!_isNT) renderTimeline([_singleCat?.id].filter(Boolean));
+  renderGospelTimeline([parseInt(n)], _isNT);
   // Reset scroll to top and re-evaluate exit button visibility on mobile
   const _sa = document.getElementById('spotlightScrollArea');
   if(_sa) _sa.scrollTop = 0;
@@ -3217,12 +3499,11 @@ function openMultiSpotlight(cardEls, ox, oy) {
   if(!contentRow.contains(multiPanelRow)) contentRow.appendChild(multiPanelRow);
 
   overlay.classList.add('active');
-  const _multiCatIds = [...new Set(cardEls.map(ce => cardCategory(parseInt(ce.getAttribute('data-card-number')))?.id).filter(Boolean))];
-  renderTimeline(_multiCatIds);
-  // Show Gospel sub-timeline only when ALL selected cards are in the gospels category (single category)
-  const _multiNums = cardEls.map(ce => parseInt(ce.getAttribute('data-card-number')));
-  const _allGospel = _multiCatIds.length === 1 && _multiCatIds[0] === 'gospels';
-  renderGospelTimeline(_multiNums, _allGospel);
+// Multi-select: hide both timelines
+  const mainTl = document.getElementById('spotlightTimeline');
+  const ntTl   = document.getElementById('gospelTimeline');
+  if (mainTl) mainTl.style.display = 'none';
+  if (ntTl)   ntTl.classList.remove('visible');
   document.body.style.top = `-${window.scrollY}px`;
   document.body.style.position = 'fixed';
   document.body.style.left = '0';
@@ -3255,7 +3536,7 @@ function closeSpotlight(){
   stopAmbientTrail();
   overlay.classList.remove('active');
   overlay.classList.remove('multi-mode');
-  // Restore main timeline, hide gospel sub-timeline
+// Reset both timelines on close
   const _gtl = document.getElementById('gospelTimeline');
   if (_gtl) _gtl.classList.remove('visible');
   const _mainTl = document.getElementById('spotlightTimeline');
@@ -3342,13 +3623,25 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&spotlightOpen)close
 //  CATEGORIES
 // ============================================================
 const CATEGORIES = [
-  { id:'creation',    label:'Creation',       icon:'fa-star',          min:1,   max:29,  testament:'ot' },
-  { id:'conquest',    label:'Conquest',        icon:'fa-shield-alt',    min:30,  max:41,  testament:'ot' },
+  { id:'creation',    label:'Creation',       icon:'fa-star',          min:1,   max:8,  testament:'ot' },
+  { id:'exodus',    label:'Exodus',       icon:'fa-star',          min:9,   max:17,  testament:'ot' },
+  { id:'priesthood',    label:'Priesthood',       icon:'fa-star',          min:18,   max:21,  testament:'ot' },
+  { id:'wilderness',    label:'Wilderness',       icon:'fa-star',          min:22,   max:29,  testament:'ot' },
+  { id:'conquest',    label:'Conquest',        icon:'fa-shield-alt',    min:30,  max:36,  testament:'ot' },
+  { id:'judges',    label:'Judges',        icon:'fa-shield-alt',    min:37,  max:41,  testament:'ot' },
   { id:'kingship',    label:'Kingship',        icon:'fa-crown',         min:42,  max:55,  testament:'ot' },
   { id:'Divide',       label:'Divide/Exile',  icon:'fa-scissors',         min:56,  max:64,  testament:'ot' },
   { id:'return',       label:'Return',  icon:'fa-person-walking-arrow-loop-left',         min:65,  max:69,  testament:'ot' },
-  { id:'gospels',     label:'Gospels',     icon:'fa-cross',         min:70,  max:118, testament:'nt' },
-  { id:'earlychurch', label:'Early Church',    icon:'fa-church',        min:119, max:140, testament:'nt' },
+  { id:'childhood',     label:'Childhood',     icon:'fa-cross',         min:70,  max:76, testament:'nt' },
+  { id:'preparation',     label:'Preparation',     icon:'fa-cross',         min:77,  max:81, testament:'nt' },
+  { id:'1st Year of Ministry',     label:'1st Year of Ministry',     icon:'fa-cross',         min:82,  max:87, testament:'nt' },
+  { id:'2nd Year of Ministry',     label:'2nd Year of Ministry',     icon:'fa-cross',         min:88,  max:95, testament:'nt' },
+  { id:'3rd Year of Ministry',     label:'3rd Year of Ministry',     icon:'fa-cross',         min:96,  max:100, testament:'nt' },
+  { id:'Final 6 Months',     label:'Final 6 Months',     icon:'fa-cross',         min:101,  max:106, testament:'nt' },
+  { id:'Passion Week',     label:'Passion Week',     icon:'fa-cross',         min:107,  max:118, testament:'nt' },
+  { id:'earlychurch', label:'Early Church',    icon:'fa-church',        min:119, max:128, testament:'nt' },
+  { id:'Pauls Journeys', label:'Pauls Journeys',    icon:'fa-church',        min:129, max:136, testament:'nt' },
+  { id:'Epistles', label:'Epistles',    icon:'fa-church',        min:137, max:140, testament:'nt' },
   { id:'revelation',  label:'Revelation',      icon:'fa-explosion',          min:141, max:150, testament:'nt' },
 ];
 
@@ -4143,22 +4436,24 @@ document.getElementById('shuffleBtn').addEventListener('click',()=>{
   sounds.shuffle();resetGameStats();startGameTimer();
 });
 
-// Mute button
-document.getElementById('muteBtn').addEventListener('click',()=>{
-  soundMuted=!soundMuted;
-  const icon=document.getElementById('muteIcon');
-  const label=document.getElementById('muteLabel');
-  const btn=document.getElementById('muteBtn');
-  if(soundMuted){
-    icon.className='fas fa-volume-xmark';
-    label.textContent='Muted';
-    btn.classList.add('muted');
-  } else {
-    icon.className='fas fa-volume-up';
-    label.textContent='Sound';
-    btn.classList.remove('muted');
-  }
-});
+// Mute button (optional — only wire up if element exists)
+const _muteBtn = document.getElementById('muteBtn');
+if (_muteBtn) {
+  _muteBtn.addEventListener('click',()=>{
+    soundMuted=!soundMuted;
+    const icon=document.getElementById('muteIcon');
+    const label=document.getElementById('muteLabel');
+    if(soundMuted){
+      icon.className='fas fa-volume-xmark';
+      label.textContent='Muted';
+      _muteBtn.classList.add('muted');
+    } else {
+      icon.className='fas fa-volume-up';
+      label.textContent='Sound';
+      _muteBtn.classList.remove('muted');
+    }
+  });
+}
 
 document.getElementById('checkBtn').addEventListener('click',()=>{
   clearCheckClasses();let correct=0,close=0,total=0;
@@ -4550,31 +4845,47 @@ function updateProgress(c,t){const pct=t>0?Math.round(c/t*100):0;const pf=docume
 
   setTimeout(showTip, 1800);
 })();
-
-// ============================================================
-//  FILTER DROPDOWN
-// ============================================================
 function buildFilterDropdown(){
   const list=document.getElementById('filterCheckboxList');
   list.innerHTML='';
   const cats=getCategoriesForTestament(currentTestament);
+  const thumbFallback=`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='84'%3E%3Crect width='56' height='84' rx='5' fill='%23334155'/%3E%3C/svg%3E`;
+
   cats.forEach(cat=>{
     const checked=activeCategories.has(cat.id);
     const row=document.createElement('label');
-    row.className='filter-checkbox-row';
-    row.innerHTML=`
-      <input type="checkbox" class="filter-cb" data-cat="${cat.id}" ${checked?'checked':''}>
-      <span class="filter-cb-box"><i class="fas fa-check filter-cb-check"></i></span>
-      <span class="filter-cat-icon"><i class="fas ${cat.icon}"></i></span>
-      <span class="filter-cb-label">${cat.label}</span>
-      <span class="filter-cb-range">${cat.min}–${cat.max}</span>`;
+    row.className='filter-checkbox-row'+(checked?' is-checked':'');
+
+    const cb=document.createElement('input');
+    cb.type='checkbox';cb.className='filter-cb';
+    cb.dataset.cat=cat.id;cb.checked=checked;
+
+    const img=document.createElement('img');
+    img.className='filter-card-thumb';
+    img.src=`../images/cards/${cat.min}.png`;
+    img.alt=cat.label;
+    img.onerror=function(){this.src=thumbFallback;};
+
+    const lbl=document.createElement('span');
+    lbl.className='filter-cb-label';
+    lbl.textContent=cat.label;
+
+    row.appendChild(cb);
+    row.appendChild(img);
+    row.appendChild(lbl);
     list.appendChild(row);
   });
-  // wire up checkboxes
+
   list.querySelectorAll('.filter-cb').forEach(cb=>{
     cb.addEventListener('change',()=>{
-      if(cb.checked) activeCategories.add(cb.dataset.cat);
-      else activeCategories.delete(cb.dataset.cat);
+      const row=cb.closest('.filter-checkbox-row');
+      if(cb.checked){
+        activeCategories.add(cb.dataset.cat);
+        row.classList.add('is-checked');
+      } else {
+        activeCategories.delete(cb.dataset.cat);
+        row.classList.remove('is-checked');
+      }
       updateFilterBtnState();
       renderCards();clearCheckClasses();resetGameStats();
     });
@@ -4606,17 +4917,18 @@ function updateFilterBtnState(){
   const dropdown=document.getElementById('filterDropdown');
   const chevron=document.getElementById('filterChevron');
   let open=false;
-  function openDropdown(){
+function openDropdown(){
     open=true;
-    // On mobile, position: fixed needs a manual top so it sits below the button
+
+
+    dropdown.classList.add('open');
+    chevron.style.transform='rotate(180deg)';
     if (window.innerWidth <= 600) {
       const rect = btn.getBoundingClientRect();
       dropdown.style.top = (rect.bottom + 8) + 'px';
     } else {
       dropdown.style.top = '';
     }
-    dropdown.classList.add('open');
-    chevron.style.transform='rotate(180deg)';
   }
   function closeDropdown(){
     open=false;
@@ -4638,6 +4950,13 @@ function updateFilterBtnState(){
     getCategoriesForTestament(currentTestament).forEach(c=>activeCategories.delete(c.id));
     buildFilterDropdown();renderCards();clearCheckClasses();resetGameStats();
   });
+  const mobileClose = document.getElementById('filterMobileClose');
+  if (mobileClose) {
+    mobileClose.addEventListener('click', e => {
+      e.stopPropagation();
+      closeDropdown();
+    });
+  }
 })();
 
 // Help Dropdown (hover on desktop, tap on mobile)
