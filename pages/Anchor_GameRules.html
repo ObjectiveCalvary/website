@@ -6,6 +6,7 @@
 <title>Anchor Game Rules</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="../images/OC_64px.png" sizes="48x48">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 /* ── Reset ── */
@@ -32,35 +33,32 @@ body { font-family:Arial, Helvetica, sans-serif; overflow-x: hidden; background:
 .back-btn {
   position: fixed;
   top: 1rem; left: 1rem; z-index: 300;
-  background: rgba(255,255,255,0.22);
+  background-color: #40654a;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255,189,89,0.5);
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 0.55rem 1.2rem;
   font-size: 0.82rem; font-weight: 800;
-  color: #5a4320; text-decoration: none;
+  color: #fff; text-decoration: none;
   display: flex; align-items: center; gap: 0.4rem;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
   transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), background 0.2s;
   letter-spacing: 0.05em;
+ 
 }
-.back-btn:hover { transform: translateX(-5px) scale(1.05); background: rgba(255,255,255,0.38); }
 
 /* ════════════════════════════════════
    HERO — matches menu sand/gold theme
 ════════════════════════════════════ */
 .hero {
-  min-height: 85svh;
+  min-height: 50svh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 0rem 1.5rem 8rem;
+  padding: 4rem 1.5rem 6rem;
   position: relative; overflow: hidden;
   background: #e4decb;
 }
 
-/* Radial soft glow overlay like menu */
 .hero::before {
   content: '';
   position: absolute; inset: 0;
@@ -95,13 +93,13 @@ body { font-family:Arial, Helvetica, sans-serif; overflow-x: hidden; background:
 }
 
 .logo-ring {
-  width: 278px; height: 278px;
+  width: 180px; height: 180px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   animation: float-bob 4.2s ease-in-out infinite;
   flex-shrink: 0;
 }
-.logo-ring img { width: 278px; height: 278px; object-fit: contain; display: block; }
+.logo-ring img { width: 180px; height: 180px; object-fit: contain; display: block; }
 .logo-fallback {
   display: none; width: 90px; height: 90px; border-radius: 50%;
   background: linear-gradient(135deg, #f8d06c 0%, #d6b027 100%);
@@ -117,7 +115,7 @@ body { font-family:Arial, Helvetica, sans-serif; overflow-x: hidden; background:
 }
 
 .hero-title {
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: var(--gold);
   font-size: clamp(2.8rem, 10vw, 4.2rem);
   font-weight: 900;
@@ -595,13 +593,11 @@ body { font-family:Arial, Helvetica, sans-serif; overflow-x: hidden; background:
   <div class="logo-container">
 
     <div class="logo-ring">
-      <img src="../images/Anchor_64px.png" alt="Anchor Logo"
-        onerror="this.style.display='none';document.querySelector('.logo-fallback').style.display='flex';">
-      <div class="logo-fallback">⚓</div>
+<i class="fa-solid fa-users" style="font-size: 140px; color: #40654a;"></i>
     </div>
   </div>
 
-  <h1 class="hero-title">Game Rules</h1>
+  <h1 class="hero-title" style="color: #40654a;">Game Rules</h1>
 
   <!-- <div class="hero-divider">
     <div class="div-line"></div>
@@ -610,8 +606,7 @@ body { font-family:Arial, Helvetica, sans-serif; overflow-x: hidden; background:
   </div> -->
 
   <p class="hero-sub">
-    Discover how the Bible fits together as one unified story through engaging, competitive gameplay rooted in sound theology and trusted scholarship.
-  </p>
+Discover together through fun.  </p>
 
   <div class="section-wave">
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -663,7 +658,7 @@ body { font-family:Arial, Helvetica, sans-serif; overflow-x: hidden; background:
   <div class="step-inner">
      <div class="step-body">
       <div class="step-section-img">
-        <img src="../images/Goal.png" alt="Game Goal" onerror="this.closest('.step-section-img').style.display='none'">
+        <img src="../images/goal.png" alt="Game Goal" onerror="this.closest('.step-section-img').style.display='none'">
       </div>
       <div class="step-body-text">
         <h2>Goal</h2>

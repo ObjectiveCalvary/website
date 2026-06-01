@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anchor Main Menu</title>
 <link rel="icon" href="../images/OC_64px.png" sizes="48x48">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -451,17 +452,17 @@ canvas {
   <nav class="btn-group" aria-label="Main menu">
 
     <button class="menu-btn btn-game" data-href="Anchor_GameRules.html">
-      <span class="btn-label">Game Rules</span>
+      <span class="btn-label"><i class="fa-solid fa-users"></i>  Game Rules</span>
 
     </button>
 
     <button class="menu-btn btn-discipleship" data-href="Anchor_Discipleship.html">
-      <span class="btn-label">Discipleship</span>
+      <span class="btn-label"><i class="fa-solid fa-comments"></i>  Discipleship</span>
 
     </button>
 
     <button class="menu-btn btn-devotional" data-href="Anchor_BibleStudy.html">
-      <span class="btn-label">Bible Study</span>
+      <span class="btn-label"><i class="fa-solid fa-seedling" ></i>  Bible Study</span>
 
     </button>
 
@@ -765,31 +766,60 @@ function handleNav(page){
 
 <!-- explosion uses DOM divs, no canvas needed -->
 
+
+
 <script>
 /* ════════════════════════════════════════════════
-   TAP → RAPID COLOUR FLASH + SHAKE → PARTICLE EXPLOSION
+   TAP → SHAKE → CARD EXPLOSION → NAVIGATE
    ════════════════════════════════════════════════ */
 (function(){
+
   const PALETTE = [
     '#ffbd59','#f8d06c','#ed9e71','#eb8a18','#d6b027',
     '#70af81','#40654a','#258fa2','#006484','#7b98bd',
     '#374ca6','#7d92e6','#858bd8','#a273a2','#903e62',
     '#8f2b58','#bd444c','#db4c61','#cf8404','#d4ac75'
   ];
+  const COVER_PALETTE = [
+    '#ffbd59','#258fa2','#903e62','#70af81',
+    '#374ca6','#ed9e71','#858bd8','#d6b027',
+    '#bd444c','#40654a','#a273a2','#006484',
+    '#db4c61','#7d92e6','#cf8404','#8f2b58',
+  ];
 
-  function hexToRgb(h){ return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]; }
-  function rgba(hex,a){ const [r,g,b]=hexToRgb(hex); return `rgba(${r},${g},${b},${a})`; }
+  function hexToRgb(h){
+    if(h && h.startsWith('rgb')){
+      const m = h.match(/\d+/g);
+      return m ? [+m[0],+m[1],+m[2]] : [0,0,0];
+    }
+    return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+  }
   function lerp(a,b,t){ return a+(b-a)*t; }
   function lerpCol(a,b,t){
-    const ra=hexToRgb(a),rb=hexToRgb(b);
+    const ra=hexToRgb(a), rb=hexToRgb(b);
     return `rgb(${Math.round(lerp(ra[0],rb[0],t))},${Math.round(lerp(ra[1],rb[1],t))},${Math.round(lerp(ra[2],rb[2],t))})`;
   }
 
   const CHARGE_MS = 1400;
 
-  const buttons = Array.from(document.querySelectorAll('.menu-btn'));
+  /* ── Sound effects ── */
+  /* Place your audio files at these paths relative to this HTML file */
+  const SFX_CHARGE     = '../sounds/charge.mp3';     /* 1.4 s — power building */
+  const SFX_TRANSITION = '../sounds/transition.mp3'; /* 3.0 s — card explosion  */
 
-  buttons.forEach(btn => {
+  function loadAudio(src){
+    const a = new Audio(src);
+    a.preload = 'auto';
+    return a;
+  }
+  const sfxCharge     = loadAudio(SFX_CHARGE);
+  const sfxTransition = loadAudio(SFX_TRANSITION);
+
+  function playSound(audio){
+    try { audio.currentTime = 0; audio.play().catch(()=>{}); } catch(e){}
+  }
+
+  document.querySelectorAll('.menu-btn').forEach(btn => {
     let busy = false;
 
     function fire(e){
@@ -797,43 +827,42 @@ function handleNav(page){
       if(busy) return;
       busy = true;
 
-      // Capture where the finger/cursor actually landed
-      const originX = e.touches ? e.touches[0].clientX : e.clientX;
-      const originY = e.touches ? e.touches[0].clientY : e.clientY;
+      // Lock in button position and href BEFORE anything changes the DOM
+      const rect = btn.getBoundingClientRect();
+      const OX   = rect.left + rect.width  / 2;
+      const OY   = rect.top  + rect.height / 2;
+      const dest = btn.getAttribute('data-href');  // read with getAttribute, not dataset
 
-      const href = btn.dataset.href;
+      // Determine animation style from button class
+      let animStyle = 'sweep'; // default: Game Rules
+      if(btn.classList.contains('btn-discipleship')) animStyle = 'starburst';
+      if(btn.classList.contains('btn-devotional'))   animStyle = 'cascade';
+
       btn.classList.add('charging');
       btn.style.animation = 'none';
+      playSound(sfxCharge);
 
       const start = performance.now();
-      let palIdx   = 0;
-      let colPhase = 0;
-      let lastCol  = PALETTE[0];
+      let palIdx = 0, colPhase = 0, lastCol = PALETTE[0];
 
       function chargeFrame(now){
-        const elapsed  = now - start;
-        const progress = Math.min(elapsed / CHARGE_MS, 1);
+        const progress = Math.min((now - start) / CHARGE_MS, 1);
 
-        // Blazing colour cycle — already fast at start, frantic at end
         const speed = 0.12 + progress * 0.55;
         colPhase += speed;
         if(colPhase >= 1){ colPhase -= 1; palIdx = (palIdx+1) % PALETTE.length; }
-
-        lastCol = lerpCol(PALETTE[palIdx], PALETTE[(palIdx+1)%PALETTE.length], colPhase);
+        lastCol = lerpCol(PALETTE[palIdx], PALETTE[(palIdx+1) % PALETTE.length], colPhase);
 
         btn.style.backgroundColor = lastCol;
         const glow = 12 + progress * 70;
         const spread = Math.round(progress * 18);
-        btn.style.boxShadow = `0 4px 0 rgba(0,0,0,0.18), 0 0 ${glow}px ${spread}px ${lastCol}ee, 0 0 ${glow*2}px ${spread}px ${lastCol}55, inset 0 1px 0 rgba(255,255,255,0.4)`;
+        btn.style.boxShadow = `0 4px 0 rgba(0,0,0,0.18),0 0 ${glow}px ${spread}px ${lastCol}ee,0 0 ${glow*2}px ${spread}px ${lastCol}55,inset 0 1px 0 rgba(255,255,255,0.4)`;
 
-        // Violent shake + rotation from 20% onwards
-        const p2 = Math.max(0, (progress - 0.2) / 0.8);
-        const shakeXY = p2 * 22;
-        const rotDeg  = p2 * 8;
-        const sc      = 1 + progress * 0.09;
-        const sx = (Math.random()-0.5) * shakeXY;
-        const sy = (Math.random()-0.5) * shakeXY;
-        const rot = (Math.random()-0.5) * rotDeg;
+        const p2 = Math.max(0,(progress-0.2)/0.8);
+        const sx = (Math.random()-0.5)*p2*22;
+        const sy = (Math.random()-0.5)*p2*22;
+        const rot = (Math.random()-0.5)*p2*8;
+        const sc  = 1+progress*0.09;
         btn.style.transform = `translate(${sx}px,${sy}px) rotate(${rot}deg) scale(${sc})`;
 
         if(progress < 1){
@@ -841,80 +870,490 @@ function handleNav(page){
         } else {
           btn.style.transform = 'scale(1.1)';
           btn.style.opacity   = '0';
-          domExplode(lastCol, href, originX, originY);
+          playSound(sfxTransition);
+          domExplode(lastCol, dest, OX, OY, animStyle);
         }
       }
       requestAnimationFrame(chargeFrame);
     }
 
-    btn.addEventListener('click', fire);
+    btn.addEventListener('click',      fire);
     btn.addEventListener('touchstart', fire, {passive:false});
   });
 
+  /* Shared navigate helper — colors the <html> element so the
+     background persists through DOM teardown and into the next page
+     paint, eliminating the white flash between pages.              */
+  function navigateTo(dest, color){
+    if(!dest) return;
+    const s = document.createElement('style');
+    s.textContent = `html,body{background:${color} !important;}`;
+    document.head.appendChild(s);
+    window.location.href = dest;
+  }
+
   /* ══════════════════════════════════════
-     CANVAS EXPLOSION — single canvas, GPU-friendly
+     CARD + COLOUR EXPLOSION → NAVIGATE
   ══════════════════════════════════════ */
-  function domExplode(triggerColor, href, originX, originY){
+  function domExplode(triggerColor, dest, OX, OY, animStyle){
+    if(animStyle === 'starburst') return domExplodeStarburst(triggerColor, dest, OX, OY);
+    if(animStyle === 'cascade')   return domExplodeCascade(triggerColor, dest, OX, OY);
+    return domExpodeSweep(triggerColor, dest, OX, OY);
+  }
+
+  /* ─── GAME RULES: original horizontal sweep ─── */
+  function domExpodeSweep(triggerColor, dest, OX, OY){
     const W = window.innerWidth, H = window.innerHeight;
-    const DPR = window.devicePixelRatio || 1;
 
-    // High-contrast selection from the existing site palette
-    const COVER_PALETTE = [
-      '#ffbd59', '#258fa2', '#903e62', '#70af81',
-      '#374ca6', '#ed9e71', '#858bd8', '#d6b027',
-      '#bd444c', '#40654a', '#a273a2', '#006484',
-      '#db4c61', '#7d92e6', '#cf8404', '#8f2b58',
-    ];
-
-    // Solid cover — snaps to opaque instantly, then cycles through palette colors
+    /* ── Colour cover behind everything ── */
     const cover = document.createElement('div');
-    cover.style.cssText = `
-      position:fixed;inset:0;z-index:999997;pointer-events:none;
-      background:${triggerColor};opacity:0;
-      transition:opacity 0.12s ease-out;
-    `;
+    cover.style.cssText = `position:fixed;inset:0;z-index:9000;pointer-events:none;background:${triggerColor};opacity:0;transition:opacity 0.12s ease-out;`;
     document.body.appendChild(cover);
     cover.getBoundingClientRect(); // force reflow
-    cover.style.opacity = '1';     // snap to solid — hides the page immediately
+    cover.style.opacity = '1';
 
-    // Cycle cover colour through the palette — slower
-    let coverPalIdx = 0;
-    let coverColPhase = 0;
+    let cpIdx = 0, cpPhase = 0;
     function cycleCover(){
-      coverColPhase += 0.05;
-      if(coverColPhase >= 1){ coverColPhase -= 1; coverPalIdx = (coverPalIdx + 1) % COVER_PALETTE.length; }
-      cover.style.background = lerpCol(
-        COVER_PALETTE[coverPalIdx],
-        COVER_PALETTE[(coverPalIdx + 1) % COVER_PALETTE.length],
-        coverColPhase
-      );
+      cpPhase += 0.005; /* was 0.028 — much calmer now */
+      if(cpPhase >= 1){ cpPhase -= 1; cpIdx = (cpIdx+1) % COVER_PALETTE.length; }
+      cover.style.background = lerpCol(COVER_PALETTE[cpIdx], COVER_PALETTE[(cpIdx+1)%COVER_PALETTE.length], cpPhase);
     }
 
-    // Burst origin — centre of the button that was pressed
-    const btn   = document.elementFromPoint(originX, originY)?.closest('.menu-btn');
-    const rect  = btn ? btn.getBoundingClientRect() : null;
-    const OX    = rect ? rect.left + rect.width  / 2 : W / 2;
-    const OY    = rect ? rect.top  + rect.height / 2 : H / 2;
+    /* ── Card burst: small cards scattered across the screen, behind the sweepers ── */
+    function launchBurst(){
+      const burstCount = 18 + Math.floor(Math.random() * 8); // 18–25 cards
+      const burstPool = pool.slice(numSpotlight, numSpotlight + burstCount);
 
-    const DURATION = 1000; // ms
-    const start = performance.now();
+      burstPool.forEach((num, i) => {
+        /* Random start position anywhere on screen */
+        const BCARD_W  = 52 + Math.random() * 38;  // 52–90 px wide
+        const BCARD_H  = BCARD_W * 1.41;
+        const startX   = Math.random() * W;
+        const startY   = Math.random() * H;
 
-    setTimeout(() => {
-      if(href){
-        sessionStorage.setItem('__anchorDrain', cover.style.background);
-        window.location.href = href;
-      }
-    }, DURATION + 60);
+        /* Drift in a random direction, modest distance */
+        const angle    = Math.random() * Math.PI * 2;
+        const dist     = 80 + Math.random() * 160;
+        const tx       = Math.cos(angle) * dist;
+        const ty       = Math.sin(angle) * dist;
 
-    // Keep cycling the cover colour until navigation fires
-    function frame(now){
-      if(now - start < DURATION){
-        cycleCover();
-        requestAnimationFrame(frame);
-      }
+        const delay    = Math.random() * 400;
+        const FLIGHT   = 2500 + Math.random() * 1000;  // 2.5–3.5 s
+        const spin     = (Math.random() - 0.5) * 180;
+        const startRot = (Math.random() - 0.5) * 30;
+
+        const el = document.createElement('div');
+        el.style.cssText = `
+          position:fixed;
+          left:${startX - BCARD_W/2}px;
+          top:${startY - BCARD_H/2}px;
+          width:${BCARD_W}px;height:${BCARD_H}px;
+          border-radius:10px;
+          overflow:hidden;
+          box-shadow:0 6px 22px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.3);
+          z-index:9005;
+          pointer-events:none;
+          opacity:0;
+          will-change:transform,opacity;
+          transform:rotate(${startRot}deg);
+        `;
+
+        const img = document.createElement('img');
+        img.src = `../images/cards/${num}.png`;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        img.onerror = () => { el.style.background = COVER_PALETTE[num % COVER_PALETTE.length]; img.remove(); };
+        el.appendChild(img);
+        document.body.appendChild(el);
+
+        let t0 = null;
+        function anim(now){
+          if(!t0) t0 = now;
+          const t  = Math.min((now - t0) / FLIGHT, 1);
+          const te = 1 - Math.pow(1 - t, 2.5); // ease-out
+
+          el.style.transform = `translate(${tx*te}px,${ty*te}px) rotate(${startRot + spin*te}deg)`;
+          /* fade in, linger, fade out gently */
+          const op = t < 0.10 ? t/0.10 : t > 0.75 ? 1-(t-0.75)/0.25 : 1;
+          el.style.opacity = op * 0.82;
+
+          if(t < 1) requestAnimationFrame(anim);
+          else el.remove();
+        }
+        setTimeout(() => requestAnimationFrame(anim), delay);
+      });
     }
-    requestAnimationFrame(frame);
-  }
+
+    /* ── Shuffle card pool ── */
+    const pool = Array.from({length:150},(_,i)=>i+1);
+    for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]; }
+
+    /* ── Random 3–5 spotlight cards ── */
+    const numSpotlight = 3 + Math.floor(Math.random() * 3); // 3, 4, or 5
+    const spotlightCards = pool.slice(0, numSpotlight);
+
+    /* ── Launch burst now that pool + numSpotlight are defined ── */
+    launchBurst();
+
+    const BASE_W = Math.min(105, W * 0.20);
+
+    function launchCard(num, delay){
+      const CARD_W = BASE_W * 3.2;
+      const CARD_H = CARD_W * 1.41;
+      const FLIGHT_MS = 2800 + Math.random() * 500;
+
+      const fromLeft = Math.random() < 0.5;
+      const startX = fromLeft ? -CARD_W : W + CARD_W;
+      const startY = H * (0.12 + Math.random() * 0.72);
+      const vx = fromLeft ? W + CARD_W * 2 : -(W + CARD_W * 2);
+      const vy = (Math.random()-0.5) * H * 0.28;
+
+      const spin     = (Math.random()-0.5) * 7;
+      const startRot = (Math.random()-0.5) * 18;
+
+      const el = document.createElement('div');
+      el.style.cssText = `
+        position:fixed;
+        left:${startX - CARD_W/2}px;
+        top:${startY - CARD_H/2}px;
+        width:${CARD_W}px;height:${CARD_H}px;
+        border-radius:22px;
+        overflow:hidden;
+        box-shadow:0 16px 60px rgba(0,0,0,0.6),0 4px 12px rgba(0,0,0,0.4);
+        z-index:9010;
+        pointer-events:none;
+        opacity:0;
+        will-change:transform,opacity;
+        transform:rotate(${startRot}deg);
+      `;
+
+      const img = document.createElement('img');
+      img.src = `../images/cards/${num}.png`;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.onerror = () => { el.style.background = COVER_PALETTE[num % COVER_PALETTE.length]; img.remove(); };
+      el.appendChild(img);
+      document.body.appendChild(el);
+
+      let t0 = null;
+      function anim(now){
+        if(!t0) t0 = now;
+        const t  = Math.min((now-t0)/FLIGHT_MS, 1);
+        const te = 1 - Math.pow(1-t, 3); // ease-out cubic
+
+        const x  = vx * te;
+        const y  = vy * te;
+        const rot = startRot + spin * te;
+        const op = t < 0.06 ? t/0.06 : t > 0.88 ? 1-(t-0.88)/0.12 : 1;
+
+        el.style.transform = `translate(${x}px,${y}px) rotate(${rot}deg)`;
+        el.style.opacity   = op;
+
+        if(t < 1) requestAnimationFrame(anim);
+        else el.remove();
+      }
+      setTimeout(() => requestAnimationFrame(anim), delay);
+
+      return delay + FLIGHT_MS; // return when this card finishes
+    }
+
+    /* Stagger spotlight cards; track when the last one ends */
+    let lastFinish = 0;
+    spotlightCards.forEach((num, i) => {
+      const delay = i * 380;
+      const finish = launchCard(num, delay);
+      if(finish > lastFinish) lastFinish = finish;
+    });
+
+    /* Navigate as the last card begins its fade-out (at 88% of its flight) */
+    const TOTAL_MS = Math.round(lastFinish * 0.88);
+
+    /* ── Colour cycle loop ── */
+    const explodeStart = performance.now();
+    function colorLoop(now){
+      if(now - explodeStart < TOTAL_MS){ cycleCover(); requestAnimationFrame(colorLoop); }
+    }
+    requestAnimationFrame(colorLoop);
+
+    /* ── Navigate with html bg locked to cover color — no flash ── */
+    setTimeout(() => { navigateTo(dest, cover.style.background || triggerColor); }, TOTAL_MS);
+  } /* end domExpodeSweep */
+
+  /* ══════════════════════════════════════════════════════
+     DISCIPLESHIP: diagonal cross — large cards fly in from
+     all four corners on diagonal paths, crossing the full
+     screen. Same feel as sweep and cascade but the travel
+     direction cuts corner-to-corner instead of side-to-side
+     or top-to-bottom, giving it its own distinct character.
+  ══════════════════════════════════════════════════════ */
+  function domExplodeStarburst(triggerColor, dest, OX, OY){
+    const W = window.innerWidth, H = window.innerHeight;
+
+    /* ── Colour cover ── */
+    const cover = document.createElement('div');
+    cover.style.cssText = `position:fixed;inset:0;z-index:9000;pointer-events:none;background:${triggerColor};opacity:0;transition:opacity 0.12s ease-out;`;
+    document.body.appendChild(cover);
+    cover.getBoundingClientRect();
+    cover.style.opacity = '1';
+
+    let cpIdx = 0, cpPhase = 0;
+    function cycleCover(){
+      cpPhase += 0.005;
+      if(cpPhase >= 1){ cpPhase -= 1; cpIdx = (cpIdx+1) % COVER_PALETTE.length; }
+      cover.style.background = lerpCol(COVER_PALETTE[cpIdx], COVER_PALETTE[(cpIdx+1)%COVER_PALETTE.length], cpPhase);
+    }
+
+    /* ── Shuffle pool ── */
+    const pool = Array.from({length:150},(_,i)=>i+1);
+    for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]; }
+
+    /* ── Small burst cards — same as sweep ── */
+    const burstCount = 18 + Math.floor(Math.random() * 8);
+    pool.slice(0, burstCount).forEach((num, i) => {
+      const BW = 52 + Math.random() * 38, BH = BW * 1.41;
+      const startX = Math.random() * W, startY = Math.random() * H;
+      const angle  = Math.random() * Math.PI * 2;
+      const dist   = 80 + Math.random() * 160;
+      const tx = Math.cos(angle) * dist, ty = Math.sin(angle) * dist;
+      const delay  = Math.random() * 400, FLIGHT = 2500 + Math.random() * 1000;
+      const spin   = (Math.random()-0.5) * 180, startRot = (Math.random()-0.5) * 30;
+
+      const el = document.createElement('div');
+      el.style.cssText = `position:fixed;left:${startX-BW/2}px;top:${startY-BH/2}px;width:${BW}px;height:${BH}px;border-radius:10px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,0.45);z-index:9005;pointer-events:none;opacity:0;will-change:transform,opacity;transform:rotate(${startRot}deg);`;
+      const img = document.createElement('img');
+      img.src = `../images/cards/${num}.png`;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.onerror = () => { el.style.background = COVER_PALETTE[num % COVER_PALETTE.length]; img.remove(); };
+      el.appendChild(img); document.body.appendChild(el);
+      let t0=null;
+      function animB(now){ if(!t0)t0=now; const t=Math.min((now-t0)/FLIGHT,1),te=1-Math.pow(1-t,2.5); el.style.transform=`translate(${tx*te}px,${ty*te}px) rotate(${startRot+spin*te}deg)`; el.style.opacity=t<0.10?t/0.10:t>0.75?1-(t-0.75)/0.25:1; if(t<1)requestAnimationFrame(animB); else el.remove(); }
+      setTimeout(()=>requestAnimationFrame(animB), delay);
+    });
+
+    /* ── Four corner origins — one diagonal path per corner ── */
+    const D = Math.sqrt(W*W + H*H); /* full diagonal distance */
+    const corners = [
+      { sx: -1, sy: -1 },  /* top-left     → bottom-right */
+      { sx:  1, sy: -1 },  /* top-right    → bottom-left  */
+      { sx: -1, sy:  1 },  /* bottom-left  → top-right    */
+      { sx:  1, sy:  1 },  /* bottom-right → top-left     */
+    ];
+
+    const BASE_W = Math.min(105, W * 0.20);
+    const CARD_W = BASE_W * 3.2;
+    const CARD_H = CARD_W * 1.41;
+    const numSpotlight = 3 + Math.floor(Math.random() * 3); /* 3–5 */
+    let lastFinish = 0;
+
+    pool.slice(burstCount, burstCount + numSpotlight).forEach((num, i) => {
+      /* Cycle through corners so cards come from different directions */
+      const corner = corners[i % corners.length];
+
+      /* Start just off the corner of the screen */
+      const startX = corner.sx < 0 ? -CARD_W : W + CARD_W;
+      const startY = corner.sy < 0 ? -CARD_H  : H + CARD_H;
+
+      /* Travel the full diagonal plus a bit more to exit the opposite side */
+      const vx = -corner.sx * (W + CARD_W * 2);
+      const vy = -corner.sy * (H + CARD_H * 2);
+
+      /* Slight random offset so cards don't all share exactly the same path */
+      const jitterX = (Math.random()-0.5) * W * 0.18;
+      const jitterY = (Math.random()-0.5) * H * 0.18;
+
+      const FLIGHT_MS = 2600 + Math.random() * 600;
+      const delay     = i * 320;
+      const spin      = (Math.random()-0.5) * 8;
+      const startRot  = (Math.random()-0.5) * 16;
+
+      const el = document.createElement('div');
+      el.style.cssText = `
+        position:fixed;
+        left:${startX + jitterX - CARD_W/2}px;
+        top:${startY + jitterY - CARD_H/2}px;
+        width:${CARD_W}px;height:${CARD_H}px;
+        border-radius:22px;overflow:hidden;
+        box-shadow:0 16px 60px rgba(0,0,0,0.6),0 4px 12px rgba(0,0,0,0.4);
+        z-index:9010;pointer-events:none;opacity:0;
+        will-change:transform,opacity;
+        transform:rotate(${startRot}deg);
+      `;
+      const img = document.createElement('img');
+      img.src = `../images/cards/${num}.png`;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.onerror = () => { el.style.background = COVER_PALETTE[num % COVER_PALETTE.length]; img.remove(); };
+      el.appendChild(img);
+      document.body.appendChild(el);
+
+      let t0 = null;
+      function anim(now){
+        if(!t0) t0 = now;
+        const t  = Math.min((now-t0)/FLIGHT_MS, 1);
+        const te = 1 - Math.pow(1-t, 3); /* ease-out cubic — same as sweep */
+        const op = t < 0.06 ? t/0.06 : t > 0.88 ? 1-(t-0.88)/0.12 : 1;
+        el.style.transform = `translate(${vx*te}px,${vy*te}px) rotate(${startRot+spin*te}deg)`;
+        el.style.opacity   = String(op);
+        if(t < 1) requestAnimationFrame(anim);
+        else el.remove();
+      }
+      setTimeout(() => requestAnimationFrame(anim), delay);
+
+      const finish = delay + FLIGHT_MS;
+      if(finish > lastFinish) lastFinish = finish;
+    });
+
+    const TOTAL_MS = Math.round(lastFinish * 0.88);
+
+    const explodeStart = performance.now();
+    function colorLoop(now){
+      if(now - explodeStart < TOTAL_MS){ cycleCover(); requestAnimationFrame(colorLoop); }
+    }
+    requestAnimationFrame(colorLoop);
+
+    setTimeout(() => { navigateTo(dest, cover.style.background || triggerColor); }, TOTAL_MS);
+  } /* end domExplodeStarburst (diagonal-cross) */
+
+  /* ══════════════════════════════════════════════════════
+     BIBLE STUDY: cascade — cards rain down from the top
+     of the screen in gentle offset columns, like pages
+     falling from heaven, drifting with a soft lateral sway.
+  ══════════════════════════════════════════════════════ */
+  function domExplodeCascade(triggerColor, dest, OX, OY){
+    const W = window.innerWidth, H = window.innerHeight;
+
+    /* ── Colour cover ── */
+    const cover = document.createElement('div');
+    cover.style.cssText = `position:fixed;inset:0;z-index:9000;pointer-events:none;background:${triggerColor};opacity:0;transition:opacity 0.12s ease-out;`;
+    document.body.appendChild(cover);
+    cover.getBoundingClientRect();
+    cover.style.opacity = '1';
+
+    let cpIdx = 0, cpPhase = 0;
+    function cycleCover(){
+      cpPhase += 0.005;
+      if(cpPhase >= 1){ cpPhase -= 1; cpIdx = (cpIdx+1) % COVER_PALETTE.length; }
+      cover.style.background = lerpCol(COVER_PALETTE[cpIdx], COVER_PALETTE[(cpIdx+1)%COVER_PALETTE.length], cpPhase);
+    }
+
+    /* ── Shuffle pool ── */
+    const pool = Array.from({length:150},(_,i)=>i+1);
+    for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]; }
+
+    /* ── Small cascade cards: rain from the top ── */
+    const burstCount = 22 + Math.floor(Math.random() * 8);
+    pool.slice(0, burstCount).forEach((num, i) => {
+      const BCARD_W = 50 + Math.random() * 40;
+      const BCARD_H = BCARD_W * 1.41;
+      const startX = Math.random() * W;
+      const startY = -BCARD_H - Math.random() * H * 0.2;
+      /* Fall past the bottom edge so cards exit naturally */
+      const ty = H + BCARD_H * 2.5;
+      const tx = (Math.random()-0.5) * W * 0.25;
+      const delay  = i * 60 + Math.random() * 80;
+      const FLIGHT = 1600 + Math.random() * 700;
+      const spin   = (Math.random()-0.5) * 90;
+      const startRot = (Math.random()-0.5) * 20;
+
+      const el = document.createElement('div');
+      el.style.cssText = `
+        position:fixed;
+        left:${startX - BCARD_W/2}px;
+        top:${startY}px;
+        width:${BCARD_W}px;height:${BCARD_H}px;
+        border-radius:10px;overflow:hidden;
+        box-shadow:0 6px 22px rgba(0,0,0,0.45),0 2px 6px rgba(0,0,0,0.3);
+        z-index:9005;pointer-events:none;opacity:0;
+        will-change:transform,opacity;
+        transform:rotate(${startRot}deg);
+      `;
+      const img = document.createElement('img');
+      img.src = `../images/cards/${num}.png`;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.onerror = () => { el.style.background = COVER_PALETTE[num % COVER_PALETTE.length]; img.remove(); };
+      el.appendChild(img);
+      document.body.appendChild(el);
+
+      let t0 = null;
+      function anim(now){
+        if(!t0) t0 = now;
+        const t  = Math.min((now-t0)/FLIGHT, 1);
+        const te = t * t; /* ease-in gravity */
+        el.style.transform = `translate(${tx*t}px,${ty*te}px) rotate(${startRot+spin*t}deg)`;
+        /* fade in only — no fade out, card exits off-screen naturally */
+        const op = t < 0.06 ? t/0.06 : 1;
+        el.style.opacity = op * 0.85;
+        if(t < 1) requestAnimationFrame(anim);
+        else el.remove();
+      }
+      setTimeout(() => requestAnimationFrame(anim), delay);
+    });
+
+    /* ── Spotlight cards: large, cascade with pendulum sway ── */
+    const numSpotlight = 3 + Math.floor(Math.random() * 3);
+    const BASE_W = Math.min(105, W * 0.20);
+    const CARD_W = BASE_W * 3.2;
+    const CARD_H = CARD_W * 1.41;
+    let lastFinish = 0;
+
+    pool.slice(burstCount, burstCount + numSpotlight).forEach((num, i) => {
+      const laneX   = W * (0.15 + (i / Math.max(numSpotlight-1,1)) * 0.70);
+      const startY  = -CARD_H;
+      /* Fall well past the bottom so card is off-screen before navigate */
+      const ty      = H + CARD_H * 2.5;
+      const tx      = (Math.random()-0.5) * W * 0.18;
+      const delay   = i * 260;
+      const FLIGHT_MS = 1900 + Math.random() * 400;
+      const spin    = (Math.random()-0.5) * 10;
+      const startRot = (Math.random()-0.5) * 15;
+
+      const el = document.createElement('div');
+      el.style.cssText = `
+        position:fixed;
+        left:${laneX - CARD_W/2}px;
+        top:${startY}px;
+        width:${CARD_W}px;height:${CARD_H}px;
+        border-radius:22px;overflow:hidden;
+        box-shadow:0 16px 60px rgba(0,0,0,0.6),0 4px 12px rgba(0,0,0,0.4);
+        z-index:9010;pointer-events:none;opacity:0;
+        will-change:transform,opacity;
+        transform:rotate(${startRot}deg);
+      `;
+      const img = document.createElement('img');
+      img.src = `../images/cards/${num}.png`;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.onerror = () => { el.style.background = COVER_PALETTE[num % COVER_PALETTE.length]; img.remove(); };
+      el.appendChild(img);
+      document.body.appendChild(el);
+
+      let t0 = null;
+      function anim(now){
+        if(!t0) t0 = now;
+        const t  = Math.min((now-t0)/FLIGHT_MS, 1);
+        const te = t * t; /* gravity ease-in */
+        const sway = Math.sin(t * Math.PI * 1.5) * tx;
+        el.style.transform = `translate(${sway}px,${ty*te}px) rotate(${startRot+spin*te}deg)`;
+        /* fade in only — exits off-screen, no fade-out pop */
+        const op = t < 0.06 ? t/0.06 : 1;
+        el.style.opacity = op;
+        if(t < 1) requestAnimationFrame(anim);
+        else el.remove();
+      }
+      setTimeout(() => requestAnimationFrame(anim), delay);
+
+      const finish = delay + FLIGHT_MS;
+      if(finish > lastFinish) lastFinish = finish;
+    });
+
+    /* Navigate after all cards have physically exited + drain lerp window */
+    const TOTAL_MS = lastFinish + 700;
+
+    const explodeStart = performance.now();
+    function colorLoop(now){
+      if(now - explodeStart < TOTAL_MS){ cycleCover(); requestAnimationFrame(colorLoop); }
+    }
+    requestAnimationFrame(colorLoop);
+
+    setTimeout(() => { navigateTo(dest, cover.style.background || triggerColor); }, TOTAL_MS);
+  } /* end domExplodeCascade */
+
 })();
 </script>
 

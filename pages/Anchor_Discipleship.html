@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anchor — Discipleship Guide</title>
+<title>Anchor Discipleship Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,31 +29,59 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 .back-btn {
   position: fixed;
   top: 1rem; left: 1rem; z-index: 300;
-  background: rgba(255,255,255,0.22);
+  background-color: #006484;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255,189,89,0.5);
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 0.55rem 1.2rem;
   font-size: 0.82rem; font-weight: 800;
-  color: #5a4320; text-decoration: none;
+  color: #fff; text-decoration: none;
   display: flex; align-items: center; gap: 0.4rem;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
   transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), background 0.2s;
   letter-spacing: 0.05em;
+ 
 }
-.back-btn:hover { transform: translateX(-5px) scale(1.05); background: rgba(255,255,255,0.38); }
-
+.menu-btn {
+    position: relative;
+    width: 100%;
+    background-color: #ffbd59;
+    padding: 1.15rem 1.6rem;
+    border-width: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    font-weight: bolder;
+    letter-spacing: 0.08em;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.22);
+    box-shadow:
+      0 4px 0 rgba(0,0,0,0.18),
+      0 8px 24px rgba(255,189,89,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 0.15s cubic-bezier(.34,1.56,.64,1),
+                box-shadow 0.15s ease,
+                background-color 0.08s ease;
+    will-change: transform;
+    /* Resting idle pulse */
+    animation: btn-idle 3s ease-in-out infinite;
+  }
 /* ── HERO ── */
 .hero {
-  min-height: 85svh;
+  min-height: 50svh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 0rem 1.5rem 8rem;
+  padding: 4rem 1.5rem 6rem;
   position: relative; overflow: hidden;
   background: #e4decb;
 }
+
 .hero::before {
   content: '';
   position: absolute; inset: 0;
@@ -65,35 +94,47 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 }
 .hero > * { position: relative; z-index: 2; }
 
+/* Logo + sparkles */
 .logo-container {
   position: relative;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 0.6rem;
   animation: fade-down 0.85s ease both;
 }
-.sparkle { position: absolute; border-radius: 50%; pointer-events: none; animation: sparkle-glow 2.8s ease-in-out infinite; }
+.sparkle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  animation: sparkle-glow 2.8s ease-in-out infinite;
+}
 .sp1 { width:9px;  height:9px;  background:#d6b027; top:-4px;   right:10px;  animation-delay:0s;    }
 .sp2 { width:7px;  height:7px;  background:#258fa2; top:14px;   left:-8px;   animation-delay:0.55s; }
 .sp3 { width:8px;  height:8px;  background:#858bd8; bottom:6px; right:-6px;  animation-delay:1.1s;  }
 .sp4 { width:6px;  height:6px;  background:#70af81; bottom:20px;left:-2px;   animation-delay:1.65s; }
+
 @keyframes sparkle-glow {
   0%,100%{ transform:scale(1);    opacity:0.55; }
   50%     { transform:scale(1.65); opacity:1;    }
 }
 
 .logo-ring {
-  width: 278px; height: 278px;
+  width: 180px; height: 180px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   animation: float-bob 4.2s ease-in-out infinite;
   flex-shrink: 0;
 }
-.logo-ring img { width: 278px; height: 278px; object-fit: contain; display: block; }
+.logo-ring img { width: 180px; height: 180px; object-fit: contain; display: block; }
 .logo-fallback {
   display: none; width: 90px; height: 90px; border-radius: 50%;
   background: linear-gradient(135deg, #f8d06c 0%, #d6b027 100%);
   align-items: center; justify-content: center;
   font-size: 2.5rem; color: rgba(255,255,255,0.9);
+}
+
+.hero-tag {
+  font-size: 0.72rem; font-weight: 900;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: #888; margin-bottom: 0.5rem;
+  animation: fade-in 0.9s 0.2s ease both;
 }
 
 .hero-title {
@@ -125,11 +166,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   position: relative;
   padding: 0.5rem 0 9.5rem;
   background: var(--c, #374ca6);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.2,.64,1);
 }
-.step-band.visible { opacity:1; transform:translateY(0); }
 .step-band::before {
   content: '';
   position: absolute; inset: 0;
@@ -144,7 +181,94 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   text-align: center;
 }
 
-.step-body { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.step-body {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2.5rem;
+  text-align: left;
+}
+
+.step-body-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.step-section-img {
+  flex-shrink: 0;
+  width: 460px;
+  height: 460px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.step-section-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  border-radius: 14px;
+}
+
+/* Tab panel inline image — sits beside text on desktop */
+.disc-panel-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 30px;
+    margin-top: 20px;
+
+}
+.disc-panel-img {
+  flex-shrink: 0;
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.disc-panel-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  border-radius: 12px;
+}
+.disc-panel-content {
+  flex: 1;
+  min-width: 0;
+  margin-top: 20px;
+}
+
+@media (max-width: 700px) {
+  .step-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .step-body-text {
+    align-items: center;
+  }
+  .step-body .intro {
+    text-align: center;
+  }
+  .step-section-img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .disc-panel-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .disc-panel-img {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
 
 .step-body h2 {
   font-family: 'Nunito', sans-serif;
@@ -157,16 +281,16 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   font-size: clamp(0.95rem, 2.5vw, 1.08rem);
   color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1.4rem;
   font-weight: 600;
-  width: 100%; max-width: 620px; text-align: center;
+  width: 100%; text-align: left;
 }
 .step-body .intro strong { color: #fff; font-weight: 900; }
 
-.ilist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; align-items: stretch; width: 100%; max-width: 620px; margin: 0 auto; }
+.ilist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; align-items: stretch; width: 100%; margin: 0; }
 .ilist li {
   display: flex; align-items: flex-start; gap: 0.85rem;
   color: rgba(255,255,255,0.94);
   font-size: clamp(0.9rem, 2.3vw, 1rem);
-  line-height: 1.65; width: 100%; text-align: left; font-weight: 600;
+  line-height: 1.65; width: 100%; text-align: justify; font-weight: 600;
 }
 .ilist li strong { color: #fff; font-weight: 900; }
 .inum {
@@ -178,7 +302,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   font-size: 0.88rem; font-weight: 900; color: #fff; margin-top: 2px;
 }
 
-.blist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; width: 100%; max-width: 620px; margin: 0 auto; }
+.blist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; width: 100%; margin: 0; }
 .blist li {
   display: flex; align-items: flex-start; gap: 0.85rem;
   color: rgba(255,255,255,0.94);
@@ -194,8 +318,8 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   border: 2px solid rgba(255,255,255,0.28);
   border-radius: 16px;
   font-size: 0.95rem; color: rgba(255,255,255,0.92); line-height: 1.6;
-  text-align: left; width: 100%; max-width: 620px;
-  margin-left: auto; margin-right: auto; font-weight: 600;
+  text-align: left; width: 100%;
+  font-weight: 600;
 }
 .tip strong { color: #fff; font-weight: 900; }
 
@@ -206,10 +330,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 .sink-band {
   position: relative; background: var(--sand);
   padding: 5rem 1.5rem 7rem; text-align: center;
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.2,.64,1);
 }
-.sink-band.visible { opacity:1; transform:translateY(0); }
 .sink-band::before {
   content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse at 50% 40%, rgba(255,189,89,0.14) 0%, transparent 70%);
@@ -234,7 +355,268 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 .ft-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid rgba(255,189,89,0.18); display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0 auto 1.2rem; }
 .ft-logo img { width: 38px; height: 38px; object-fit: contain; }
 
-/* ── ANIMATIONS ── */
+/* ── SPIRITUAL GROWTH EQUATION ── */
+.eq-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* The full equation block */
+.eq-formula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  /* background: rgba(0,0,0,0.18);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 20px; */
+  padding: 0.8rem 2.2rem 1.5rem;
+  width: 100%;
+  position: relative;
+  overflow: visible;
+  /* box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.18); */
+}
+
+/* "Spiritual Growth" result row */
+.eq-line1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.eq-result {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eq-result-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.4rem, 6vw, 2.4rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.eq-equals {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.4rem, 6vw, 2.4rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  user-select: none;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* Divider line between result and terms */
+.eq-divider {
+  width: 70%;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 0.5rem 0 0.7rem;
+}
+
+/* RHS: "Hearing God × Processing × Responding" */
+.eq-line2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: clamp(0.15rem, 1.2vw, 0.4rem);
+  width: 100%;
+  overflow: visible;
+  padding: 6px 0 2px;
+}
+
+.eq-term {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.3rem, 1.2vw, 0.55rem) clamp(0.4rem, 2.5vw, 1.2rem);
+  border-radius: 5px;
+  border: 2px solid var(--bubble-color, rgba(255,255,255,0.3));
+  background: var(--bubble-bg, rgba(255,255,255,0.08));
+  box-shadow: 0 0 0 0 var(--bubble-color, rgba(255,255,255,0.3));
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1),
+              box-shadow 0.22s ease,
+              background 0.22s ease;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+@media (max-width: 480px) {
+  .eq-formula { padding: 1.4rem 0.8rem 1.2rem; }
+}
+.eq-term:hover,
+.eq-term.active {
+  transform: translateY(-3px) scale(1.06);
+  background: var(--bubble-color, rgba(255,255,255,0.2));
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 0 0 4px var(--bubble-glow, rgba(255,255,255,0.12));
+}
+
+/* Individual bubble colours */
+#eq-hearing   { --bubble-color: #5bd870; --bubble-bg: rgba(91, 216, 91, 0.12); --bubble-glow: rgba(91, 216, 118, 0.22); }
+#eq-processing { --bubble-color: #869cfc; --bubble-bg: rgba(139, 218, 250, 0.12); --bubble-glow: rgba(139, 165, 250, 0.22); }
+#eq-responding { --bubble-color: #d14848; --bubble-bg: rgba(251, 60, 60, 0.12); --bubble-glow: rgba(251, 60, 60, 0.22); }
+
+.eq-term-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.72rem, 3.2vw, 1.35rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.eq-op {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.8rem, 3vw, 1.5rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.25);
+  user-select: none;
+  line-height: 1;
+  align-self: center;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.eq-hint {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.28);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 1.2rem;
+  text-align: center;
+  width: 100%;
+  
+}
+
+.eq-panel-wrap {
+  width: 100%;
+  margin-top: 1rem;
+
+}
+
+.eq-panel {
+  width: 100%;
+  background: rgba(0,0,0,0.18);
+  border-left: 3px solid rgba(255,255,255,0.35);
+  border-radius: 0 12px 12px 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-bottom: 5px;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease, padding 0.28s ease;
+
+}
+.eq-panel.open {
+  max-height: 800px;
+  opacity: 1;
+  padding: 1.2rem 1.5rem;
+}
+
+.eq-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+    justify-content: center;
+  align-items: center;
+
+}
+
+.eq-panel-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.16em;
+}
+
+.eq-panel-body {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.75;
+  font-weight: 600;
+}
+.eq-panel-body strong { color: #fff; font-weight: 900; }
+
+.eq-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+  padding-left: 0;
+}
+.eq-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  font-weight: 600;
+}
+.eq-bullets li::before {
+  content: '›';
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.35);
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+/* zero multiplier callout */
+.eq-zero-note {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.52);
+  line-height: 1.7;
+  font-weight: 600;
+  background: rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-top: 0.25rem;
+}
+.eq-zero-note strong { color: rgba(255,255,255,0.85); font-weight: 900; }
+
+/* ── SECTION 1 DESKTOP REFINEMENTS ── */
+@media (min-width: 701px) {
+  /* On desktop/tablet, move the tab panels below the two-column layout */
+  .step-body-text .disc-tabs,
+  .step-body-text .disc-panels {
+    /* Let them span full width inside the text column */
+    width: 100%;
+  }
+
+  /* Slightly smaller main image on tablet to give more room to text */
+  @media (max-width: 900px) {
+    .step-section-img {
+      width: 400px;
+      height: 400px;
+    }
+    .disc-panel-img {
+      width: 440px;
+      height: 440px;
+    }
+  }
+}
+
+/* Widen the step-inner for section 1 on large screens */
+.step-band .step-inner {
+  max-width: 900px;
+}
 @keyframes float-bob { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-9px); } }
 @keyframes fade-down { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
 @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
@@ -252,6 +634,41 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   .step-body h2 { font-size: 1.65rem; }
   .hero-title { font-size: 2.4rem; }
 }
+
+/* ════════════════════════════════════
+   STEP 3 TABS — Choose A Card / Choose A Theme
+════════════════════════════════════ */
+.disc-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0;
+  width: 100%;
+}
+.disc-tab {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.18);
+  color: rgba(255,255,255,0.5);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.disc-tab.disc-tab-active {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.5);
+  color: #fff;
+}
+.disc-panels { width: 100%; margin-top: 1rem; }
+.disc-panel  { display: none; flex-direction: column; align-items: flex-start; }
+.disc-panel.disc-panel-active { display: flex; }
 </style>
 </head>
 <body>
@@ -264,22 +681,19 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 
 
     <div class="logo-ring">
-      <img src="../images/Anchor_64px.png" alt="Anchor Logo"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-      <div class="logo-fallback">⚓</div>
+      <i class="fa-solid fa-comments" style="font-size: 140px; color: #006484"></i>
     </div>
   </div>
 
-  <h1 class="hero-title">Discipleship Guide</h1>
+  <h1 class="hero-title" style="color: #006484;">Discipleship</h1>
 
   <p class="hero-sub">
-    Anchor is a gospel tool designed to help you walk alongside others,
-    through honest conversation, shared curiosity, and guided discovery through Scripture.
+     Helping others follow Jesus.
   </p>
 
   <div class="section-wave">
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#8f2b58">
+      <path fill="#006484">
         <animate attributeName="d" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
           values="M0,90 C360,20 720,110 1080,30 C1260,0 1380,70 1440,50 L1440,120 L0,120 Z;
                   M0,40 C360,100 720,10 1080,90 C1260,115 1380,40 1440,70 L1440,120 L0,120 Z;
@@ -291,44 +705,92 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 
 
 <!-- ════ SECTION 1 — You Don't Have to Know It All ════ -->
-<section class="step-band" style="--c:#8f2b58">
+<section class="step-band" style="--c:#006484">
   <div class="step-inner">
+      <div class="step-section-img" style="margin-bottom: 20px;">
+        <img src="../images/DPlay.png" alt="Discipleship" onerror="this.closest('.step-section-img').style.display='none'">
+      </div>
     <div class="step-body">
-      <h2>You Don't Have to Know It All</h2>
-      <p class="intro">
-        One of the biggest barriers to discipleship is the belief that you need to
-        have all the answers first. You don't... and you never will. <strong>Disciples are meant to make disciples</strong> (Matt 28:16–20). Using Anchor can help you know where to start.
+    
+      <div class="step-body-text">
+      <h2>Start with a Game</h2>
+      <p class="intro" style="text-align: justify;">
+        One of the biggest barriers to discipleship knowing where to start, with Anchor it's simple! You don't need to know everything, we have done a lot of the hard theology for you.
       </p>
       <ul class="blist">
         <li>
           <span class="bdot"></span>
-          <span><strong>Start with a simple invitation.</strong> Reach out to a friend, family
-          member, or someone in your life who could use a little guided discovery.
-          Pray beforehand and trust that God will provide what's needed in the moment.</span>
+          <span><strong>Step 1:</strong> Pray and ask God to reveal who He has placed in your life already that you can help spiritually form. Often God works through the existing friendships and relationship we have.</span>
         </li>
         <li>
           <span class="bdot"></span>
-          <span><strong>Keep it relaxed and low-pressure.</strong> Play a game of Anchor over coffee, hot chocolate,
-          or whatever's on the table. Anchor is designed so that even someone with
-          little Bible knowledge can engage fully, the colour system makes it
-          accessible from the very first card.</span>
+          <span><strong>Step 2:</strong> Organize an easy place to meet up one-on-one. Play a game of Anchor over coffee, tea or hot chocolate, and have some fun! Anchor has been made to be fun whether you know a lot or little about the Bible.</span>
         </li>
         <li>
           <span class="bdot"></span>
-          <span><strong>Let the conversation happen naturally.</strong> As you play together,
+          <span><strong>Step 3:</strong> As you play together,
           questions and moments of curiosity will surface on their own.
           Share what you know. Speak into what you notice. And when you don't
-          know the answer, say so, <em>"I'm not sure"</em> is always an honest
-          and welcome response.</span>
+          know the answer, say so. Let it naturally drift into discipleship and when you are ready try one of the following:</span>
+        
         </li>
 
       </ul>
-     
+
+      <!-- ── Step 3 Tabs ── -->
+      <div class="disc-tabs" id="discTabs">
+        <button class="disc-tab disc-tab-active" data-idx="0">Choose A Card</button>
+        <button class="disc-tab" data-idx="1">Choose A Theme</button>
+      </div>
+
+      <div class="disc-panels" id="discPanels">
+
+        <!-- PANEL 0 — Choose A Card -->
+        <div class="disc-panel disc-panel-active" data-idx="0">
+          <div class="disc-panel-row">
+            <div class="disc-panel-img">
+              <img src="../images/card.png" alt="A card" onerror="this.closest('.disc-panel-img').style.display='none'">
+            </div>
+            <div class="disc-panel-content">
+              <ul class="ilist">
+                <li>
+                  <span><strong>Pick any card</strong> from the Anchor deck that catches their interest. Curiosity and guided discovery are powerful tools for learning. Work together to figure out where the card fits in the biblical timeline, then read part of it (or the whole card if it's shorter). Let the conversation naturally flow into real-life application. Afterwards, encourage them to continue exploring the deck until you meet again.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 1 — Choose A Theme -->
+        <div class="disc-panel" data-idx="1">
+          <div class="disc-panel-row">
+            <div class="disc-panel-img">
+              <img src="../images/theme.png" alt="A theme" onerror="this.closest('.disc-panel-img').style.display='none'">
+            </div>
+            <div class="disc-panel-content">
+              <ul class="ilist">
+                <li>
+                  <span><strong>Choose a Theme Set you know well</strong> from the Anchor deck and walk through it together. Show how each card connects to the next, how the theme fits into the bigger story of Scripture, and share some of the lessons you have learned from it. Then encourage them to continue exploring the remaining cards on their own before you meet again, so they can share their insights and discoveries with you.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end disc-panels -->
+
+      </div><!-- end step-body-text -->
     </div>
+
+    <button class="menu-btn btn-discipleship" style="flex-direction: column;" onclick="window.location.href='Anchor.html#AnchorPracticeMode'">
+      <span class="btn-label">View Card Order</span>
+      <span class="btn-label" style="font-size: 12px; color: #6d6d6d;">Go to Anchor Digital Version</span>
+    </button>
   </div>
+  
   <div class="band-wave">
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#006484">
+      <path fill="#40654a">
         <animate attributeName="d" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
           values="M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z;
                   M0,30 C360,100 720,5  1080,95 C1300,115 1400,45 1440,80 L1440,120 L0,120 Z;
@@ -339,102 +801,119 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 </section>
 
 
-<!-- ════ SECTION 2 — Discipling Through Themes ════ -->
-<section class="step-band" style="--c:#006484">
+
+<!-- ════ SECTION 3 — Spiritual Growth Formula ════ -->
+<section class="step-band" style="--c:#40654a">
   <div class="step-inner">
-    <div class="step-body">
-      <h2>Discipling Through Themes</h2>
-      <p class="intro">
-        One of the most powerful ways to help someone understand the Bible is to
-        show them how a single thread runs through the entire story. Choose a
-        theme you're familiar with and walk through it together.
-      </p>
-      <ul class="ilist">
-        <li>
-          <div class="inum">1</div>
-          <span><strong>Pick a theme you know.</strong> Lay out the relevant cards and walk
-          through how that theme unfolds. Let the cards do the heavy lifting.</span>
-        </li>
-        <li>
-          <div class="inum">2</div>
-          <span><strong>Share what it's meant to you.</strong> Theology hits different
-          when it's personal. Tell them not just what a theme or even card means, but
-          how understanding it has shaped the way you read the Bible or
-          live your faith.</span>
-        </li>
-        <li>
-          <div class="inum">3</div>
-          <span><strong>Invite them to go deeper.</strong> After exploring
-          together, ask what they noticed. Let them go and learn more about it and then discuss it the next time you meet.</span>
-        </li>
-      </ul>
-      <!-- <div class="tip">
-        <strong>🎨 Theme ideas to get started —</strong> Covenant · Sacrifice · Kingship ·
-        The Promised Land · Redemption · The Holy Spirit · Prayer · Exile &amp; Return.
-        Any one of these, traced from Genesis to Revelation, is a discipleship
-        session in itself.
-      </div> -->
-    </div>
-  </div>
-  <div class="band-wave">
-    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#cf8404">
-        <animate attributeName="d" dur="5.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
-          values="M0,95 C300,10 700,110 1100,15 C1300,0 1400,55 1440,35 L1440,120 L0,120 Z;
-                  M0,25 C300,110 700,10 1100,105 C1300,120 1400,55 1440,85 L1440,120 L0,120 Z;
-                  M0,95 C300,10 700,110 1100,15 C1300,0 1400,55 1440,35 L1440,120 L0,120 Z"/>
-      </path>
-    </svg>
-  </div>
-</section>
+          <div class="step-section-img">
+        <img src="../images/Equation.png" alt="Discipleship" onerror="this.closest('.step-section-img').style.display='none'">
+      </div>
+    <div class="step-body" style="flex-direction: column; align-items: center; text-align: center;">
 
 
-<!-- ════ SECTION 3 — Building a Rhythm ════ -->
-<!-- <section class="step-band" style="--c:#cf8404">
-  <div class="step-inner">
-    <div class="step-body">
-      <h2>Building a Rhythm</h2>
-      <p class="intro">
-        A single conversation can spark something — but a consistent rhythm
-        is what shapes a disciple. You don't need a formal programme.
-        You need a recurring moment that both of you protect.
-      </p>
-      <ul class="blist">
-        <li>
-          <span class="bdot"></span>
-          <span><strong>Start with once a fortnight.</strong> A low-commitment cadence
-          removes the pressure and builds trust. As momentum grows, so
-          does the frequency.</span>
-        </li>
-        <li>
-          <span class="bdot"></span>
-          <span><strong>Begin each session with a check-in.</strong> Before the cards
-          come out, ask how they've been sitting with what came up last time.
-          What stayed with them? What confused them? What did they go
-          and read?</span>
-        </li>
-        <li>
-          <span class="bdot"></span>
-          <span><strong>End with something to carry.</strong> Before you part ways, identify
-          one passage, question, or idea to sit with until you meet again.
-          Keep it small and specific — depth beats breadth every time.</span>
-        </li>
-        <li>
-          <span class="bdot"></span>
-          <span><strong>Pray together.</strong> Even briefly. It reframes the whole conversation
-          as something you're both receiving, not just discussing.</span>
-        </li>
-      </ul>
-      <div class="tip">
-        <strong>📅 Consistency beats intensity.</strong> An hour every two weeks over
-        a year will do far more than an occasional deep dive. Show up
-        regularly and let the Word do its work over time.
+      <div class="eq-wrap">
+
+        <div class="eq-formula">
+          <!-- Line 1: Spiritual Growth = -->
+          <div class="eq-line1">
+            <div class="eq-result" id="eq-growth">
+              <div class="eq-result-label">Spiritual Growth</div>
+            </div>
+            <span class="eq-equals">=</span>
+          </div>
+
+          <!-- <div class="eq-divider"></div> -->
+
+          <!-- Line 2: Hearing God × Processing × Responding -->
+          <div class="eq-line2">
+            <div class="eq-term" data-key="hearing" id="eq-hearing" onclick="toggleEq('hearing')">
+              <div class="eq-term-label">Hearing God</div>
+            </div>
+            <span class="eq-op">&times;</span>
+            <div class="eq-term" data-key="processing" id="eq-processing" onclick="toggleEq('processing')">
+              <div class="eq-term-label">Processing</div>
+            </div>
+            <span class="eq-op">&times;</span>
+            <div class="eq-term" data-key="responding" id="eq-responding" onclick="toggleEq('responding')">
+              <div class="eq-term-label">Responding</div>
+            </div>
+          </div>
+
+          <p class="eq-hint">tap each term to expand</p>
+        </div>
+
+        <div class="eq-panel-wrap" style="margin-top:1rem;">
+
+          <div class="eq-panel" id="panel-growth" style="display:none">
+            <div class="eq-panel-inner">
+              <div class="eq-panel-title">Spiritual Growth</div>
+              <div class="eq-panel-body">
+                Spiritual growth is <strong>becoming more like Christ</strong> &mdash; growing in love, wisdom, faith, and obedience over time.
+                It is not measured in Bible knowledge alone, but in transformation: the gradual reshaping of how you think, speak, and live.
+                <ul class="eq-bullets">
+                  <li>It is a lifelong journey, not a single moment.</li>
+                  <li>It shows up in your relationships, character, and choices.</li>
+                  <li>It requires all three elements of this formula working together.</li>
+                </ul>
+              </div>
+              <div class="eq-zero-note">
+                <strong>Why multiplication?</strong> If any one element is zero, the whole equation is zero.
+                You can hear without responding. You can respond without truly processing.
+                Growth only happens when all three are active.
+              </div>
+            </div>
+          </div>
+
+          <div class="eq-panel" id="panel-hearing">
+            <div class="eq-panel-inner">
+              <div class="eq-panel-title">Hearing God</div>
+                        <div class="step-section-img" >
+                             <img src="../images/seed.png" alt="Discipleship" onerror="this.closest('.step-section-img').style.display='none'">
+                         </div>
+              <div class="eq-panel-body">
+                The Bible is the primary way God speaks to us; it is how we hear His voice. God is constantly speaking into every person’s life, whether that is calling someone to repentance and salvation for the first time, lovingly exposing disobedience, bringing healing to deep hurt, or many other things. God is speaking into our lives whether we are listening or not. The Seed is the area of spiritual growth that God is currently speaking into and inviting us to hear and respond to.
+              </div>
+            </div>
+          </div>
+
+          <div class="eq-panel" id="panel-processing">
+            <div class="eq-panel-inner">
+              <div class="eq-panel-title">Processing</div>
+                 <div class="step-section-img">
+                             <img src="../images/watering.png" alt="Discipleship" onerror="this.closest('.step-section-img').style.display='none'">
+                         </div>
+              <div class="eq-panel-body">
+                Once we have clarity on what we feel God is leading us into (what He is revealing), we can begin devoting time to truly understanding it. By digesting it, meditating on it, reading about it, and allowing it to move from head knowledge to heart knowledge, we are watering the seed God has planted.
+              </div>
+            </div>
+          </div>
+
+          <div class="eq-panel" id="panel-responding">
+            <div class="eq-panel-inner">
+              <div class="eq-panel-title">Responding</div>
+                 <div class="step-section-img">
+                             <img src="../images/responding.png" alt="Discipleship" onerror="this.closest('.step-section-img').style.display='none'">
+                         </div>
+              <div class="eq-panel-body">
+               After hearing what God is saying to us and taking time to process it, the final (and often skipped) step in our spiritual growth is responding. It is choosing to live differently after hearing and processing the truth God has revealed to us.
+This is the Fruit that is visible in our lives.
+
+              </div>
+            </div>
+          </div>
+
+
+                <p class="intro" style="text-align: justify;">
+       Applying this formula to discipleship is simple. When you meet with someone, whether over coffee, hot chocolate, or tea. Help them discover what God may be leading them uniquely into (the Seed). Ask good questions, listen well, and pay attention to where God is already at work in their life as you play the game and work through the cards. <br><br>Once the seed becomes clearer, help them process it (watering). Point them to Scripture, encourage reflection, pray with them and help them consider that this may be an area where God wants to grow them right now. <br><br>Then, after walking through it together and diving deeper over time, help them put it into action by responding to the revelation God has given them (Fruit). <br><br>
+      </p><strong style="text-align: center; color: #fff;">1 Corinthians 3:5-9 | Colossians 1:10</strong>
+
+        </div>
       </div>
     </div>
   </div>
   <div class="band-wave">
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#374ca6">
+      <path fill="#40654a">
         <animate attributeName="d" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
           values="M0,85 C400,5  900,115 1300,20 C1400,5  1440,50 1440,40 L1440,120 L0,120 Z;
                   M0,25 C400,110 900,5  1300,100 C1400,115 1440,60 1440,80 L1440,120 L0,120 Z;
@@ -442,7 +921,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
       </path>
     </svg>
   </div>
-</section> -->
+</section>
 
 
 <!-- ════ SECTION 4 — When They Want to Go Deeper ════ -->
@@ -507,7 +986,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 
 
 <!-- ════ CLOSING BAND ════ -->
-<section class="sink-band" style="background-color: #cf8404;">
+<!-- <section class="sink-band" style="background-color: #cf8404;">
   <div class="sink-inner">
 
     <p class="sink-desc">
@@ -516,17 +995,138 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
       Pick up the cards and start the conversation.
     </p>
   </div>
-</section>
+</section> -->
 
 
+<!-- ═══════════════════════════════════════════════════════
+     ANCHOR MENU — Water Drain Transition
+     Paste this block as the FIRST child of <body> on every
+     destination page (Anchor_GameRules.html, etc.)
+     It reads the colour stored by the menu and drains it
+     off the screen like water before the page is visible.
+════════════════════════════════════════════════════════ -->
+<script>
+// ── Step 3 Tabs — Choose A Card / Choose A Theme ──
+(function() {
+  const tabs   = document.querySelectorAll('#discTabs .disc-tab');
+  const panels = document.querySelectorAll('#discPanels .disc-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = +this.dataset.idx;
+      tabs.forEach(t   => t.classList.toggle('disc-tab-active',   +t.dataset.idx   === idx));
+      panels.forEach(p => p.classList.toggle('disc-panel-active', +p.dataset.idx   === idx));
+    });
+  });
+})();
+</script>
 
 <script>
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
-  });
-},{ threshold: 0.06 });
-document.querySelectorAll('.step-band, .sink-band').forEach(b => io.observe(b));
+// ── Spiritual Growth Equation ──
+(function(){
+  const KEYS = ['growth','hearing','processing','responding'];
+  let active = null;
+
+  window.toggleEq = function(key) {
+    const panel = document.getElementById('panel-' + key);
+    const term  = document.getElementById('eq-' + key);
+    if (!panel) return;
+
+    if (active === key) {
+      // close
+      panel.classList.remove('open');
+      term.classList.remove('active');
+      active = null;
+      return;
+    }
+    // close previous
+    if (active) {
+      const prevPanel = document.getElementById('panel-' + active);
+      const prevTerm  = document.getElementById('eq-' + active);
+      if (prevPanel) prevPanel.classList.remove('open');
+      if (prevTerm)  prevTerm.classList.remove('active');
+    }
+    panel.classList.add('open');
+    term.classList.add('active');
+    active = key;
+    // smooth scroll so panel is visible
+    setTimeout(function() {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 80);
+  };
+})();
 </script>
+
+<script>
+(function(){
+  const col = sessionStorage.getItem('__anchorDrain');
+  if(!col) return;
+  sessionStorage.removeItem('__anchorDrain');
+
+  const DPR = window.devicePixelRatio || 1;
+  const W   = window.innerWidth;
+  const H   = window.innerHeight;
+
+  const cvs = document.createElement('canvas');
+  cvs.width  = W * DPR;
+  cvs.height = H * DPR;
+  cvs.style.cssText = `
+    position:fixed;inset:0;
+    width:${W}px;height:${H}px;
+    z-index:999999;pointer-events:none;
+  `;
+  document.body.appendChild(cvs);
+  const cx = cvs.getContext('2d');
+  cx.scale(DPR, DPR);
+
+  const DURATION = 900; // ms — how long the drain takes
+  const HOLD     = 120; // ms — brief pause before draining starts
+  const start    = performance.now();
+
+  function easeIn(t){ return t * t * t; } // cubic — accelerates like gravity
+
+  function frame(now){
+    const elapsed  = Math.max(0, now - start - HOLD);
+    const progress = Math.min(elapsed / DURATION, 1);
+    const ease     = easeIn(progress);
+
+    cx.clearRect(0, 0, W, H);
+
+    // The water surface descends from top (0) to just below the screen (H + wave headroom)
+    const surfaceY  = ease * (H + 60);
+
+    // Wave amplitude shrinks as the water drains away — calms at the end
+    const waveAmp   = 22 * (1 - ease);
+    const waveFreq  = 0.018;
+    const wavePhase = elapsed * 0.006;
+
+    // Draw the water body — fill from the wavy surface down to the bottom
+    cx.fillStyle = col;
+    cx.beginPath();
+    cx.moveTo(0, H); // bottom-left
+
+    // Walk left-to-right along the wavy surface
+    for(let x = 0; x <= W; x += 3){
+      const y = surfaceY
+              + Math.sin(x * waveFreq + wavePhase)          * waveAmp
+              + Math.sin(x * waveFreq * 2.3 + wavePhase * 1.4) * (waveAmp * 0.4);
+      cx.lineTo(x, y);
+    }
+
+    cx.lineTo(W, H); // bottom-right
+    cx.closePath();
+    cx.fill();
+
+    if(progress < 1){
+      requestAnimationFrame(frame);
+    } else {
+      cvs.remove();
+    }
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
+
+
 </body>
 </html>

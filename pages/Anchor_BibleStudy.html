@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anchor Bible Study</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="../images/OC_64px.png" sizes="48x48">
 
@@ -32,20 +33,49 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 .back-btn {
   position: fixed;
   top: 1rem; left: 1rem; z-index: 300;
-  background: rgba(255,255,255,0.22);
+  background-color: #8f2b58;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255,189,89,0.5);
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 0.55rem 1.2rem;
   font-size: 0.82rem; font-weight: 800;
-  color: #5a4320; text-decoration: none;
+  color: #fff; text-decoration: none;
   display: flex; align-items: center; gap: 0.4rem;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
   transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), background 0.2s;
   letter-spacing: 0.05em;
+ 
 }
-.back-btn:hover { transform: translateX(-5px) scale(1.05); background: rgba(255,255,255,0.38); }
+
+.menu-btn {
+    position: relative;
+    width: 100%;
+    background-color: #ffbd59;
+    padding: 1.15rem 1.6rem;
+    border-width: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    font-weight: bolder;
+    letter-spacing: 0.08em;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.22);
+    box-shadow:
+      0 4px 0 rgba(0,0,0,0.18),
+      0 8px 24px rgba(255,189,89,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 0.15s cubic-bezier(.34,1.56,.64,1),
+                box-shadow 0.15s ease,
+                background-color 0.08s ease;
+    will-change: transform;
+    /* Resting idle pulse */
+    animation: btn-idle 3s ease-in-out infinite;
+  }
 
 /* ════════════════════════════════════
    PARTICLE CANVAS
@@ -54,11 +84,11 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
    HERO
 ════════════════════════════════════ */
 .hero {
-  min-height: 85svh;
+  min-height: 50svh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 0rem 1.5rem 8rem;
+  padding: 4rem 1.5rem 6rem;
   position: relative; overflow: hidden;
   background: #e4decb;
 }
@@ -97,13 +127,13 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 }
 
 .logo-ring {
-  width: 278px; height: 278px;
+  width: 180px; height: 180px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   animation: float-bob 4.2s ease-in-out infinite;
   flex-shrink: 0;
 }
-.logo-ring img { width: 278px; height: 278px; object-fit: contain; display: block; }
+.logo-ring img { width: 180px; height: 180px; object-fit: contain; display: block; }
 .logo-fallback {
   display: none; width: 90px; height: 90px; border-radius: 50%;
   background: linear-gradient(135deg, #f8d06c 0%, #d6b027 100%);
@@ -165,14 +195,9 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 ════════════════════════════════════ */
 .step-band {
   position: relative;
-  padding: 0.5rem 0 9.5rem;
+  padding: 0.5rem 0 7rem;
   background: var(--c, #374ca6);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.2,.64,1);
 }
-.step-band.visible { opacity:1; transform:translateY(0); }
-
 .step-band::before {
   content: '';
   position: absolute; inset: 0;
@@ -204,7 +229,55 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   font-size: 0.82rem; font-weight: 900; color: #fff;
 }
 
-.step-body { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.step-body {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2.5rem;
+  text-align: left;
+}
+
+.step-body-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.step-section-img {
+  flex-shrink: 0;
+  width: 460px;
+  height: 460px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.step-section-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  border-radius: 14px;
+}
+
+@media (max-width: 700px) {
+  .step-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .step-body-text {
+    align-items: center;
+  }
+  .step-body .intro {
+    text-align: center;
+  }
+  .step-section-img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
 
 .step-body h2 {
   font-family: 'Nunito', sans-serif;
@@ -217,12 +290,12 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   font-size: clamp(0.95rem, 2.5vw, 1.08rem);
   color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1.4rem;
   font-weight: 600;
-  width: 100%; max-width: 620px; text-align: center;
+  width: 100%; text-align: left;
 }
 .step-body .intro strong { color: #fff; font-weight: 900; }
 
 /* ── Instruction list ── */
-.ilist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; align-items: stretch; width: 100%; max-width: 620px; margin: 0 auto; }
+.ilist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; align-items: stretch; width: 100%; margin: 0; }
 .ilist li {
   display: flex; align-items: flex-start; gap: 0.85rem;
   color: rgba(255,255,255,0.94);
@@ -243,7 +316,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 }
 
 /* Bullet list (no numbers) */
-.blist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; width: 100%; max-width: 620px; margin: 0 auto; }
+.blist { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; width: 100%; margin: 0; }
 .blist li {
   display: flex; align-items: flex-start; gap: 0.85rem;
   color: rgba(255,255,255,0.94);
@@ -266,8 +339,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   border: 2px solid rgba(255,255,255,0.28);
   border-radius: 16px;
   font-size: 0.95rem; color: rgba(255,255,255,0.92); line-height: 1.6;
-  text-align: left; width: 100%; max-width: 620px;
-  margin-left: auto; margin-right: auto;
+  text-align: left; width: 100%;
   font-weight: 600;
 }
 .tip strong { color: #fff; font-weight: 900; }
@@ -287,12 +359,7 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   background: var(--sand);
   padding: 5rem 1.5rem 7rem;
   text-align: center;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.34,1.2,.64,1);
 }
-.sink-band.visible { opacity:1; transform:translateY(0); }
-
 .sink-band::before {
   content: '';
   position: absolute; inset: 0;
@@ -404,20 +471,226 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 }
 
 /* ════════════════════════════════════
+   PRAY / SPECS SECTION
+════════════════════════════════════ */
+.pray-specs-band {
+  position: relative;
+  background: #8f2b58;
+  padding: 0.5rem 0 6rem;
+}
+.pray-specs-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(255,255,255,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.ps-inner {
+  max-width: 860px; margin: 0 auto;
+  padding: 0rem 2rem 0;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+
+/* ── Tab buttons ── */
+.ps-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  width: 100%;
+}
+.ps-tab {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.18);
+  color: rgba(255,255,255,0.5);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.ps-tab.ps-tab-active {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.5);
+  color: #fff;
+}
+
+/* ── Tab panels ── */
+.ps-panels { width: 100%; }
+.ps-panel  { display: none; flex-direction: column; align-items: center; text-align: center; }
+.ps-panel.ps-panel-active { display: flex; }
+
+/* ── Each acronym block header ── */
+.ps-block { display: flex; flex-direction: column; align-items: center; }
+
+.ps-block-header {
+  display: flex; align-items: center; gap: 1rem; flex-direction: column;
+  margin-bottom: 1.1rem; width: 100%;
+  justify-content: center;
+}
+
+.ps-img {
+  width: 224px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+
+.ps-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.01em;
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ── Divider line matching original style ── */
+.ps-divider {
+  width: 100%; height: 2px; border-radius: 99px;
+  background: rgba(255,255,255,0.25);
+  margin-bottom: 1.2rem;
+}
+
+/* ── Acronym letter tiles ── */
+.acro-row {
+  display: flex; gap: 0.55rem; 
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.acro-tile {
+  position: relative;
+  width: 58px; height: 58px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.35);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1),
+              background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+.acro-tile:hover, .acro-tile.active {
+  background: rgba(255,255,255,0.95);
+  border-color: rgba(255,255,255,1);
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+}
+.acro-tile .letter {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.7rem; font-weight: 900;
+  color: rgba(255,255,255,0.9);
+  transition: color 0.2s;
+  line-height: 1;
+  pointer-events: none;
+}
+.acro-tile:hover .letter, .acro-tile.active .letter {
+  color: #8f2b58;
+}
+
+/* ── Tooltip label below tile ── */
+.acro-tile .tile-label {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  white-space: nowrap;
+  background: rgba(255,255,255,0.97);
+  color: #8f2b58;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.72rem; font-weight: 900;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+  z-index: 10;
+}
+.acro-tile:hover .tile-label, .acro-tile.active .tile-label {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+
+/* ── Definition reveal box ── */
+.acro-def {
+  width: 100%; max-width: 360px;
+  padding: 0 1.1rem;
+  background: rgba(0,0,0,0.18);
+  border: 1.5px solid rgba(255,255,255,0.22);
+  border-radius: 14px;
+  font-size: 0.92rem; color: rgba(255,255,255,0.93);
+  line-height: 1.6; font-weight: 600;
+  text-align: center;
+  transition: opacity 0.25s, max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  border-color: transparent;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.acro-def.show {
+  opacity: 1;
+  max-height: 600px;
+  padding: 0.85rem 1.1rem;
+  border-color: rgba(255,255,255,0.22);
+  margin-top: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+.acro-def strong { color: #fff; font-weight: 900; }
+
+/* ── Intro text ── */
+.ps-intro {
+  font-size: clamp(0.92rem, 2.4vw, 1.04rem);
+  color: rgba(255,255,255,0.85); line-height: 1.7; font-weight: 600;
+  max-width: 680px; margin-bottom: 0.4rem;
+  text-align: justify;
+}
+
+/* ── Tap hint ── */
+.ps-hint {
+  font-size: 0.75rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 0.3rem;
+  margin-top: 1rem;
+
+}
+
+/* ════════════════════════════════════
    RESPONSIVE
 ════════════════════════════════════ */
 @media (max-width: 600px) {
-  .hero { padding: 4.5rem 1.2rem 7rem; }
+  .hero { padding: 3rem 1.2rem 5rem; min-height: 40svh; }
+  .logo-ring { width: 130px; height: 130px; }
+  .logo-ring i { font-size: 130px !important; }
   .step-inner { padding: 0 1.2rem; }
-  .step-band  { padding: 3.5rem 0 5.5rem; }
-  .sink-band  { padding: 4rem 1.2rem 6rem; }
+  .step-band  { padding: 2.5rem 0 4.5rem; }
+  .pray-specs-band { padding: 2.5rem 0 4.5rem; }
+  .sink-band  { padding: 3rem 1.2rem 5rem; }
   .ilist li, .blist li { font-size: 0.92rem; }
   .tip        { font-size: 0.88rem; }
   .sink-btn   { padding: 1rem 2rem; width: 100%; max-width: 340px; }
+  .ps-inner   { padding: 0.5rem 1.2rem 0; }
+  .ps-title   { font-size: 28px; }
+  .ps-img     { width: 190px; }
 }
 @media (max-width: 380px) {
   .step-body h2 { font-size: 1.65rem; }
   .hero-title   { font-size: 2.4rem; }
+  .acro-tile { width: 44px; height: 44px; border-radius: 9px; }
+  .acro-tile .letter { font-size: 1.25rem; }
 }
 </style>
 </head>
@@ -433,23 +706,20 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
   <div class="logo-container">
 
     <div class="logo-ring">
-      <img src="../images/Anchor_64px.png" alt="Anchor Logo"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-      <div class="logo-fallback">⚓</div>
+      <i class="fa-solid fa-seedling" style="font-size: 140px; color: #8f2b58"></i>
     </div>
   </div>
 
-  <h1 class="hero-title">Bible Study</h1>
+  <h1 class="hero-title" style="color: #8f2b58;">Bible Study</h1>
 
   <p class="hero-sub">
-    Anchor isn't an interpretive resource or commentary. Rather it's a Gospel tool designed to
-    spark curiosity, and help you find your place in the
-    greatest story ever told.
+    Consistent Dedicated Time With God.
   </p>
+    <!-- Growing spiritually is a lot like exercie, at first you have to create habits, consistency and be super intentional about it. It might take some getting used to and be  -->
 
   <div class="section-wave">
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#258fa2">
+      <path fill="#8f2b58">
         <animate attributeName="d" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
           values="M0,90 C360,20 720,110 1080,30 C1260,0 1380,70 1440,50 L1440,120 L0,120 Z;
                   M0,40 C360,100 720,10 1080,90 C1260,115 1380,40 1440,70 L1440,120 L0,120 Z;
@@ -460,108 +730,97 @@ body { font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; background
 </header>
 
 
-<!-- ════ SECTION 1 — Discovery ════ -->
-<section class="step-band" style="--c:#258fa2">
-  <div class="step-inner">
-    <div class="step-body">
-      <h2>Discovery</h2>
-      <p class="intro">
-The Bible can be explored in many ways, One incredible way is through curiosity and discovery! Often, ending in profound spiritual growth and a desire to find out even more. How can you use Anchor for guided discovery?      </p>
-      <p class="intro" style="margin-bottom:1rem;">Browse the Anchor cards and pick one that:</p>
-      <ul class="blist">
-        <li><span class="bdot"></span><span>You've never encountered before and want to explore.</span></li>
-        <li><span class="bdot"></span><span>Catches your eye and looks interesting.</span></li>
-        <li><span class="bdot"></span><span>You once knew but want to revisit with fresh eyes.</span></li>
-      </ul>
-      <div class="tip">
-        <strong>✨ Remember:</strong> Some of the most awe-inspiring revelations come not from
-        a specific study plan, but reliance on the Holy Spirit and an open Bible.
+
+<!-- ════ SECTION 4 — Pray & Study ════ -->
+<section class="pray-specs-band step-band" style="--c:#8f2b58">
+  <div class="ps-inner">
+
+      <div class="step-body-text">
+        <h2 style="width: 100%;
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem; font-size: 2.1rem;">A Simple Way to</h2>
+    <!-- ── Tab buttons ── -->
+    <div class="ps-tabs" id="psTabs">
+      <button class="ps-tab ps-tab-active" data-idx="0">Pray</button>
+      <button class="ps-tab" data-idx="1">Study</button>
+    </div>
+
+    <!-- ── Tab panels ── -->
+    <div class="ps-panels" id="psPanels">
+
+      <!-- PANEL 0 — PRAY -->
+      <div class="ps-panel ps-panel-active" data-idx="0">
+        <div class="ps-block-header">
+          <img class="ps-img" src="../images/Pray.png" alt="People praying" onerror="this.style.display='none'">
+        </div>
+        <div class="acro-row" id="pray-row">
+          <div class="acro-tile" data-group="pray" data-idx="0" onclick="selectTile(this, event)">
+            <span class="tile-label">Praise</span>
+            <span class="letter">P</span>
+          </div>
+          <div class="acro-tile" data-group="pray" data-idx="1" onclick="selectTile(this, event)">
+            <span class="tile-label">Repent</span>
+            <span class="letter">R</span>
+          </div>
+          <div class="acro-tile" data-group="pray" data-idx="2" onclick="selectTile(this, event)">
+            <span class="tile-label">Ask</span>
+            <span class="letter">A</span>
+          </div>
+          <div class="acro-tile" data-group="pray" data-idx="3" onclick="selectTile(this, event)">
+            <span class="tile-label">Yield</span>
+            <span class="letter">Y</span>
+          </div>
+        </div>
+        <div class="acro-def" id="pray-def"></div>
+                  <p class="ps-hint">Tap a letter to explore</p>
+
+                <p class="ps-intro" style="margin-top:1.2rem;">
+          Prayer is how we talk to God. It is a place where God shapes the desires of our heart to what He desires. It's not a task to perform but a relationship to enjoy. A simple way to start is to use the acronym.
+        </p>
+
       </div>
-    </div>
-  </div>
-  <div class="band-wave">
-    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#cf8404">
-        <animate attributeName="d" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
-          values="M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z;
-                  M0,30 C360,100 720,5  1080,95 C1300,115 1400,45 1440,80 L1440,120 L0,120 Z;
-                  M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z"/>
-      </path>
-    </svg>
-  </div>
-</section>
 
+      <!-- PANEL 1 — SPECS -->
+      <div class="ps-panel" data-idx="1">
+        <div class="ps-block-header">
+          
+          <img class="ps-img" style="width:150px;" src="../images/Study.png" alt="Person studying" onerror="this.style.display='none'">
+        </div>
+        <div class="acro-row" id="specs-row">
+          <div class="acro-tile" data-group="specs" data-idx="0" onclick="selectTile(this, event)">
+            <span class="tile-label">Sin to Confess</span>
+            <span class="letter">S</span>
+          </div>
+          <div class="acro-tile" data-group="specs" data-idx="1" onclick="selectTile(this, event)">
+            <span class="tile-label">Promise to Claim</span>
+            <span class="letter">P</span>
+          </div>
+          <div class="acro-tile" data-group="specs" data-idx="2" onclick="selectTile(this, event)">
+            <span class="tile-label">Example to Follow</span>
+            <span class="letter">E</span>
+          </div>
+          <div class="acro-tile" data-group="specs" data-idx="3" onclick="selectTile(this, event)">
+            <span class="tile-label">Command to Obey</span>
+            <span class="letter">C</span>
+          </div>
+          <div class="acro-tile" data-group="specs" data-idx="4" onclick="selectTile(this, event)">
+            <span class="tile-label">Service to Render</span>
+            <span class="letter">S</span>
+          </div>
+        </div>
 
-<!-- ════ SECTION 2 — Biblical Literacy ════ -->
-<section class="step-band" style="--c:#cf8404">
-  <div class="step-inner">
-    <div class="step-body">
-      <h2>Biblical Literacy</h2>
-      <p class="intro">
-When we understand the context of the Bible passage we are reading, we allow the Bible to speak for itself rather than reading our own ideas into it. That is why Anchor is grounded in solid academic foundations and designed to be explored modularly, one piece at a time, in the order that serves you best.
-      </p>
-      <ul class="ilist">
-        <li>
-          <div class="inum">1</div>
-          <span><strong>Go chronologically:</strong> Start at the beginning of the Old or New
-          Testament and work through it in order.</span>
-        </li>
-        <li>
-          <div class="inum">2</div>
-          <span><strong>Explore a theme:</strong> Choose a theme like Kingship, Return,
-          or Passion Week and understand our that theme shapes the redemptive plan</span>
-        </li>
-        <li>
-          <div class="inum">3</div>
-          <span><strong>Practice the order:</strong> Shuffle your cards regularly, then put
-          them back in sequence. Doing this alongside your reading builds
-          a mental story-map of the Bible that sticks.</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="band-wave">
-    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path fill="#40654a">
-        <animate attributeName="d" dur="5.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
-          values="M0,95 C300,10 700,110 1100,15 C1300,0 1400,55 1440,35 L1440,120 L0,120 Z;
-                  M0,25 C300,110 700,10 1100,105 C1300,120 1400,55 1440,85 L1440,120 L0,120 Z;
-                  M0,95 C300,10 700,110 1100,15 C1300,0 1400,55 1440,35 L1440,120 L0,120 Z"/>
-      </path>
-    </svg>
-  </div>
-</section>
+        <div class="acro-def" id="specs-def"></div>
+                          <p class="ps-hint">Tap a letter to explore</p>
 
-
-<!-- ════ SECTION 3 — Launch Point ════ -->
-<section class="step-band" style="--c:#40654a">
-  <div class="step-inner">
-    <div class="step-body">
-      <h2>Launch Point</h2>
-      <p class="intro">
-        Anchor covers a huge amount of the Old Testament and the entirety of the New.<strong>But you don't have to follow the rules perfectly.</strong>
-        Let your curiosity lead.
-      </p>
-      <ul class="blist">
-        <li>
-          <span class="bdot"></span>
-          <span>Pick any card and explore how it fits into God's bigger plan. If reading
-          one passage pulls you somewhere else off script, go there. That's exactly the point,
-          to <strong>anchor yourself in the Bible</strong> and keep reading.</span>
-        </li>
-        <li>
-          <span class="bdot"></span>
-          <span>If your devotional momentum stalls. Shuffle the deck,
-          find a new starting point, and get your head back in the Word.</span>
-        </li>
-      </ul>
-      <div class="tip">
-        <strong>📖 Use Anchor as a tool, not a rule.</strong> It exists to serve your
-        journey into the Bible, not to define its boundaries. Go off-script whenever
-        the Holy Spirit leads you there.
+        <p class="ps-intro" style="margin-top:1.2rem;">
+          The Bible is how God talks to us. But what should we look for when He speaks? As you read Scripture, keep an eye out for five key things, summed up in SPECS. Most passages include at least one of them.
+        </p>
       </div>
-    </div>
+
+    </div><!-- end ps-panels -->
   </div>
+
   <div class="band-wave">
     <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <path fill="#40654a">
@@ -575,20 +834,238 @@ When we understand the context of the Bible passage we are reading, we allow the
 </section>
 
 
+<!-- ════ SECTION 1 — Discovery ════ -->
+<section class="step-band" style="--c:#40654a">
+  <div class="step-inner">
+          <div class="step-section-img">
+        <img src="../images/BibleStudy1.png" alt="Discovery" onerror="this.closest('.step-section-img').style.display='none'">
+      </div>
+    <div class="step-body">
 
+      <div class="step-body-text">
+        <h2 style="width: 100%;
+  text-align: center;
+  color: white;
+  margin-bottom: 1rem;">Guided Discovery</h2>
+  
+      <p class="intro" style="text-align: center;">
+        <em style="text-align: center;">"And beginning with Moses and all the Prophets, he explained to them what was said in all the Scriptures concerning himself."</em><strong><br>Luke 24:27</strong>
+      <p class="intro" style="margin-bottom:1rem; text-align: justify;">When we understand the context of the Bible passage(s) we are reading, we allow the Bible to speak for itself rather than reading our own ideas into it. This is where Anchor's guided discovery shines! Start anywhere and begin building up your mental story-map of the redemptive picture. Some helpful launch points:</p>
+  <ul class="ilist">
+        <li>
+          <div class="inum">1</div>
+          <span><strong>Go in order of time:</strong> Start at the beginning of the Old or New
+          Testament Anchor decks and work through it in order.</span>
+        </li>
+        <li>
+          <div class="inum">2</div>
+          <span><strong>Explore a theme:</strong> Choose a theme like Kingship, Return,
+          or Passion Week and understand how that theme shapes and fits into the redemptive plan</span>
+        </li>
+        <li>
+          <div class="inum">3</div>
+          <span><strong>Random curiosity:</strong> Pick any of the cards that ignites your curiosity and go find out what happened.</span>
+        </li>
+        <li>
+          <div class="inum">4</div>
+          <span><strong>Practice the order:</strong> Shuffle your cards, then put
+          them back in sequence. Doing this alongside your reading builds
+          up your biblical literacy.</span> 
+          
+        </li>
+        
+      </ul>
+      <div class="tip">
+        <strong>📖 Use Anchor as a tool, not a rule.</strong> It exists to serve your
+        journey into the Bible, not to define its boundaries. Go off-script whenever
+        the Holy Spirit leads you there.
+      </div>
+        <button class="menu-btn btn-discipleship" style="flex-direction: column; margin-top: 40px;" onclick="window.location.href='Anchor.html#AnchorPracticeMode'">
+      <span class="btn-label">View Card Order</span>
+      <span class="btn-label" style="font-size: 12px; color: #6d6d6d;">Go to Anchor Digital Version</span>
+    </button>
+      </div><!-- end step-body-text -->
+    </div>
+  </div>
+  <div class="band-wave">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#40654a">
+        <animate attributeName="d" dur="4.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+          values="M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z;
+                  M0,30 C360,100 720,5  1080,95 C1300,115 1400,45 1440,80 L1440,120 L0,120 Z;
+                  M0,80 C360,10 720,110 1080,20 C1300,0 1400,60 1440,40 L1440,120 L0,120 Z"/>
+      </path>
+    </svg>
+  </div>
+</section>
+
+
+</section>
+
+
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════
+     ANCHOR MENU — Water Drain Transition
+     Paste this block as the FIRST child of <body> on every
+     destination page (Anchor_GameRules.html, etc.)
+     It reads the colour stored by the menu and drains it
+     off the screen like water before the page is visible.
+════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  const col = sessionStorage.getItem('__anchorDrain');
+  if(!col) return;
+  sessionStorage.removeItem('__anchorDrain');
+
+  const DPR = window.devicePixelRatio || 1;
+  const W   = window.innerWidth;
+  const H   = window.innerHeight;
+
+  const cvs = document.createElement('canvas');
+  cvs.width  = W * DPR;
+  cvs.height = H * DPR;
+  cvs.style.cssText = `
+    position:fixed;inset:0;
+    width:${W}px;height:${H}px;
+    z-index:999999;pointer-events:none;
+  `;
+  document.body.appendChild(cvs);
+  const cx = cvs.getContext('2d');
+  cx.scale(DPR, DPR);
+
+  const DURATION = 900; // ms — how long the drain takes
+  const HOLD     = 120; // ms — brief pause before draining starts
+  const start    = performance.now();
+
+  function easeIn(t){ return t * t * t; } // cubic — accelerates like gravity
+
+  function frame(now){
+    const elapsed  = Math.max(0, now - start - HOLD);
+    const progress = Math.min(elapsed / DURATION, 1);
+    const ease     = easeIn(progress);
+
+    cx.clearRect(0, 0, W, H);
+
+    // The water surface descends from top (0) to just below the screen (H + wave headroom)
+    const surfaceY  = ease * (H + 60);
+
+    // Wave amplitude shrinks as the water drains away — calms at the end
+    const waveAmp   = 22 * (1 - ease);
+    const waveFreq  = 0.018;
+    const wavePhase = elapsed * 0.006;
+
+    // Draw the water body — fill from the wavy surface down to the bottom
+    cx.fillStyle = col;
+    cx.beginPath();
+    cx.moveTo(0, H); // bottom-left
+
+    // Walk left-to-right along the wavy surface
+    for(let x = 0; x <= W; x += 3){
+      const y = surfaceY
+              + Math.sin(x * waveFreq + wavePhase)          * waveAmp
+              + Math.sin(x * waveFreq * 2.3 + wavePhase * 1.4) * (waveAmp * 0.4);
+      cx.lineTo(x, y);
+    }
+
+    cx.lineTo(W, H); // bottom-right
+    cx.closePath();
+    cx.fill();
+
+    if(progress < 1){
+      requestAnimationFrame(frame);
+    } else {
+      cvs.remove();
+    }
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
 
 
 
 
 
 <script>
-/* ── Scroll reveal ── */
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+/* ── PRAY / SPECS interactive tiles ── */
+const PRAY_DEFS = [
+  'Honor God by giving Him gratitude for who He is and what He has done. <br><br><em>"God, You are loving, merciful, and full of grace. Thank you for..."</em><br><br><strong><br>Check out: Psalms 100:4</strong>',
+  'It is the kindness of God that allows us to joyfully repent of our mistakes. Confess joyfully and openly to God and ask Him to reveal any sin or idols in your life. <br><br><em>"God I am so sorry for where I have messed up, please help me do better today and reveal any disobedience in my life I am not seeing...</em><br><br><strong><br>Check out: Acts 3:19</strong>',
+  'Share with God what is currently on your heart, bring your thoughts, plans, people, worries and wants to Him.. <br><br><em>"God I really want to pursue... I am worried about... I want to ask for your help in... Please bring breakthrough for... "</em><br><br><strong><br>Check out: Philippians 4:6-7</strong>',
+  'Invite God to help you understand what you are about to read and to give you the strength to yeild (obay/follow) what He shows you.<br><br><em>"God empower me with your Holy Spirit to understand what I read from your Word, and give me the strength to be obedient to what you reveal..."</em><br><br><strong><br>Check out: Psalm 119:33-40</strong>'
+];
+const SPECS_DEFS = [
+  'Does this reveal a sin or a sinful action that I need to learn from and/or repent of?<br><br><em>"Then Peter said, “Ananias, why have you let Satan fill your heart? You lied to the Holy Spirit, and you kept some of the money for yourself."</em><br><br><strong><br>Reference: Acts 5:3</strong>',
+
+  'Is there a promise of God I need to trust and remember?<br><br><em>"For this is how God loved the world: He gave his one and only Son, so that everyone who believes in him will not perish but have eternal life."</em><br><br><strong><br>Reference: John 3:16</strong>',
+
+  'Does this show me an example of righteousness or godliness to follow?<br><br><em>"I am the Lord’s servant,” Mary answered. “May your word to me be fulfilled.” Then the angel left her."</em><br><br><strong><br>Reference: Luke 1:38</strong>',
+
+  'Is there a direct command to obey?<br><br><em>"A new command I give you: Love one another. As I have loved you, so you must love one another."</em><br><br><strong><br>Refernce: John 13:34</strong>',
+
+  'Does this call me to serve in some way?<br><br><em>"Share with the Lord’s people who are in need. Practice hospitality."</em><br><br><strong><br>Refernce: Romans 12:13</strong>'
+];
+
+function selectTile(tile, event) {
+  if (event) event.stopPropagation();
+  const group = tile.dataset.group;
+  const idx   = parseInt(tile.dataset.idx);
+  const defEl = document.getElementById(group + '-def');
+  const defs  = group === 'pray' ? PRAY_DEFS : SPECS_DEFS;
+
+  // Toggle off if already active
+  if (tile.classList.contains('active')) {
+    tile.classList.remove('active');
+    defEl.classList.remove('show');
+    defEl.innerHTML = '';
+    return;
+  }
+
+  // Deactivate siblings
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(t => t.classList.remove('active'));
+  tile.classList.add('active');
+
+  defEl.classList.remove('show');
+  setTimeout(() => {
+    defEl.innerHTML = defs[idx];
+    defEl.classList.add('show');
+  }, 120);
+}
+
+// Tab switching — Step One / Step Two
+(function() {
+  const tabs   = document.querySelectorAll('#psTabs .ps-tab');
+  const panels = document.querySelectorAll('#psPanels .ps-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const idx = +this.dataset.idx;
+      tabs.forEach(t   => t.classList.toggle('ps-tab-active',   +t.dataset.idx   === idx));
+      panels.forEach(p => p.classList.toggle('ps-panel-active', +p.dataset.idx   === idx));
+      // Clear any open tiles when switching tabs
+      document.querySelectorAll('.acro-tile.active').forEach(tile => {
+        const group = tile.dataset.group;
+        const defEl = document.getElementById(group + '-def');
+        tile.classList.remove('active');
+        if (defEl) { defEl.classList.remove('show'); defEl.innerHTML = ''; }
+      });
+    });
   });
-},{ threshold: 0.06 });
-document.querySelectorAll('.step-band, .sink-band').forEach(b => io.observe(b));
+})();
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.acro-tile')) {
+    document.querySelectorAll('.acro-tile.active').forEach(tile => {
+      const group = tile.dataset.group;
+      const defEl = document.getElementById(group + '-def');
+      tile.classList.remove('active');
+      if (defEl) { defEl.classList.remove('show'); defEl.innerHTML = ''; }
+    });
+  }
+});
 </script>
+
 </body>
 </html>
