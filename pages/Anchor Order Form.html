@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchor Order Form</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { width: 100%; min-height: 100%; }
+
+  body {
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    background: #e4decb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+  }
+
+  .overlay {
+       position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        linear-gradient(#4a4a4a86, #4a4a4a86),
+        url('./p1.jpg');
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+  }
+
+  .page {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 560px;
+    padding: 2.8rem 1.6rem 3.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ══════ LOGO ══════ */
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.4rem;
+    animation: fade-down 0.85s ease both;
+  }
+
+  .logo-ring {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: float-bob 4.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes float-bob {
+    0%,100%{ transform:translateY(0);    }
+    50%     { transform:translateY(-8px); }
+  }
+
+  .logo-ring img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .logo-fallback {
+    display: none;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f8d06c 0%, #d6b027 100%);
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    color: rgba(255,255,255,0.9);
+  }
+
+  h1.title {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffbd59;
+    font-size: 52px;
+    margin-bottom: 4px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(214,176,39,0.25);
+    animation: fade-down 0.85s ease both;
+  }
+
+  .subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(0.7rem, 2vw, 0.85rem);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    animation: fade-down 0.9s 0.15s ease both;
+  }
+
+  .divider {
+    width: 100%;
+    max-width: 340px;
+    margin: 0.2rem 0 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fade-in 1s 0.3s ease both;
+  }
+  .div-line {
+    flex: 1;
+    height: 1.5px;
+    border-radius: 99px;
+    background: linear-gradient(to right, transparent, #d6b027 30%, #ed9e71 60%, #ffbd59, transparent);
+    opacity: 0.65;
+  }
+  .div-diamond {
+    width: 8px; height: 8px;
+    background: #ffbd59;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(214,176,39,0.55);
+  }
+
+  /* ══════ RELATIONSHIP MESSAGE ══════ */
+  .promise-card {
+    width: 100%;
+    max-width: 460px;
+    margin-bottom: 1.6rem;
+    background: rgba(255,255,255,0.6);
+    border: 1.5px solid rgba(214,176,39,0.3);
+    border-radius: 14px;
+    padding: 1.1rem 1.4rem;
+    animation: fade-in 1s 0.3s ease both;
+  }
+  .promise-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #4a4a4a;
+    text-align: center;
+  }
+
+  /* ══════ METHOD DETAIL NOTES ══════ */
+  .method-note {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    border-radius: 10px;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-bottom 0.35s ease;
+  }
+  .method-note.show {
+    max-height: 160px;
+    opacity: 1;
+    margin-bottom: 1.2rem;
+  }
+  .method-note-inner {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    padding: 0.75rem 0.9rem;
+    background: rgba(37,143,162,0.08);
+    border: 1.5px solid rgba(37,143,162,0.25);
+    border-radius: 10px;
+  }
+  .method-note-inner i {
+    color: #258fa2;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+  .method-note-inner p {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: #4a4a4a;
+  }
+
+  /* ══════ FORM CARD ══════ */
+  .order-card {
+    width: 100%;
+    background: rgba(255,255,255,0.78);
+    border: 1.5px solid rgba(214,176,39,0.35);
+    border-radius: 18px;
+    padding: 1.8rem 1.7rem 2rem;
+    box-shadow: 0 4px 24px rgba(214,176,39,0.12), 0 1px 4px rgba(0,0,0,0.05);
+    animation: fade-in 1s 0.4s ease both;
+  }
+
+  .field {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #616161;
+    margin-bottom: 0.4rem;
+  }
+
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field input[type="number"] {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: #3a3a3a;
+    background: #fdfbf6;
+    border: 1.5px solid rgba(214,176,39,0.3);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .field input:focus {
+    border-color: #ffbd59;
+    box-shadow: 0 0 0 3px rgba(255,189,89,0.22);
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  /* ══════ PRICE LINE ══════ */
+  .qty-price-row {
+    margin-bottom: 1.2rem;
+  }
+  .qty-price-row .field {
+    margin-bottom: 0;
+  }
+  .price-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(214,176,39,0.25);
+  }
+  .price-line .amount {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #b8862e;
+    line-height: 1;
+  }
+  .price-line .per {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9a9a9a;
+  }
+
+  /* ══════ TOGGLE (Collection / Delivery) ══════ */
+  .toggle-group {
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .toggle-option {
+    flex: 1;
+    position: relative;
+  }
+
+  .toggle-option input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .toggle-option .pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0.6rem;
+    border-radius: 10px;
+    border: 1.5px solid rgba(214,176,39,0.35);
+    background: #fdfbf6;
+    color: #616161;
+    font-weight: 700;
+    font-size: 0.92rem;
+    transition: all 0.18s ease;
+  }
+
+  .toggle-option input:checked + .pill {
+    background: #ffbd59;
+    border-color: #ffbd59;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(255,189,89,0.4);
+    transform: translateY(-1px);
+  }
+
+  .toggle-option input:focus-visible + .pill {
+    box-shadow: 0 0 0 3px rgba(37,143,162,0.35);
+  }
+
+  /* Delivery location field reveal */
+  #delivery-field {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-bottom 0.35s ease;
+  }
+  #delivery-field.show {
+    max-height: 140px;
+    opacity: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  /* ══════ SUBMIT BUTTON (matches menu-btn) ══════ */
+  .order-btn {
+    position: relative;
+    width: 100%;
+    background-color: #ffbd59;
+    padding: 1rem 1.4rem;
+    border-width: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.35rem;
+    font-weight: bolder;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.22);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.18), 0 8px 24px rgba(255,189,89,0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 0.15s cubic-bezier(.34,1.56,.64,1), box-shadow 0.15s ease;
+    margin-top: 0.4rem;
+  }
+
+  .order-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 9px 0 rgba(0,0,0,0.16), 0 16px 34px rgba(255,189,89,0.5), inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  .order-btn:active {
+    transform: translateY(2px) scale(0.98);
+  }
+  .order-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .hint {
+    font-size: 0.72rem;
+    color: #b23a3a;
+    margin-top: 0.3rem;
+    display: none;
+  }
+  .field.error input { border-color: #c14545; }
+  .field.error .hint { display: block; }
+
+  .footer {
+    margin-top: 1.8rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(75,60,45,0.35);
+    text-align: center;
+  }
+
+  @keyframes fade-down {
+    from { opacity:0; transform:translateY(-16px); }
+    to   { opacity:1; transform:translateY(0);     }
+  }
+  @keyframes fade-in {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
+
+  /* ══════ POPUP MODAL ══════ */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(40,32,20,0.45);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    animation: fade-in 0.25s ease both;
+  }
+  .modal-backdrop.show { display: flex; }
+
+  .modal-card {
+    background: #fdfbf6;
+    border-radius: 18px;
+    border: 1.5px solid rgba(214,176,39,0.4);
+    padding: 2.4rem 1.9rem 2rem;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: pop-up 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes pop-up {
+    from { opacity:0; transform:scale(0.82) translateY(14px); }
+    to   { opacity:1; transform:scale(1)    translateY(0);    }
+  }
+
+  .modal-icon {
+    font-size: 2.4rem;
+    color: #ffbd59;
+    margin-bottom: 0.8rem;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #3a3a3a;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-text {
+    font-size: 0.95rem;
+    color: #616161;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-close {
+    background-color: #ffbd59;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.65rem 1.6rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 6px 18px rgba(255,189,89,0.4);
+    transition: transform 0.15s ease;
+  }
+  .modal-close:hover { transform: translateY(-2px); }
+  .modal-close:active { transform: translateY(1px); }
+
+  @media(max-width:480px){
+    .row-2 { grid-template-columns: 1fr; }
+    .page { padding: 2rem 1.1rem 2.5rem; }
+    h1.title { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<main class="page" role="main">
+
+
+
+  <h1 class="title">Anchor</h1>
+  <p class="subtitle">Place Your Order</p>
+
+
+
+  <div class="promise-card">
+    <p class="promise-text">We believe in relationship and personal contact. After you've placed your order, a representative of OC will get in contact with you shortly to finalize your order.</p>
+  </div>
+
+  <div class="order-card">
+    <form id="order-form" novalidate
+          action="https://docs.google.com/forms/d/e/1FAIpQLSemfvG5LzTmFsRZiignZZ6Za0y9PjhWuyM4_-9N3mqkTb1f4A/formResponse"
+          method="POST" target="hidden_iframe">
+
+      <div class="row-2">
+        <div class="field" id="field-first">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" name="entry.100704698" autocomplete="given-name" required>
+          <span class="hint">Please enter your first name</span>
+        </div>
+        <div class="field" id="field-surname">
+          <label for="surname">Surname</label>
+          <input type="text" id="surname" name="entry.1439360865" autocomplete="family-name" required>
+          <span class="hint">Please enter your surname</span>
+        </div>
+      </div>
+
+      <div class="field" id="field-phone">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="entry.1485276490" autocomplete="tel" required>
+        <span class="hint">Please enter your phone number</span>
+      </div>
+
+      <div class="field" id="field-email">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="entry.1483162267" autocomplete="email" required>
+        <span class="hint">Please enter a valid email address</span>
+      </div>
+
+      <div class="qty-price-row">
+        <div class="field" id="field-qty">
+          <label for="quantity">Quantity</label>
+          <input type="number" id="quantity" name="entry.1319525673" min="1" step="1" value="1" required>
+          <span class="hint">Please enter a quantity</span>
+        </div>
+        <div class="price-line">
+          <span class="amount" id="price-amount">R399.00</span>
+          <span class="per" id="price-per">Per Pack</span>
+        </div>
+      </div>
+
+      <div class="field" id="field-method">
+        <label>Collection or Delivery</label>
+        <div class="toggle-group">
+          <label class="toggle-option">
+            <input type="radio" name="entry.486535201" value="Pick-Up Point" id="method-collect" required>
+            <span class="pill"><i class="fa-solid fa-store"></i> Collection</span>
+          </label>
+          <label class="toggle-option">
+            <input type="radio" name="entry.486535201" value="Delivery" id="method-deliver" required>
+            <span class="pill"><i class="fa-solid fa-truck"></i> Delivery</span>
+          </label>
+        </div>
+        <span class="hint">Please choose collection or delivery</span>
+      </div>
+
+      <div class="method-note" id="collect-note">
+        <div class="method-note-inner">
+          <i class="fa-solid fa-location-dot"></i>
+          <p><strong>Collection point:</strong><br><br>El Shaddai Christian Church <br>4 Lords Walk, Durbanville, Cape Town, 7550</p>
+        </div>
+      </div>
+
+      <div class="method-note" id="deliver-note">
+        <div class="method-note-inner">
+          <i class="fa-solid fa-truck-fast"></i>
+          <p><strong>Delivery:</strong> All deliveries are handled through The Courier Guy. Delivery fees are added to your order depending on location, typically around R[60 - 100]. Depending on your order quantity.</p>
+        </div>
+      </div>
+
+      <div class="field" id="delivery-field">
+        <label for="location">Delivery Location</label>
+        <input type="text" id="location" name="entry.360730794" autocomplete="street-address">
+        <span class="hint">Please enter a delivery location</span>
+      </div>
+
+      <button type="submit" class="order-btn" id="submit-btn">Place Order Now</button>
+    </form>
+  </div>
+
+  <p class="footer">Made by: Objective Calvary</p>
+
+</main>
+
+<!-- Hidden iframe target so submission doesn't leave the page -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<!-- Success popup -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal-card">
+    <div class="modal-icon"><i class="fa-solid fa-phone-volume"></i></div>
+    <div class="modal-title">Exciting Stuff!</div>
+    <p class="modal-text">We'll get in contact soon!</p>
+    <button class="modal-close" id="modal-close">Close</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const form = document.getElementById('order-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const iframe = document.getElementById('hidden_iframe');
+  const modal = document.getElementById('modal-backdrop');
+  const modalClose = document.getElementById('modal-close');
+
+  const deliverRadio = document.getElementById('method-deliver');
+  const collectRadio = document.getElementById('method-collect');
+  const deliveryField = document.getElementById('delivery-field');
+  const locationInput = document.getElementById('location');
+
+  const collectNote = document.getElementById('collect-note');
+  const deliverNote = document.getElementById('deliver-note');
+  const quantityInput = document.getElementById('quantity');
+  const priceAmount = document.getElementById('price-amount');
+  const pricePer = document.getElementById('price-per');
+  const UNIT_PRICE = 399.00;
+
+  function formatRand(value){
+    return 'R' + value.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function updatePrice(){
+    const qty = parseInt(quantityInput.value, 10);
+    if (!qty || qty < 1) {
+      priceAmount.textContent = formatRand(UNIT_PRICE);
+      pricePer.textContent = 'Per Pack';
+    } else {
+      priceAmount.textContent = formatRand(UNIT_PRICE * qty);
+      pricePer.textContent = qty === 1 ? 'Total (1 Pack)' : 'Total (' + qty + ' Packs)';
+    }
+  }
+  quantityInput.addEventListener('input', updatePrice);
+  updatePrice();
+
+  function syncDeliveryField(){
+    collectNote.classList.toggle('show', collectRadio.checked);
+    deliverNote.classList.toggle('show', deliverRadio.checked);
+
+    if (deliverRadio.checked) {
+      deliveryField.classList.add('show');
+      locationInput.required = true;
+    } else {
+      deliveryField.classList.remove('show');
+      locationInput.required = false;
+      locationInput.value = '';
+      deliveryField.classList.remove('error');
+    }
+  }
+  deliverRadio.addEventListener('change', syncDeliveryField);
+  collectRadio.addEventListener('change', syncDeliveryField);
+
+  function clearErrors(){
+    form.querySelectorAll('.field').forEach(f => f.classList.remove('error'));
+  }
+
+  function validate(){
+    clearErrors();
+    let valid = true;
+    const requiredFields = [
+      { el: document.getElementById('first-name'), wrap: 'field-first' },
+      { el: document.getElementById('surname'), wrap: 'field-surname' },
+      { el: document.getElementById('phone'), wrap: 'field-phone' },
+      { el: document.getElementById('email'), wrap: 'field-email' },
+      { el: document.getElementById('quantity'), wrap: 'field-qty' },
+    ];
+    requiredFields.forEach(({el, wrap}) => {
+      if (!el.value.trim()) {
+        document.getElementById(wrap).classList.add('error');
+        valid = false;
+      }
+    });
+    if (!deliverRadio.checked && !collectRadio.checked) {
+      document.getElementById('field-method').classList.add('error');
+      valid = false;
+    }
+    if (deliverRadio.checked && !locationInput.value.trim()) {
+      deliveryField.classList.add('error');
+      valid = false;
+    }
+    return valid;
+  }
+
+  let formSubmitted = false;
+
+  iframe.addEventListener('load', function(){
+    // Ignore the iframe's initial blank load on page-load; only react
+    // to loads that happen right after we actually submitted the form.
+    if (!formSubmitted) return;
+    formSubmitted = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Place Order Now';
+    modal.classList.add('show');
+    form.reset();
+    syncDeliveryField();
+    updatePrice();
+  });
+
+  form.addEventListener('submit', function(e){
+    if (!validate()) {
+      e.preventDefault();
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    formSubmitted = true;
+    // allow the natural POST to hidden_iframe to proceed
+  });
+
+  // Safety net: if the iframe's load event doesn't fire for any reason
+  // (some browsers are inconsistent with cross-origin iframe loads),
+  // still surface the popup a few seconds after a real submission.
+  form.addEventListener('submit', function(){
+    if (!validate()) return;
+    setTimeout(function(){
+      if (formSubmitted) {
+        formSubmitted = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Place Order Now';
+        modal.classList.add('show');
+        form.reset();
+        syncDeliveryField();
+        updatePrice();
+      }
+    }, 4000);
+  });
+
+  modalClose.addEventListener('click', function(){
+    modal.classList.remove('show');
+    // Return to whichever page the visitor arrived from
+    if (window.history.length > 1) {
+      window.history.back();
+    } else if (document.referrer) {
+      window.location.href = document.referrer;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
