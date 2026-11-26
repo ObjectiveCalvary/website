@@ -1040,40 +1040,56 @@
 <!-- Particle Canvas for Celebrations -->
 <canvas id="particleCanvas"></canvas>
 
-<!-- ================= NAVIGATION ================= -->
-<header>
-    <nav>
-        <ul class="menu">
-            <li><a href="../index.html" ><i class="fa-solid fa-house"></i>   Home</a></li>
+  <!-- ================= NAVIGATION ================= -->
+             <header>
+            <nav>
+                <ul class="menu">
+                    <li>
+                        <a href="../index.html" 
+                            ><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home</a
+                        >
+                    </li>
 
-            <li class="dropdown">
-            <a class="active" href="#" style="color: #ffbd59;"><i class="fa-solid fa-grip-vertical" style="color: #ffbd59; margin-right: 5px;"></i>     Gospel Tools</a>
-            <ul class="dropdown-content">
-                <li>
-                <a href="./IRBs.html">
-                    <img src="../images/IRB_64px.png" class="menu-icon" alt="">
-                    IRBs
-                </a>
-                </li>
-                <li>
-                <a href="./Anchor.html">
-                    <img src="../images/Anchor_64px.png"  class="menu-icon" alt="">
-                    Anchor
-                </a>
-                </li>
-                <li>
-                <a href="./Pulse.html">
-                    <img src="../images/Pulse_64px.png" class="menu-icon" alt="">
-                    Pulse
-                </a>
-                </li>
-            </ul>
-            </li>
+                    <li class="dropdown">
+                        <a href="#"  class="active"
+                            ><i
+                                class="fa-solid fa-magnifying-glass"
+                                style="margin-right: 5px"
+                            ></i>
+                            Gospel Tools</a
+                        >
+                        <ul class="dropdown-content">
+                            <li>
+                                <a href="./IRBs.html">
+                                    <img src="../images/IRB_64px.png" class="menu-icon" alt="" />
+                                    IRBs
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Anchor.html">
+                                    <img src="../images/Anchor_64px.png" class="menu-icon" alt="" />
+                                    Anchor
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./Pulse.html">
+                                    <img src="../images/Pulse_64px.png" class="menu-icon" alt="" />
+                                    Pulse
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-            <li><i class="fa-solid fa-code"></i> <a href="https://forms.gle/qT6z1kd16kxkoYpR7">Feedback</a></li>
-        </ul>
-    </nav>
-</header>
+                    <li>
+                        <a href="../consultants.html" 
+                            ><i class="fa-solid fa-user-graduate"></i>&nbsp;&nbsp;Consultants</a
+                        >
+                    </li>
+
+                    
+                </ul>
+            </nav>
+        </header>
 
  <section class="hero">
   <!-- Background video -->
@@ -1103,19 +1119,15 @@
     />
     <div class="links" style="margin-bottom: 50px;">
       <p>
-        A Discipleship and Bible Study Tool<br />
-        Using Anchor Events from Scripture
+        A Bible discovery game that builds biblical<br>literacy by sparking curiosity around anchor events
       </p>
     </div>
-    <div class="button-group" style="padding-bottom: 0px; margin-bottom: 0px;">
-      <a href="./Anchor_Menu.html" class="primary-btn2">See Game Rules</a>
-      <a href="https://youtu.be/AeiPA2uMesg" class="secondary-btn">
-        Watch Promo Video
+    <div class="button-group">
+      <a href="./Anchor_Menu.html" class="primary-btn2">Open Digital Hub</a>
+      <a href="./Anchor Order Form.html" class="secondary-btn">
+        Order Your Set
       </a>
-      
-    </div>
-      <a href="./Anchor Order Form.html" class="primary-btn4">Buy A Pack!</a>
-  </div>
+     
 </section>
 
 
@@ -1283,849 +1295,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Canvases -->
-<canvas id="particleCanvas"></canvas>
-<canvas id="dragTrailCanvas"></canvas>
-<canvas id="spotlightParticleCanvas"></canvas>
-<button id="floatSelectBtn" data-label="Select cards" aria-label="Toggle multi-select mode">
-  <i class="fas fa-layer-group"></i>
-</button>
-
-
-
-
-<!-- SPOTLIGHT OVERLAY -->
-<div id="spotlightOverlay">
-  <!-- Exit button lives on the overlay, not inside the header,
-       so it never pushes the timeline off-centre -->
-  <button id="spotlightExitBtn" title="Close (Esc)"><i class="fas fa-times"></i></button>
-  <div id="spotlightHeader">
-    <div id="spotlightTimeline">
-      <div class="sptl-track"></div>
-      <div class="sptl-nodes"></div>
-    </div>
-    <!-- Gospel sub-timeline — only visible when active card(s) are in gospel range -->
-    <div id="gospelTimeline">
-      <div class="gtl-nodes"></div>
-    </div>
-  </div>
-  <div id="spotlightScrollArea">
-  <div id="spotlightContentRow">
-
-    <!-- LEFT PANEL: PRAY (order:1 on desktop, order:2 on mobile) -->
-    <div class="spotlight-panel" id="panelPray">
-      <div class="panel-title-row">
-        <h3 class="panel-title">A Simple Way to Pray</h3>
-      </div>
-
-      <div class="panel-divider"></div>
-
-      <!-- PRAY Acronym -->
-      <div class="acronym-row">
-        <div class="acronym-letter-block pray-p" data-touch="false">
-          <span class="acronym-big-letter">P</span>
-          <span class="acronym-word">Praise</span>
-          <div class="acronym-tooltip">Praise — Express Gratitude and Thanksgiving to God</div>
-        </div>
-        <div class="acronym-letter-block pray-r" data-touch="false">
-          <span class="acronym-big-letter">R</span>
-          <span class="acronym-word">Repent</span>
-          <div class="acronym-tooltip">Repent — Confess Sin to God and Ask for Forgiveness</div>
-        </div>
-        <div class="acronym-letter-block pray-a" data-touch="false">
-          <span class="acronym-big-letter">A</span>
-          <span class="acronym-word">Ask</span>
-          <div class="acronym-tooltip">Ask — Bring your needs to God (for yourself and others)</div>
-        </div>
-        <div class="acronym-letter-block pray-y" data-touch="false">
-          <span class="acronym-big-letter">Y</span>
-          <span class="acronym-word">Yield</span>
-          <div class="acronym-tooltip">Yield — Ask God to Help You Follow His Wants of You and Obey Him</div>
-        </div>
-      </div>
-
-      <div class="panel-divider"></div>
-
-      <!-- Prayer Type Tabs -->
-      <div style="font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#9ca3b0;margin-bottom:10px;">Prayer's to Use</div>
-      <div class="prayer-tabs">
-
-        <div class="prayer-tab" id="ptab-repentance">
-          <div class="prayer-tab-header" onclick="togglePrayerTab('ptab-repentance')">
-            <span class="prayer-tab-label"><i class="fa-solid fa-bread-slice" style="color:#d6b442;"></i> The Lord's Prayer</span>
-            <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-          </div>
-          <div class="prayer-tab-body">
-            <p class="prayer-tab-content">
-
-Our Father in heaven,
-hallowed be your name, <br><br>
-your kingdom come,
-your will be done,
-    on earth as it is in heaven. 
-Give us today our daily bread.<br><br>
-And forgive us our debts,
-    as we also have forgiven our debtors.<br><br>
-And lead us not into temptation,
-    but deliver us from the evil one.<br><br>
-  
-  - Matthew 6:9-13
-  </p>
-          </div>
-        </div>
-
-        <div class="prayer-tab" id="ptab-protection">
-          <div class="prayer-tab-header" onclick="togglePrayerTab('ptab-protection')">
-            <span class="prayer-tab-label"><i class="fas fa-heart-crack" style="color:#db2777;"></i> David's Prayer of Repentance</span>
-            <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-          </div>
-          <div class="prayer-tab-body">
-            <p class="prayer-tab-content">
-
-
-Have mercy on me, O God,
-    according to your unfailing love;
-according to your great compassion
-    blot out my transgressions.
-Wash away all my iniquity
-    and cleanse me from my sin. <br><br>
-
-For I know my transgressions,
-    and my sin is always before me.
-Against you, you only, have I sinned
-    and done what is evil in your sight;
-so you are right in your verdict
-    and justified when you judge.
-Surely I was sinful at birth,
-    sinful from the time my mother conceived me.
-Yet you desired faithfulness even in the womb;
-    you taught me wisdom in that secret place.<br><br>
-
-Cleanse me with hyssop, and I will be clean;
-    wash me, and I will be whiter than snow.
-Let me hear joy and gladness;
-    let the bones you have crushed rejoice.
-Hide your face from my sins
-    and blot out all my iniquity.<br><br>
-
-Create in me a pure heart, O God,
-    and renew a steadfast spirit within me.
-Do not cast me from your presence
-    or take your Holy Spirit from me.
-Restore to me the joy of your salvation
-    and grant me a willing spirit, to sustain me.<br><br>
-
-Then I will teach transgressors your ways,
-    so that sinners will turn back to you.
-Deliver me from the guilt of bloodshed, O God,
-    you who are God my Savior,
-    and my tongue will sing of your righteousness.
-Open my lips, Lord,
-    and my mouth will declare your praise.
-You do not delight in sacrifice, or I would bring it;
-    you do not take pleasure in burnt offerings.
-My sacrifice, O God, is a broken spirit;
-    a broken and contrite heart
-    you, God, will not despise.<br><br>
-
-May it please you to prosper Zion,
-    to build up the walls of Jerusalem.
-Then you will delight in the sacrifices of the righteous,
-    in burnt offerings offered whole;
-    then bulls will be offered on your altar.<br><br>
-
-- Psalm 51
-  
-  
-  </p>
-          </div>
-        </div>
-
-        <div class="prayer-tab" id="ptab-thanksgiving">
-          <div class="prayer-tab-header" onclick="togglePrayerTab('ptab-thanksgiving')">
-            <span class="prayer-tab-label"><i class="fa-solid fa-gift" style="color:#457ee9;"></i> David's Prayer of Praise</span>
-            <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-          </div>
-          <div class="prayer-tab-body">
-            <p class="prayer-tab-content">
-              I will exalt you, my God the King;
-    I will praise your name for ever and ever.
-Every day I will praise you
-    and extol your name for ever and ever.<br><br>
-
-Great is the Lord and most worthy of praise;
-    his greatness no one can fathom.
-One generation commends your works to another;
-    they tell of your mighty acts.
-They speak of the glorious splendor of your majesty—
-    and I will meditate on your wonderful works.
-They tell of the power of your awesome works—
-    and I will proclaim your great deeds.
-They celebrate your abundant goodness
-    and joyfully sing of your righteousness.<br><br>
-
-The Lord is gracious and compassionate,
-    slow to anger and rich in love.<br><br>
-
-The Lord is good to all;
-    he has compassion on all he has made.
-All your works praise you, Lord;
-    your faithful people extol you.
-They tell of the glory of your kingdom
-    and speak of your might,
-so that all people may know of your mighty acts
-    and the glorious splendor of your kingdom.
-Your kingdom is an everlasting kingdom,
-    and your dominion endures through all generations.<br><br>
-
-The Lord is trustworthy in all he promises
-    and faithful in all he does.
-The Lord upholds all who fall
-    and lifts up all who are bowed down.
-The eyes of all look to you,
-    and you give them their food at the proper time.
-You open your hand
-    and satisfy the desires of every living thing.<br><br>
-
-The Lord is righteous in all his ways
-    and faithful in all he does.
-The Lord is near to all who call on him,
-    to all who call on him in truth.
-He fulfills the desires of those who fear him;
-    he hears their cry and saves them.
-The Lord watches over all who love him,
-    but all the wicked he will destroy.<br><br>
-
-My mouth will speak in praise of the Lord.
-    Let every creature praise his holy name
-    for ever and ever.<br><br>
-
-    - Psalm 145
-            </p>
-          </div>
-        </div>
-
-
-        
-
-      </div>
-
-
-
-
-      
-    </div>
-
-    <!-- CENTER: Single Spotlight Card (single-card mode) -->
-    <div id="spotlightCardWrap">
-      <span id="spotlightLabel"></span>
-      <div id="spotlightInner">
-        <div id="spotlightFront"><img id="spotlightFrontImg" src="" alt="" /></div>
-        <div id="spotlightBack"><img id="spotlightBackImg" src="" alt="" /></div>
-      </div>
-      <div id="spotlightHint"><i class="fas fa-hand-pointer" style="margin-right:5px;"></i>Click to flip</div>
-    </div>
-
-    <!-- RIGHT PANEL: SPECS -->
-    <div class="spotlight-panel" id="panelSpecs">
-      <div class="panel-title-row">
-        <h3 class="panel-title">A Simple Study Method</h3>
-      </div>
-
-      <div class="panel-divider"></div>
-
-      <!-- SPECS Acronym -->
-      <div class="acronym-row">
-        <div class="acronym-letter-block specs-s1" data-touch="false">
-          <span class="acronym-big-letter">S</span>
-          <span class="acronym-word">Sin</span>
-          <div class="acronym-tooltip">S — Sin to confess</div>
-        </div>
-        <div class="acronym-letter-block specs-p" data-touch="false">
-          <span class="acronym-big-letter">P</span>
-          <span class="acronym-word">Promise</span>
-          <div class="acronym-tooltip">P — Promise to claim</div>
-        </div>
-        <div class="acronym-letter-block specs-e" data-touch="false">
-          <span class="acronym-big-letter">E</span>
-          <span class="acronym-word">Example</span>
-          <div class="acronym-tooltip">E — Example to follow</div>
-        </div>
-        <div class="acronym-letter-block specs-c" data-touch="false">
-          <span class="acronym-big-letter">C</span>
-          <span class="acronym-word">Command</span>
-          <div class="acronym-tooltip">C — Command to obey</div>
-        </div>
-        <div class="acronym-letter-block specs-s2" data-touch="false">
-          <span class="acronym-big-letter">S</span>
-          <span class="acronym-word">Service</span>
-          <div class="acronym-tooltip">S — Service to render</div>
-        </div>
-      </div>
-
-      <div class="panel-divider"></div>
-
-        <p class="panel-supporting-text" style="text-align: justify; font-style: normal;">Prayer is how we talk to God, and the Bible is how God talks to us. But what should we look for when He speaks? As you read Scripture, keep an eye out for five key things, summed up in SPECS. Most passages include at least one of them. <br><br></p>
-     
-     
-      <!-- Dropdown: Spiritual Growth Equation -->
-      <div class="prayer-tabs">
-        <div class="prayer-tab" id="stab-equation">
-          <div class="prayer-tab-header" onclick="togglePrayerTab('stab-equation')">
-            <span class="prayer-tab-label"><i class="fa-solid fa-seedling" style="color:#4ade80;"></i> The Spiritual Growth Equation</span>
-            <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-          </div>
-          <div class="prayer-tab-body">
-            <div class="growth-equation">
-              <div class="growth-eq-label">Spiritual Growth</div>
-              <div class="growth-eq-equals">=</div>
-              <div class="growth-eq-factors">
-                <span class="growth-factor" data-growth-tip="Read and listen to Scripture — let God speak to you through His Word.">
-                  Hearing God
-                  <span class="growth-tooltip">Read and listen to Scripture, let God speak to you through His Word.</span>
-                </span>
-                <span class="growth-operator">×</span>
-                <span class="growth-factor" data-growth-tip="Reflect and meditate on what God is saying to you personally.">
-                  Processing
-                  <span class="growth-tooltip">Reflect and meditate on what God is saying to you, using the SPECS method.</span>
-                </span>
-                <span class="growth-operator">×</span>
-                <span class="growth-factor" data-growth-tip="Act in obedience to what God reveals — faith without action is incomplete.">
-                  Responding
-                  <span class="growth-tooltip">Act in obedience to what God reveals.</span>
-                </span>
-              </div>
-            </div>
-            <p class="prayer-tab-content" style="text-align: justify; font-style: normal; white-space: normal;">Did you know there is a formula for Spiritual Growth? It starts with hearing from God through Scripture, taking time to process what He is saying, and then responding in obedience to what He reveals. It's as simple as that 🌱.</p>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-
-    <!-- MULTI-CARD ROW (multi-card mode only — injected by JS) -->
-    <div id="multiCardRow" style="display:none;"></div>
-
-    <!-- MULTI-PANEL ROW (multi-card mode only) -->
-    <div id="multiPanelRow" style="display:none;"></div>
-
-    <!-- COMBINED PANEL (tablet portrait + phone — tabs switch between PRAY and SPECS) -->
-    <div class="spotlight-panel" id="panelCombined" style="display:none;">
-      <!-- Tab switcher -->
-      <div class="combined-tab-bar">
-        <button class="combined-tab-btn active" id="combinedTabPray" onclick="switchCombinedTab('pray','')">
-          <span>🙏</span> PRAY
-        </button>
-        <button class="combined-tab-btn" id="combinedTabSpecs" onclick="switchCombinedTab('specs','')">
-          <span>👓</span> SPECS
-        </button>
-      </div>
-
-      <!-- PRAY pane -->
-      <div class="combined-tab-pane active" id="combinedPanePray">
-        <div class="panel-title-row" style="align-items: center; justify-content: center;">
-          
-          <h3 class="panel-title" style="text-align: center;">A Simple Way to Pray</h3>
-        </div>
-        <div class="panel-divider"></div>
-        <div class="acronym-row">
-          <div class="acronym-letter-block pray-p" data-touch="false">
-            <span class="acronym-big-letter">P</span>
-          <span class="acronym-word">Praise</span>
-          <div class="acronym-tooltip">Praise — Express Gratitude and Thanksgiving to God</div>
-          </div>
-          <div class="acronym-letter-block pray-r" data-touch="false">
-                  <span class="acronym-big-letter">R</span>
-          <span class="acronym-word">Repent</span>
-          <div class="acronym-tooltip">Repent — Confess Sin to God and Ask for Forgiveness</div>
-          </div>
-          <div class="acronym-letter-block pray-a" data-touch="false">
-                <span class="acronym-big-letter">A</span>
-          <span class="acronym-word">Ask</span>
-          <div class="acronym-tooltip">Ask — Bring your needs to God (for yourself and others)</div>
-          </div>
-          <div class="acronym-letter-block pray-y" data-touch="false">
-                  <span class="acronym-big-letter">Y</span>
-          <span class="acronym-word">Yield</span>
-          <div class="acronym-tooltip">Yield — Ask God to Help You Follow His Wants of You and Obey Him</div>
-          </div>
-        </div>
-        <div class="panel-divider"></div>
-        <div style="font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,189,89,0.7);margin-bottom:10px; text-align: center;">Example Prayer's to Use</div>
-        <div class="prayer-tabs">
-          <div class="prayer-tab" id="cptab-repentance">
-            <div class="prayer-tab-header" onclick="togglePrayerTab('cptab-repentance')">
-              <span class="prayer-tab-label"><i class="fa-solid fa-bread-slice" style="color:#d6b442;"></i> The Lord's Prayer</span>
-              <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-            </div>
-            <div class="prayer-tab-body">
-  <p class="prayer-tab-content">
-
-Our Father in heaven,
-hallowed be your name, <br><br>
-your kingdom come,
-your will be done,
-    on earth as it is in heaven. 
-Give us today our daily bread.<br><br>
-And forgive us our debts,
-    as we also have forgiven our debtors.<br><br>
-And lead us not into temptation,
-    but deliver us from the evil one.<br><br>
-  
-  - Matthew 6:9-13
-  </p>            </div>
-          </div>
-          <div class="prayer-tab" id="cptab-protection">
-            <div class="prayer-tab-header" onclick="togglePrayerTab('cptab-protection')">
-            <span class="prayer-tab-label"><i class="fas fa-heart-crack" style="color:#db2777;"></i> David's Prayer of Repentance</span>
-              <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-            </div>
-            <div class="prayer-tab-body">
-               <p class="prayer-tab-content">
-
-
-Have mercy on me, O God,
-    according to your unfailing love;
-according to your great compassion
-    blot out my transgressions.
-Wash away all my iniquity
-    and cleanse me from my sin. <br><br>
-
-For I know my transgressions,
-    and my sin is always before me.
-Against you, you only, have I sinned
-    and done what is evil in your sight;
-so you are right in your verdict
-    and justified when you judge.
-Surely I was sinful at birth,
-    sinful from the time my mother conceived me.
-Yet you desired faithfulness even in the womb;
-    you taught me wisdom in that secret place.<br><br>
-
-Cleanse me with hyssop, and I will be clean;
-    wash me, and I will be whiter than snow.
-Let me hear joy and gladness;
-    let the bones you have crushed rejoice.
-Hide your face from my sins
-    and blot out all my iniquity.<br><br>
-
-Create in me a pure heart, O God,
-    and renew a steadfast spirit within me.
-Do not cast me from your presence
-    or take your Holy Spirit from me.
-Restore to me the joy of your salvation
-    and grant me a willing spirit, to sustain me.<br><br>
-
-Then I will teach transgressors your ways,
-    so that sinners will turn back to you.
-Deliver me from the guilt of bloodshed, O God,
-    you who are God my Savior,
-    and my tongue will sing of your righteousness.
-Open my lips, Lord,
-    and my mouth will declare your praise.
-You do not delight in sacrifice, or I would bring it;
-    you do not take pleasure in burnt offerings.
-My sacrifice, O God, is a broken spirit;
-    a broken and contrite heart
-    you, God, will not despise.<br><br>
-
-May it please you to prosper Zion,
-    to build up the walls of Jerusalem.
-Then you will delight in the sacrifices of the righteous,
-    in burnt offerings offered whole;
-    then bulls will be offered on your altar.<br><br>
-
-- Psalm 51
-  
-  
-  </p>
-            </div>
-          </div>
-          <div class="prayer-tab" id="cptab-thanksgiving">
-            <div class="prayer-tab-header" onclick="togglePrayerTab('cptab-thanksgiving')">
-            <span class="prayer-tab-label"><i class="fa-solid fa-gift" style="color:#457ee9;"></i> David's Prayer of Praise</span>
-              <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-            </div>
-            <div class="prayer-tab-body">
- <p class="prayer-tab-content">
-              I will exalt you, my God the King;
-    I will praise your name for ever and ever.
-Every day I will praise you
-    and extol your name for ever and ever.<br><br>
-
-Great is the Lord and most worthy of praise;
-    his greatness no one can fathom.
-One generation commends your works to another;
-    they tell of your mighty acts.
-They speak of the glorious splendor of your majesty—
-    and I will meditate on your wonderful works.
-They tell of the power of your awesome works—
-    and I will proclaim your great deeds.
-They celebrate your abundant goodness
-    and joyfully sing of your righteousness.<br><br>
-
-The Lord is gracious and compassionate,
-    slow to anger and rich in love.<br><br>
-
-The Lord is good to all;
-    he has compassion on all he has made.
-All your works praise you, Lord;
-    your faithful people extol you.
-They tell of the glory of your kingdom
-    and speak of your might,
-so that all people may know of your mighty acts
-    and the glorious splendor of your kingdom.
-Your kingdom is an everlasting kingdom,
-    and your dominion endures through all generations.<br><br>
-
-The Lord is trustworthy in all he promises
-    and faithful in all he does.
-The Lord upholds all who fall
-    and lifts up all who are bowed down.
-The eyes of all look to you,
-    and you give them their food at the proper time.
-You open your hand
-    and satisfy the desires of every living thing.<br><br>
-
-The Lord is righteous in all his ways
-    and faithful in all he does.
-The Lord is near to all who call on him,
-    to all who call on him in truth.
-He fulfills the desires of those who fear him;
-    he hears their cry and saves them.
-The Lord watches over all who love him,
-    but all the wicked he will destroy.<br><br>
-
-My mouth will speak in praise of the Lord.
-    Let every creature praise his holy name
-    for ever and ever.<br><br>
-
-    - Psalm 145
-            </p>            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SPECS pane -->
-      <div class="combined-tab-pane" id="combinedPaneSpecs">
-        <div class="panel-title-row" style="align-items: center; justify-content: center;">
-          <h3 class="panel-title">A Simple Study Method</h3>
-        </div>
-        <div class="panel-divider"></div>
-        <div class="acronym-row">
-          <div class="acronym-letter-block specs-s1" data-touch="false">
-            <span class="acronym-big-letter">S</span>
-            <span class="acronym-word">Sin</span>
-            <div class="acronym-tooltip">S — Sin to confess</div>
-          </div>
-          <div class="acronym-letter-block specs-p" data-touch="false">
-            <span class="acronym-big-letter">P</span>
-            <span class="acronym-word">Promise</span>
-            <div class="acronym-tooltip">P — Promise to claim</div>
-          </div>
-          <div class="acronym-letter-block specs-e" data-touch="false">
-            <span class="acronym-big-letter">E</span>
-            <span class="acronym-word">Example</span>
-            <div class="acronym-tooltip">E — Example to follow</div>
-          </div>
-          <div class="acronym-letter-block specs-c" data-touch="false">
-            <span class="acronym-big-letter">C</span>
-            <span class="acronym-word">Command</span>
-            <div class="acronym-tooltip">C — Command to obey</div>
-          </div>
-          <div class="acronym-letter-block specs-s2" data-touch="false">
-            <span class="acronym-big-letter">S</span>
-            <span class="acronym-word">Service</span>
-            <div class="acronym-tooltip">S — Service to render</div>
-          </div>
-        </div>
-        <div class="panel-divider"></div>
-        <p class="panel-supporting-text" style="text-align: justify; font-style: normal;">Prayer is how we talk to God, and the Bible is how God talks to us. But what should we look for when He speaks? As you read Scripture, keep an eye out for five key things, summed up in SPECS. Most passages include at least one of them. <br><br></p>
-     
-     
-      <!-- Dropdown: Spiritual Growth Equation -->
-      <div class="prayer-tabs">
-        <div class="prayer-tab" id="cstab-equation">
-          <div class="prayer-tab-header" onclick="togglePrayerTab('cstab-equation')">
-            <span class="prayer-tab-label"><i class="fa-solid fa-seedling" style="color:#4ade80;"></i> The Spiritual Growth Equation</span>
-            <i class="fas fa-chevron-down prayer-tab-chevron"></i>
-          </div>
-          <div class="prayer-tab-body">
-            <div class="growth-equation">
-              <div class="growth-eq-label">Spiritual Growth</div>
-              <div class="growth-eq-equals">=</div>
-              <div class="growth-eq-factors">
-                <span class="growth-factor" data-growth-tip="Read and listen to Scripture — let God speak to you through His Word.">
-                  Hearing God
-                  <span class="growth-tooltip">Read and listen to Scripture, let God speak to you through His Word.</span>
-                </span>
-                <span class="growth-operator">×</span>
-                <span class="growth-factor" data-growth-tip="Reflect and meditate on what God is saying to you personally.">
-                  Processing
-                  <span class="growth-tooltip">Reflect and meditate on what God is saying to you, using the SPECS method.</span>
-                </span>
-                <span class="growth-operator">×</span>
-                <span class="growth-factor" data-growth-tip="Act in obedience to what God reveals — faith without action is incomplete.">
-                  Responding
-                  <span class="growth-tooltip">Act in obedience to what God reveals.</span>
-                </span>
-              </div>
-            </div>
-            <p class="prayer-tab-content" style="text-align: justify; font-style: normal; white-space: normal;">Did you know there is a formula for Spiritual Growth? It starts with hearing from God through Scripture, taking time to process what He is saying, and then responding in obedience to what He reveals. It's as simple as that 🌱.</p>
-          </div>
-        </div>
-
-   
-      </div>
-
-      </div>
-
-    </div><!-- /panelCombined -->
-
-    <!-- Mobile-only bottom exit button — below the panel, inside the content row -->
-    <div id="spotlightMobileExitWrap">
-      <button id="spotlightMobileExitBtn" onclick="closeSpotlight()">
-        <i class="fas fa-times"></i> Close
-      </button>
-    </div>
-
-  </div>
-  </div><!-- /spotlightScrollArea -->
-</div>
-
-
-
-
-<!-- ================= ANCHOR CARDS ================= -->
-<section class="anchor-cards-container" id="AnchorPracticeMode">
-  <div class="anchor-cards-inner">
-
-    <section class="anchor-menu-bar">
-
-      <!-- Top row: testament tabs centered -->
-      <div class="menu-top-row">
-        <div class="testament-toggle" id="testamentToggle">
-          <span class="toggle-pill" id="togglePill"></span>
-          <button class="toggle-btn active" data-testament="ot">
-            <i class="fas fa-scroll"></i>
-            <span>Old Testament</span>
-          </button>
-          <button class="toggle-btn" data-testament="nt">
-            <i class="fas fa-cross"></i>
-            <span>New Testament</span>
-          </button>
-          <button class="toggle-btn" data-testament="both">
-            <i class="fas fa-bible"></i>
-            <span>The Bible</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Bottom row: grouped with labels -->
-      <div class="menu-bottom-row">
-
-        <!-- GROUP: Controls -->
-        <div class="menu-group">
-          <div class="menu-group-label">Controls</div>
-          <div class="menu-group-btns">
-            <button id="shuffleBtn" class="menu-btn" data-variant="shuffle" title="Randomly rearrange all cards">
-              <i class="fas fa-random"></i><span>Shuffle</span>
-            </button>
-            <button id="checkBtn" class="menu-btn" data-variant="check" title="Check if cards are in correct order">
-              <i class="fas fa-check-circle"></i><span>Check Order</span>
-            </button>
-            <button id="resetBtn" class="menu-btn" data-variant="reset" title="Return cards to original order">
-              <i class="fas fa-undo"></i><span>Reset</span>
-            </button>
-            <!-- FILTER DROPDOWN -->
-            <div class="filter-dropdown-wrap" id="filterDropdownWrap">
-              <button id="filterBtn" class="menu-btn" data-variant="filter" title="Filter by category">
-                <i class="fas fa-filter"></i><span>Filter</span>
-                <i class="fas fa-chevron-down filter-chevron" id="filterChevron"></i>
-              </button>
-              <div class="filter-dropdown" id="filterDropdown">
-<div class="filter-dropdown-header" style="display:flex;align-items:center;justify-content:space-between;">
-  <span>Show Categories</span>
-  <button id="filterMobileClose" style="display:none;background:none;border:none;color:rgba(3, 3, 3, 0.7);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;" aria-label="Close filter">
-    <i class="fas fa-times"></i>
-  </button>
-</div>                <div id="filterCheckboxList" class="filter-checkbox-list"></div>
-                <div class="filter-dropdown-footer">
-                  <button class="filter-footer-btn" id="filterSelectAll">All</button>
-                  <button class="filter-footer-btn" id="filterSelectNone">None</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Cols slider sits below the control buttons -->
-          <div class="menu-size">
-            <span class="menu-size-label"> Card Size</span>
-            <div class="notch-selector" id="notchSelector">
-              <input type="range" class="notch-slider" id="colsSlider" min="0" max="14" step="1" value="7">
-            </div>
-            <span id="colsLabel">9</span>
-          </div>
-          <!-- Hints shown below slider on mobile only
-          <div class="menu-hints menu-hints--mobile">
-            <span class="menu-hint-line"><i class="fas fa-hand-pointer"></i> Tap to flip &amp; drag to reorder</span>
-            <span class="menu-hint-line"><i class="fas fa-search"></i> Double-tap to spotlight</span>
-          </div> -->
-        </div>
-
-      </div>
-    </section>
-
-    <!-- HOW TO PLAY MODAL -->
-    <div id="helpModal" class="modal-overlay" style="display:none;">
-      <div class="modal-sheet">
-        <div class="modal-header modal-header--purple">
-          <div class="modal-header-icon">⚓</div>
-          <div class="modal-header-text">
-            <div class="modal-header-eyebrow">Guide</div>
-            <div class="modal-header-title">How to Use Anchor</div>
-          </div>
-          <button id="helpCloseBtn" class="modal-close-btn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-          <div class="help-controls-grid">
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-orange"><i class="fas fa-random"></i></div><span>Shuffle</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-green"><i class="fas fa-check-circle"></i></div><span>Check Order</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-red"><i class="fas fa-undo"></i></div><span>Reset</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-blue"><i class="fas fa-filter"></i></div><span>Filter</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-purple"><i class="fas fa-layer-group"></i></div><span>Multi-Select</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-indigo"><i class="fas fa-search"></i></div><span>Inspect</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-slate"><i class="fas fa-sync-alt"></i></div><span>Flip Card</span></div>
-            <div class="help-ctrl-chip"><div class="help-ctrl-icon instr-slate"><i class="fas fa-grip-vertical"></i></div><span>Drag</span></div>
-          </div>
-          <div class="modal-legend-block">
-            <div class="modal-legend-title">After pressing <strong>Check Order</strong></div>
-            <div class="modal-legend-row">
-              <div class="modal-legend-item correct-bg"><i class="fas fa-check-circle"></i><span><strong>Correct</strong> — Exactly right.</span></div>
-              <div class="modal-legend-item close-bg"><i class="fas fa-exclamation-circle"></i><span><strong>Close</strong> — One or two off.</span></div>
-              <div class="modal-legend-item wrong-bg"><i class="fas fa-times-circle"></i><span><strong>Wrong</strong> — Needs to move.</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DID YOU KNOW? MODAL -->
-    <div id="dykModal" class="modal-overlay" style="display:none;">
-      <div class="modal-sheet modal-sheet--wide">
-        <div class="modal-header modal-header--amber">
-          <div class="modal-header-text">
-            <div class="modal-header-eyebrow">About Anchor</div>
-            <div class="modal-header-title">Did You Know?</div>
-          </div>
-          <button id="dykCloseBtn" class="modal-close-btn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-
-          <!-- Section 1 -->
-          <div class="dyk-block">
-            <div class="dyk-block-img-wrap">
-              <img src="" alt="Academic Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-              <div class="dyk-img-fallback"><i class="fas fa-book-open"></i><span>Add Image</span></div>
-              <div class="dyk-banner-title">
-                <span class="dyk-banner-eyebrow">Academic Foundation</span>
-                Built on Scholarship
-              </div>
-            </div>
-            <div class="dyk-block-content">
-            <div class="dyk-block-tag">Academic Foundation</div>
-            <h2 class="dyk-block-heading">Anchor is Built on Scholarship</h2>
-            <p class="dyk-block-body">Anchor wasn't built on intuition — it was constructed on a foundation of proven educational and discipleship research. The card system, sequencing logic, and study methods draw directly from three core texts:</p>
-            <div class="dyk-book-list">
-              <div class="dyk-book-card">
-                <div class="dyk-book-num">01</div>
-                <div class="dyk-book-info">
-                  <div class="dyk-book-title">The Master Plan of Evangelism</div>
-                  <div class="dyk-book-author">Robert E. Coleman</div>
-                  <div class="dyk-book-desc">Foundational framework for intentional discipleship and multiplication — the backbone of how Anchor approaches personal and group study.</div>
-                </div>
-              </div>
-              <div class="dyk-book-card">
-                <div class="dyk-book-num">02</div>
-                <div class="dyk-book-info">
-                  <div class="dyk-book-title">Competent to Counsel</div>
-                  <div class="dyk-book-author">Jay E. Adams</div>
-                  <div class="dyk-book-desc">Grounds the SPECS study method in Scripture-centered application — identifying sin, promises, examples, commands, and service as you read.</div>
-                </div>
-              </div>
-              <div class="dyk-book-card">
-                <div class="dyk-book-num">03</div>
-                <div class="dyk-book-info">
-                  <div class="dyk-book-title">Celebration of Discipline</div>
-                  <div class="dyk-book-author">Richard J. Foster</div>
-                  <div class="dyk-book-desc">Informs the PRAY method and the spiritual disciplines woven throughout Anchor — prayer, study, and meditation as transformative practices.</div>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-
-          <div class="dyk-sep"></div>
-
-          <!-- Section 2 -->
-          <div class="dyk-block">
-            <div class="dyk-block-img-wrap">
-              <img src="" alt="Daily Practice" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-              <div class="dyk-img-fallback"><i class="fas fa-sun"></i><span>Add Image</span></div>
-              <div class="dyk-banner-title">
-                <span class="dyk-banner-eyebrow">Daily Practice</span>
-                Use It for Devotionals
-              </div>
-            </div>
-            <div class="dyk-block-content">
-            <div class="dyk-block-tag">Daily Practice</div>
-            <h2 class="dyk-block-heading">Use It for Devotionals</h2>
-            <p class="dyk-block-body">Anchor works beautifully as a daily devotional tool. Pull a card, read its verse, then use the <strong>PRAY</strong> and <strong>SPECS</strong> methods in the spotlight view to respond to what God is saying. Work through a category over a week or a month — letting Scripture shape your morning rhythm with structure, not rigidity.</p>
-            </div>
-          </div>
-
-          <div class="dyk-sep"></div>
-
-          <!-- Section 3 -->
-          <div class="dyk-block">
-            <div class="dyk-block-img-wrap">
-              <img src="" alt="Discipleship" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-              <div class="dyk-img-fallback"><i class="fas fa-people-group"></i><span>Add Image</span></div>
-              <div class="dyk-banner-title">
-                <span class="dyk-banner-eyebrow">Discipleship</span>
-                Walk Others Through It
-              </div>
-            </div>
-            <div class="dyk-block-content">
-            <div class="dyk-block-tag">Discipleship</div>
-            <h2 class="dyk-block-heading">Walk Others Through It</h2>
-            <p class="dyk-block-body">Anchor is designed to pass on. Walk someone through the card system together — shuffle, sort, discuss, and check. Use the spotlight view to guide them through how to pray and study Scripture. The structure makes discipleship approachable for brand-new believers and seasoned mentors alike. You don't need a curriculum; you need a card, a question, and a conversation.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div id="cardGrid" class="card-grid"></div>
-  </div>
-</section>
 
 
 
@@ -2409,104 +1578,10 @@ See who can arrange the story most accurately. Talk through the events. Discuss 
 
 
 
-<!-- ================= CHURCH LOGO CAROUSEL ================= -->
-<section class="church-logos-section">
-  <div class="church-logos-header">
-    <h2 style="margin-bottom: 5px;">Ministries Currently Using</h2>
-    <p class="chruch-logo-small-text">Objective Calvary: Gospel Tools</p>
-  </div>
-
-  <div class="logo-track-wrap">
-    <div class="logo-track" id="logoTrack">
-      <!-- Replace src with your actual church logo paths, e.g. ../images/church_logo_1.png -->
-
-      <div class="logo-item"><img src="../images/church1.png" alt="Church 1"></div>
-      <div class="logo-item"><img src="../images/church2.png" alt="Church 2"></div>
-      <div class="logo-item"><img src="../images/church3.png" alt="Church 3"></div>
-      <div class="logo-item"><img src="../images/church4.png" alt="Church 4"></div>
-
-
-      <!-- Duplicate set for seamless infinite loop -->
-      <div class="logo-item"><img src="../images/church1.png" alt="Church 1"></div>
-      <div class="logo-item"><img src="../images/church2.png" alt="Church 2"></div>
-      <div class="logo-item"><img src="../images/church3.png" alt="Church 3"></div>
-      <div class="logo-item"><img src="../images/church4.png" alt="Church 4"></div>
-    </div>
-  </div>
-</section>
 
 
 
 
-
-
-
-
-<!-- ================= CITATIONS & CONTRIBUTIONS ================= -->
-
-
-
-
-    <!-- Contributions -->
-    <div class="contributions-block">
-      <h3 class="citations-heading" style="text-align: center;">Contributions</h3>
-      <p class="citations-subtext" style="text-align: center;">Victory is won through many advisers according to Scripture. Anchor was made possible through the generous help of the following people.</p>
-
-      <div class="contributions-grid">
-
-                <div class="contributor-card">
-          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
-          <div class="contributor-info">
-            <span class="contributor-name">William du Toit</span>
-          </div>
-        </div>
-
-
-                <div class="contributor-card">
-          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
-          <div class="contributor-info">
-            <span class="contributor-name">Dylan Farge</span>
-          </div>
-        </div>
-
-                <div class="contributor-card">
-          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
-          <div class="contributor-info">
-            <span class="contributor-name">Joy du Toit</span>
-          </div>
-        </div>
-
-        <div class="contributor-card">
-          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
-          <div class="contributor-info">
-            <span class="contributor-name">Grant Böhler</span>
-          </div>
-        </div>
-
-
-
-        <div class="contributor-card">
-          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
-          <div class="contributor-info">
-            <span class="contributor-name">Charl Wiehahn</span>
-          </div>
-        </div>
-
-                <div class="contributor-card">
-          <div class="contributor-avatar"><i class="fas fa-user"></i></div>
-          <div class="contributor-info">
-            <span class="contributor-name">Elizabeth Ackermann</span>
-          </div>
-        </div>
-
-
-
-
-      </div>
-    </div>
-
-  </div>
-</section>
 
 
 <!-- ================= SOCIAL PROOF / INSTAGRAM (SIMPLE PLAY ICON) ================= -->
@@ -2561,7 +1636,7 @@ See who can arrange the story most accurately. Talk through the events. Discuss 
     <div class="footer-content">
         <div class="footer-col">
             <h4>Objective Calvary</h4>
-            <p>Equipping the Universal Church with Gospel Tools to communicate the theological, spiritual, and redemptive purpose of the crucifixion of Jesus Christ.</p>
+            <p>Creating Gospel Tools to Effectively Communicate the Word of Jesus.</p>
         </div>
 
         <div class="footer-col">
@@ -2593,7 +1668,11 @@ See who can arrange the story most accurately. Talk through the events. Discuss 
     </div>
 
     <div class="footer-bottom">
-        <p>Objective Calvary, since 2025.</p>
+       <p>Objective Calvary, since 2025.</p>
+                <p class="hero-legal">
+                        &nbsp;&nbsp;Objective Calvary (Pty) Ltd &nbsp;·&nbsp; Reg. No. 2026/936145/07<br />
+                        
+                    </p>
     </div>
 </footer>
 
