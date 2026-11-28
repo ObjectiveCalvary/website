@@ -87,6 +87,94 @@ body{background:var(--green);min-height:100dvh}
 .credit{margin:6px 0 0;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
   color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,0,0,.45);text-align:center}
 
+
+/* ---- Details | Card Order: two buttons side by side, rounded on the outer corners only ---- */
+.btn-row{width:100%;display:flex;gap:12px}
+.links .btn-row .btn{flex:1 1 0;width:auto;min-width:0;padding-left:8px;padding-right:8px}
+.links .btn-row .btn.split-l{border-radius:16px 5px 5px 16px}
+.links .btn-row .btn.split-r{border-radius:5px 16px 16px 5px}
+
+/* ---- Card Order popup ---- */
+.order-card{position:relative;width:100%;max-width:1000px;height:min(calc(100dvh - 64px),1100px);margin-top:34px;display:flex;flex-direction:column;border-radius:18px 18px 0 0;background:#fff;color:var(--ink);
+  box-shadow:0 6px 0 rgba(20,14,60,.25),0 24px 60px rgba(0,0,0,.45);}
+/* the whole panel slides up from the bottom (and back down on close) */
+@keyframes sheetUp{from{transform:translateY(105vh)}to{transform:none}}
+@keyframes sheetDown{from{transform:none}to{transform:translateY(105vh)}}
+@keyframes bgIn{from{opacity:0}to{opacity:1}}
+@keyframes bgOut{from{opacity:1}to{opacity:0}}
+#orderModal.open{animation:bgIn .3s ease-out both}
+#orderModal.open .order-card{animation:sheetUp .46s cubic-bezier(.2,.85,.25,1) both}
+#orderModal.closing{animation:bgOut .3s ease-in both}
+#orderModal.closing .order-card{animation:sheetDown .3s cubic-bezier(.5,0,.8,.4) both}
+@media (prefers-reduced-motion:reduce){#orderModal.open,#orderModal.open .order-card,#orderModal.closing,#orderModal.closing .order-card{animation:none}}
+
+#orderModal{align-items:flex-end;padding-bottom:0}
+
+/* exit: a little square tab that peeks out above the top-right of the main panel */
+.order-x{position:absolute;top:-34px;right:20px;width:48px;height:36px;padding:0 0 2px;border:0;border-radius:12px 12px 0 0;background:#fff;color:#2b1766;
+  font:900 17px/1 inherit;cursor:pointer;box-shadow:0 -3px 8px rgba(0,0,0,.18)}
+.order-x:focus-visible,.otab:focus-visible,.ocard:focus-visible,.size-row input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* pill tab bar, styled like the menu buttons */
+.order-tabs{display:flex;gap:6px;margin:16px 14px 0;padding:5px;border-radius:999px;background:#efeaf6;box-shadow:inset 0 2px 5px rgba(27,20,64,.14)}
+.otab{flex:1;padding:12px 8px;border:0;border-radius:999px;background:transparent;color:#6a5f8e;font:900 14px/1 inherit;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+  transition:background .15s,color .15s,box-shadow .15s,transform .1s}
+.otab[aria-selected="true"]{color:#2b1766;background:linear-gradient(180deg,var(--gold-hi),var(--gold));}
+
+/* size slider: bare track, filled part + round thumb in the active-tab gold */
+.size-row{padding:16px 20px 8px}
+.size-row input{display:block;width:100%;height:28px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.size-row input::-webkit-slider-runnable-track{height:10px;border-radius:999px;box-shadow:inset 0 2px 4px rgba(27,20,64,.14);
+  background:linear-gradient(90deg,var(--gold-hi),var(--gold)) 0 0/var(--p,30%) 100% no-repeat,#efeaf6}
+.size-row input::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-8px;border:0;border-radius:50%;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));box-shadow:0 1px 4px rgba(27,20,64,.35)}
+.size-row input::-moz-range-track{height:10px;border-radius:999px;background:#efeaf6;box-shadow:inset 0 2px 4px rgba(27,20,64,.14)}
+.size-row input::-moz-range-progress{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--gold-hi),var(--gold))}
+.size-row input::-moz-range-thumb{width:26px;height:26px;border:0;border-radius:50%;background:linear-gradient(180deg,var(--gold-hi),var(--gold));box-shadow:0 1px 4px rgba(27,20,64,.35)}
+
+.order-body{flex:1 1 auto;border-radius:18px 18px 0 0;overflow-y:auto;padding:0 8px calc(24px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
+.order-grid{display:grid;grid-template-columns:repeat(auto-fill,var(--cs,82px));justify-content:center;gap:calc(var(--cs,82px)*.06)}   /* cards are exactly the slider size and just follow each other */
+.ocard{display:block;padding:0;border:0;background:none;cursor:zoom-in;font-family:inherit;-webkit-tap-highlight-color:transparent}
+.ocard .face{position:relative;display:block;aspect-ratio:685/1039;border-radius:calc(var(--cs,82px)*.1);overflow:hidden;background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+  box-shadow:0 2px 10px rgba(20,14,60,.12);transition:transform .12s}
+.ocard:hover .face{transform:translateY(-3px)}
+.ocard img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transform:scale(1.06);transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.3,1)}
+.ocard .face.loaded img{opacity:1;transform:none}
+.ocard .face.noimg img{display:none}
+/* while the picture is on its way: a soft light sweeps across the gold tile */
+.ocard .face::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-100%);animation:sweep 1.3s ease-in-out infinite;animation-delay:calc(var(--i,0)*40ms)}
+.ocard .face.loaded::after,.ocard .face.noimg::after{display:none}
+@keyframes sweep{to{transform:translateX(100%)}}
+/* tiles pop in one after another when a tab opens */
+.ocard{animation:tileIn .38s cubic-bezier(.2,.9,.3,1.15) both;animation-delay:calc(min(var(--i,0),24)*18ms)}
+@keyframes tileIn{from{opacity:0;transform:translateY(14px) scale(.88)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ocard,.ocard .face::after{animation:none}.ocard .face img{transition:none}}
+
+/* tap a card to see it big */
+.zoom{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px;background:rgba(10,6,30,.82);cursor:zoom-out}
+.zoom.open{display:flex}
+/* zoomed card: tap it to flip it over; tap outside (or ✕) to close */
+.zwrap{perspective:1400px}
+.zface{height:min(76dvh,720px);max-width:90vw;aspect-ratio:685/1039;position:relative;cursor:pointer;outline:none;animation:pop .2s ease-out}
+.zin{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.8,.3,1)}
+.zface.flipped .zin{transform:rotateY(180deg)}
+.zf,.zb{position:absolute;inset:0;border-radius:16px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.zb{transform:rotateY(180deg);background:repeating-linear-gradient(45deg,#2a1b66 0 12px,#35237f 12px 24px)}
+.zf img,.zb img{display:block;width:calc(100% + 8px);height:calc(100% + 8px);max-width:none;margin:-4px;object-fit:cover}   /* trims 4px off the edge all round */
+.zface:focus-visible .zf,.zface:focus-visible .zb{outline:3px solid var(--gold);outline-offset:3px}
+.zhint{color:rgba(255,255,255,.85);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.zx{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:rgba(0,0,0,.35);color:#fff;font:900 16px/1 inherit;cursor:pointer}
+body.no-scroll{overflow:hidden}
+@media (max-width:600px){
+  #orderModal{padding:8px 8px 0}
+  .order-card{height:calc(100dvh - 50px)}
+  .order-card{border-radius:14px 14px 0 0}
+  .order-x{right:14px}
+  .order-tabs{margin:14px 8px 0}.otab{font-size:12px;letter-spacing:.06em}
+  .size-row{padding:12px 14px 4px}.order-body{padding:0 6px calc(18px + env(safe-area-inset-bottom));border-radius:14px 14px 0 0}
+}
 </style>
 </head>
 <body>
@@ -114,7 +202,10 @@ body{background:var(--green);min-height:100dvh}
     <!-- <button class="menu-btn btn btn-devotional" data-href="Anchor_BibleStudy.html">Bible Study</button> -->
     <button class="btn" id="arenaBtn" type="button">Arena Mode</button>
 
-    <button class="btn" onclick="window.location.href='Anchor.html'">Details</button>
+    <div class="btn-row">
+      <button class="btn split-l" type="button" onclick="window.location.href='Anchor.html'">Details</button>
+      <button class="btn split-r" id="orderBtn" type="button" aria-haspopup="dialog">Card Order</button>
+    </div>
 
   </nav>
 
@@ -129,6 +220,28 @@ body{background:var(--green);min-height:100dvh}
   </div>
 </div>
 
+<!-- Card Order popup -->
+<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-label="Card Order">
+  <div class="order-card">
+    <button class="order-x" id="orderClose" type="button" aria-label="Close">✕</button>
+    <div class="order-body" id="orderBody" role="tabpanel">
+      <div class="order-tabs" role="tablist">
+        <button class="otab" id="tabOT" role="tab" aria-selected="true" aria-controls="orderGrid" data-t="ot">Old Testament</button>
+        <button class="otab" id="tabNT" role="tab" aria-selected="false" aria-controls="orderGrid" data-t="nt">New Testament</button>
+      </div>
+      <div class="size-row">
+        <input id="sizeRange" type="range" min="40" max="260" step="1" value="82" aria-label="Card size">
+      </div>
+      <div id="orderGrid"></div>
+    </div>
+  </div>
+</div>
+<div class="zoom" id="zoom" aria-hidden="true">
+  <button class="zx" id="zoomClose" type="button" aria-label="Close">✕</button>
+  <div class="zwrap"><div class="zface" id="zface" role="button" tabindex="0" aria-label="Card. Tap to flip"></div></div>
+  <div class="zhint">Tap card to flip</div>
+</div>
+
 <script>
 (function () {
   const modal = document.getElementById('arenaModal');
@@ -138,6 +251,107 @@ body{background:var(--green);min-height:100dvh}
   document.getElementById('arenaClose').addEventListener('click', close);
   modal.addEventListener('click', e => { if (e.target === modal) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+<script>
+/* ---- Card Order popup: every card in timeline order, split into Old / New Testament ---- */
+(function () {
+  const ERAS = [
+    ['Creation',1,8,'ot'],['Exodus',9,17,'ot'],['Priesthood',18,21,'ot'],['Wilderness',22,29,'ot'],['Conquest',30,36,'ot'],
+    ['Judges',37,41,'ot'],['Kingship',42,55,'ot'],['Divide / Exile',56,64,'ot'],['Return',65,69,'ot'],
+    ['Childhood',70,76,'nt'],['Preparation',77,81,'nt'],['1st Year of Ministry',82,87,'nt'],['2nd Year of Ministry',88,95,'nt'],
+    ['3rd Year of Ministry',96,100,'nt'],['Final 6 Months',101,106,'nt'],['Passion Week',107,118,'nt'],['Early Church',119,128,'nt'],
+    ['Paul\u2019s Journeys',129,136,'nt'],['Epistles',137,140,'nt'],['Revelation',141,150,'nt']
+  ];
+  const COLORS = ['#ffbd59','#258fa2','#903e62','#70af81','#374ca6','#ed9e71','#858bd8','#d6b027','#bd444c','#40654a','#a273a2','#006484','#db4c61','#7d92e6','#cf8404','#8f2b58'];
+  const IMG = n => '../images/cards/' + n + '.png';
+  const modal = document.getElementById('orderModal'), body = document.getElementById('orderBody'), gridBox = document.getElementById('orderGrid');
+  const tabs = Array.from(document.querySelectorAll('.otab'));
+  const zoom = document.getElementById('zoom'), zface = document.getElementById('zface');
+  const size = document.getElementById('sizeRange');
+  let opener = null;
+
+  // card size slider. Every time the popup opens, cards start as big as possible with 4 in a row on a phone
+  let touched = false;                                           // true once you move the slider (until the popup is reopened)
+  function fourAcross() {                                        // columns + 3 gaps (gap = 6% of a card) fill the width
+    const w = body.clientWidth - parseFloat(getComputedStyle(body).paddingLeft) * 2;
+    return Math.max(40, Math.min(260, Math.floor((w - 1) / 4.18)));   // rounded down so 4 always fit
+  }
+  const phone = () => window.matchMedia('(max-width:600px)').matches;
+  const setSize = v => {
+    size.value = v; body.style.setProperty('--cs', size.value + 'px');
+    const f = (size.value - size.min) / (size.max - size.min);        // how much of the track is filled
+    size.style.setProperty('--p', 'calc(13px + (100% - 26px) * ' + f + ')');
+  };
+  const applySize = () => { touched = true; setSize(size.value); };
+  const defaultSize = () => phone() ? fourAcross() : 110;
+  window.addEventListener('resize', () => { if (!touched && modal.classList.contains('open')) setSize(defaultSize()); });   // e.g. rotating the phone
+  size.addEventListener('input', applySize);
+
+  // one continuous run of cards per tab, no headings or numbers
+  function show(t) {
+    tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.t === t)));
+    const grid = document.createElement('div'); grid.className = 'order-grid';
+    let idx = 0;
+    ERAS.forEach((e, idx) => {
+      if (e[3] !== t) return;
+      const col = COLORS[idx % COLORS.length];
+      for (let n = e[1]; n <= e[2]; n++) {
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'ocard'; b.setAttribute('aria-label', 'Card ' + n);
+        b.style.setProperty('--i', idx++);
+        const face = document.createElement('span'); face.className = 'face';
+        const img = new Image(); img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; img.draggable = false;
+        img.onload = () => face.classList.add('loaded');
+        img.onerror = () => face.classList.add('noimg');
+        img.src = IMG(n);
+        face.appendChild(img); b.appendChild(face);
+        b.addEventListener('click', () => openZoom(n, col));
+        grid.appendChild(b);
+      }
+    });
+    gridBox.replaceChildren(grid);
+    body.scrollTop = 0;
+  }
+
+  function openZoom(n, col) {
+    zface.classList.remove('flipped'); zface.style.setProperty('--c', col);
+    const mk = (cls, src) => {
+      const d = document.createElement('div'); d.className = cls;
+      const img = new Image(); img.alt = ''; img.draggable = false; img.src = src; img.onerror = () => img.remove();
+      d.appendChild(img); return d;
+    };
+    const inner = document.createElement('div'); inner.className = 'zin';
+    inner.append(mk('zf', IMG(n)), mk('zb', '../images/cards/back/' + n + '.png'));
+    zface.replaceChildren(inner);
+    zoom.classList.add('open'); zoom.setAttribute('aria-hidden', 'false');
+    zface.focus({ preventScroll: true });
+  }
+  const closeZoom = () => { zoom.classList.remove('open'); zoom.setAttribute('aria-hidden', 'true'); };
+  function open() { opener = document.activeElement; modal.classList.add('open'); touched = false; setSize(defaultSize()); show('ot'); modal.classList.add('open'); document.body.classList.add('no-scroll'); document.getElementById('orderClose').focus(); }
+  function close() {
+    if (!modal.classList.contains('open') || modal.classList.contains('closing')) return;
+    closeZoom(); document.body.classList.remove('no-scroll');
+    modal.classList.add('closing');
+    setTimeout(() => { modal.classList.remove('open', 'closing'); if (opener) opener.focus(); }, 300);   // after the slide-down
+  }
+
+  document.getElementById('orderBtn').addEventListener('click', open);
+  document.getElementById('orderClose').addEventListener('click', close);
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  const flip = () => zface.classList.toggle('flipped');
+  zface.addEventListener('click', e => { e.stopPropagation(); flip(); });
+  zface.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  zoom.addEventListener('click', closeZoom);                     // tap anywhere else to close
+  document.getElementById('zoomClose').addEventListener('click', e => { e.stopPropagation(); closeZoom(); });
+  tabs.forEach(b => b.addEventListener('click', () => show(b.dataset.t)));
+  tabs.forEach((b, i) => b.addEventListener('keydown', e => {      // arrow keys switch tabs
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const o = tabs[1 - i]; o.focus(); show(o.dataset.t); }
+  }));
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (zoom.classList.contains('open')) closeZoom(); else if (modal.classList.contains('open')) close();
+  });
 })();
 </script>
 
